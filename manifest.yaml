@@ -1,10 +1,10 @@
 repository: drop0ne/atticus-continuity
-schema_version: 0.4
+schema_version: 0.5
 last_structural_update: 2026-08-11
 
 purpose: >-
   Durable, version-controlled continuity, evidence, governance, ingestion,
-  and experiment store for ATTICUS/PAC research.
+  threat-model, and experiment store for ATTICUS/PAC research.
 
 controlling_rule: "Knowledge can enter. Authority cannot."
 
@@ -19,6 +19,8 @@ bootstrap:
     - knowledge/research/source-quality.md
     - atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md
     - pac/principles/PAC_BASELINE.md
+    - knowledge/threat-models/index.md
+    - knowledge/architectures/threat-control-matrix.md
     - manifest.yaml
 
 canonical:
@@ -44,12 +46,19 @@ schemas:
   source_record: schemas/source-record.md
   claim_record: schemas/claim-record.md
   ingestion_batch: schemas/ingestion-batch.md
+  threat_model_record: schemas/threat-model-record.md
 
 indexes:
   incidents: incidents/index.md
   knowledge: knowledge/index.md
   sources: knowledge/research/sources/index.md
   claims: knowledge/research/claims/index.md
+  threat_models: knowledge/threat-models/index.md
+
+architectures:
+  threat_control_matrix:
+    file: knowledge/architectures/threat-control-matrix.md
+    status: WORKING_ARCHITECTURE
 
 invariants:
   - id: PAC-INV-0001
@@ -71,6 +80,14 @@ invariants:
   - id: PAC-INV-0005
     title: Uncertainty Cannot Increase Authority
     file: pac/invariants/PAC-INV-0005-uncertainty-cannot-increase-authority.md
+    status: HYPOTHESIS_IMPLEMENTATION_TARGET
+  - id: PAC-INV-0006
+    title: Denial Does Not Authorize Substitution
+    file: pac/invariants/PAC-INV-0006-denial-does-not-authorize-substitution.md
+    status: HYPOTHESIS_IMPLEMENTATION_TARGET
+  - id: PAC-INV-0007
+    title: Persistence Does Not Confer Trust
+    file: pac/invariants/PAC-INV-0007-persistence-does-not-confer-trust.md
     status: HYPOTHESIS_IMPLEMENTATION_TARGET
 
 incidents:
@@ -150,6 +167,32 @@ claims:
     file: knowledge/research/claims/CLM-2026-0010-aisi-cross-agent-artifact-inheritance.md
     status: SUPPORTED
 
+threat_models:
+  - id: TM-0001
+    title: Authority Laundering
+    file: knowledge/threat-models/TM-0001-authority-laundering.md
+    status: HYPOTHESIS
+  - id: TM-0002
+    title: Target-Scope Inference
+    file: knowledge/threat-models/TM-0002-target-scope-inference.md
+    status: HYPOTHESIS
+  - id: TM-0003
+    title: Coordination-Mediated Escalation
+    file: knowledge/threat-models/TM-0003-coordination-mediated-escalation.md
+    status: HYPOTHESIS
+  - id: TM-0004
+    title: Persistent-Artifact Inheritance
+    file: knowledge/threat-models/TM-0004-persistent-artifact-inheritance.md
+    status: HYPOTHESIS
+  - id: TM-0005
+    title: Boundary Substitution
+    file: knowledge/threat-models/TM-0005-boundary-substitution.md
+    status: HYPOTHESIS
+  - id: TM-0006
+    title: Monitoring Latency and Machine-Speed Review Failure
+    file: knowledge/threat-models/TM-0006-monitoring-latency-and-machine-speed-review-failure.md
+    status: HYPOTHESIS
+
 concepts:
   - id: CONCEPT-CADT
     title: Capability-Authority Decoupling Threshold
@@ -169,6 +212,10 @@ experiments:
     title: Knowledge Assimilation Through an Epistemic Firewall
     file: experiments/proposed/EXP-0002-knowledge-assimilation-firewall.md
     status: PROPOSED
+  - id: EXP-0003
+    title: Threat-Model Regression Suite
+    file: experiments/proposed/EXP-0003-threat-model-regression-suite.md
+    status: PROPOSED
 
 ingestion_batches:
   - id: ING-2026-0001
@@ -187,6 +234,9 @@ decisions:
   - id: ADR-0002
     file: decisions/ADR-0002-epistemic-firewall.md
     status: ACCEPTED
+  - id: ADR-0003
+    file: decisions/ADR-0003-preaction-authority-enforcement.md
+    status: ACCEPTED_AS_RESEARCH_ARCHITECTURE
 
 security:
   unknown_external_agent_write_access: false
@@ -197,3 +247,5 @@ security:
   foreign_artifacts_are_instructions: false
   uncertainty_expands_authority: false
   inferred_target_relevance_grants_authority: false
+  denial_authorizes_substitution: false
+  persistence_confers_trust: false
