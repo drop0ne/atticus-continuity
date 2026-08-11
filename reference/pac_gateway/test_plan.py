@@ -94,11 +94,8 @@ class PlanLedgerTests(unittest.TestCase):
         self.assertEqual(aggregate3.decision, Decision.DENY)
         self.assertIn("PLAN_STEP_LIMIT_EXCEEDED", aggregate3.reason_codes)
 
-    def test_effect_budget_persists_across_agents(self) -> None:
+    def test_effect_and_resource_budgets_persist_across_steps(self) -> None:
         _, _, gateway, _, ledger = build_components(step_limit=10)
-        # The gateway token is subject-specific, so use agent-a for local gating and
-        # demonstrate that changing plan actors cannot reset the shared plan budget
-        # by inspecting the same ledger across distinct step records.
         for index in range(2):
             p = make_proposal(f"P-{index}")
             local = gateway.evaluate(p)
@@ -125,8 +122,6 @@ class PlanLedgerTests(unittest.TestCase):
 
     def test_plan_authority_mismatch_denies(self) -> None:
         _, _, gateway, _, ledger = build_components()
-        # Local denial is expected too; aggregate policy independently records the
-        # authority mismatch instead of treating the plan as a replacement grant.
         p = make_proposal("P-1", authority_ref="AUTH-OTHER")
         local = gateway.evaluate(p)
         aggregate = ledger.evaluate_and_commit(PlanStep("STEP-1", "PLAN-1", p), local)
