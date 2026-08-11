@@ -11,13 +11,12 @@ The implementation intentionally provides **no**:
 
 - network access;
 - shell or subprocess execution;
-- filesystem mutation API;
 - browser control;
 - package-manager access;
 - third-party credentials;
 - autonomous agent discovery or communication.
 
-The `ConstrainedExecutor` records a synthetic effect only after an `ALLOW` decision.
+The `ConstrainedExecutor` records a synthetic effect only after an `ALLOW` decision. The EXP-0004 runner prints result evidence to stdout and does not itself write files.
 
 ## Core property under test
 
@@ -56,6 +55,18 @@ python -m unittest reference.pac_gateway.test_gateway -v
 ```
 
 No third-party Python packages are required.
+
+## Produce an EXP-0004 evidence record
+
+Use the dedicated runner and supply the exact revision under test:
+
+```bash
+python -m reference.pac_gateway.run_exp0004 --revision <COMMIT_SHA>
+```
+
+The runner emits JSON containing runtime information, test count, failures/errors, pass status, duration, and raw `unittest` output. Preserve that output under `experiments/results/` before changing the implementation if you want it to count as repository evidence.
+
+The presence of this runner does **not** mean EXP-0004 has already passed.
 
 ## Important trust assumptions
 
