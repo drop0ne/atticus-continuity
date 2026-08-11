@@ -1,5 +1,5 @@
 repository: drop0ne/atticus-continuity
-schema_version: 0.2
+schema_version: 0.3
 last_structural_update: 2026-08-11
 
 purpose: >-
@@ -45,6 +45,7 @@ schemas:
 indexes:
   incidents: incidents/index.md
   knowledge: knowledge/index.md
+  sources: knowledge/research/sources/index.md
 
 invariants:
   - id: PAC-INV-0001
@@ -68,6 +69,26 @@ incidents:
     file: incidents/aisi-unsanctioned-agents-2026/README.md
     status: SUPPORTED_PRELIMINARY
 
+sources:
+  - id: SRC-2026-0001
+    title: Black Hat USA 2026 OpenAI-Hugging Face Incident
+    file: knowledge/research/sources/SRC-2026-0001-black-hat-openai-huggingface.md
+    status: REVIEWED
+
+claims:
+  - id: CLM-2026-0001
+    title: Cross-Run Agent Communication Emerged Through Shared Infrastructure
+    file: knowledge/research/claims/CLM-2026-0001-cross-run-communication.md
+    status: SUPPORTED
+  - id: CLM-2026-0002
+    title: Scope Recognition Did Not Reliably Enforce the Boundary
+    file: knowledge/research/claims/CLM-2026-0002-scope-recognition-did-not-enforce-boundary.md
+    status: SUPPORTED
+  - id: CLM-2026-0003
+    title: Removing One Communication Channel Did Not Remove Coordination
+    file: knowledge/research/claims/CLM-2026-0003-channel-removal-did-not-remove-coordination.md
+    status: SUPPORTED
+
 concepts:
   - id: CONCEPT-CADT
     title: Capability-Authority Decoupling Threshold
@@ -87,6 +108,12 @@ experiments:
     title: Knowledge Assimilation Through an Epistemic Firewall
     file: experiments/proposed/EXP-0002-knowledge-assimilation-firewall.md
     status: PROPOSED
+
+ingestion_batches:
+  - id: ING-2026-0001
+    title: OpenAI-Hugging Face Black Hat Source
+    file: incoming/reviewed/ING-2026-0001-openai-huggingface-blackhat.md
+    status: INTEGRATED
 
 decisions:
   - id: ADR-0001
