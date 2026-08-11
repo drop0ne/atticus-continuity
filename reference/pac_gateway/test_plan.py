@@ -4,11 +4,31 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from threading import Barrier, Thread
 
-from .pac_gateway import ActionProposal, AuthorityToken, Decision, Gateway, TargetScope
-from .plan import PlanEnvelope, PlanLedger, PlanStep, PlanSnapshot
+from .pac_gateway import (
+    ActionIntentBinding,
+    ActionProposal,
+    AuthorityToken,
+    Decision,
+    Gateway,
+    TargetScope,
+)
+from .plan import PlanEnvelope, PlanLedger, PlanSnapshot, PlanStep
 
 
 NOW = datetime(2026, 8, 11, 23, 0, tzinfo=timezone.utc)
+
+
+def trusted_intent(proposal: ActionProposal) -> ActionIntentBinding:
+    return ActionIntentBinding(
+        id=f"BIND-{proposal.id}",
+        issuer="trusted-plan-test-orchestrator",
+        proposal_ref=proposal.id,
+        intent_ref=proposal.semantic_action_id,
+        issued_at=NOW - timedelta(minutes=1),
+        expires_at=NOW + timedelta(minutes=10),
+        provenance="trusted-plan-test-binding",
+        authority_ref=proposal.authority_ref,
+    )
 
 
 def make_authority(token_id: str, subject: str) -> AuthorityToken:
@@ -39,6 +59,7 @@ def build_components(*, step_limit=2, budget=2):
     gateway = Gateway(
         authority_tokens=authorities,
         target_scopes={target.id: target},
+        intent_resolver=trusted_intent,
         now=lambda: NOW,
     )
     plan = PlanEnvelope(
@@ -157,8 +178,6 @@ class PlanLedgerTests(unittest.TestCase):
 
     def test_agent_cannot_use_another_subjects_plan_authority_binding(self) -> None:
         _, _, gateway, _, ledger = build_components()
-        # Local gateway rejects this token/subject mismatch and the plan independently
-        # rejects the authority binding for defense in depth.
         p = make_proposal("P-X", subject="agent-b", authority_ref="AUTH-PLAN-A")
         local = gateway.evaluate(p)
         aggregate = ledger.evaluate_and_commit(PlanStep("STEP-X", "PLAN-1", p), local)
