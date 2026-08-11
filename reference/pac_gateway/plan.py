@@ -20,9 +20,9 @@ class PlanEnvelope:
     issuer: str
     created_at: datetime
     expires_at: datetime
-    authority_ref: str
     objective: str
     subjects: frozenset[str]
+    authorized_authority_refs: Mapping[str, frozenset[str]]
     target_scope_refs: frozenset[str]
     allowed_capabilities: frozenset[str]
     allowed_resources: frozenset[str]
@@ -52,6 +52,16 @@ class PlanDecision:
     step_count_after: int
     resource_usage_after: Mapping[str, int]
     effect_usage_after: Mapping[str, int]
+    subject_step_count_after: Mapping[str, int]
+
+
+@dataclass(frozen=True)
+class PlanSnapshot:
+    plan_ref: str
+    step_count: int
+    resource_usage: Mapping[str, int]
+    effect_usage: Mapping[str, int]
+    subject_step_count: Mapping[str, int]
 
 
 @dataclass
@@ -59,6 +69,7 @@ class _PlanState:
     step_count: int = 0
     resource_usage: dict[str, int] = field(default_factory=dict)
     effect_usage: dict[str, int] = field(default_factory=dict)
+    subject_step_count: dict[str, int] = field(default_factory=dict)
 
 
 class PlanLedger:
@@ -75,19 +86,19 @@ class PlanLedger:
         self._now = now or (lambda: datetime.now(timezone.utc))
         self._lock = Lock()
 
-    def snapshot(self, plan_ref: str) -> Optional[PlanDecision]:
-        state = self._states.get(plan_ref)
-        if state is None:
-            return None
-        return PlanDecision(
-            step_ref="SNAPSHOT",
-            plan_ref=plan_ref,
-            decision=Decision.DEFER,
-            reason_codes=(),
-            step_count_after=state.step_count,
-            resource_usage_after=dict(state.resource_usage),
-            effect_usage_after=dict(state.effect_usage),
-        )
+    def snapshot(self, plan_ref: str) -> Optional[PlanSnapshot]:
+        """Return a copy of aggregate state without overloading decision semantics."""
+        with self._lock:
+            state = self._states.get(plan_ref)
+            if state is None:
+                return None
+            return PlanSnapshot(
+                plan_ref=plan_ref,
+                step_count=state.step_count,
+                resource_usage=dict(state.resource_usage),
+                effect_usage=dict(state.effect_usage),
+                subject_step_count=dict(state.subject_step_count),
+            )
 
     def evaluate_and_commit(
         self,
@@ -117,12 +128,17 @@ class PlanLedger:
                 reasons.append("PLAN_PROVENANCE_MISSING")
             if not (plan.created_at <= now <= plan.expires_at):
                 reasons.append("PLAN_EXPIRED")
-            if proposal.authority_ref != plan.authority_ref:
-                reasons.append("PLAN_AUTHORITY_MISMATCH")
             if proposal.objective != plan.objective:
                 reasons.append("PLAN_OBJECTIVE_MISMATCH")
             if proposal.subject not in plan.subjects:
                 reasons.append("PLAN_SUBJECT_NOT_AUTHORIZED")
+
+            subject_authorities = plan.authorized_authority_refs.get(proposal.subject, frozenset())
+            if not subject_authorities:
+                reasons.append("PLAN_SUBJECT_AUTHORITY_NOT_BOUND")
+            elif proposal.authority_ref not in subject_authorities:
+                reasons.append("PLAN_AUTHORITY_MISMATCH")
+
             if proposal.target_scope_ref not in plan.target_scope_refs:
                 reasons.append("PLAN_TARGET_NOT_AUTHORIZED")
             if proposal.capability not in plan.allowed_capabilities:
@@ -157,13 +173,17 @@ class PlanLedger:
             if reasons:
                 return self._decision(step, Decision.DENY, tuple(dict.fromkeys(reasons)))
 
-            # Commit only after every local and aggregate check passes.
+            # Commit only after every local and aggregate check passes. The lock
+            # makes evaluation + reservation atomic within this process.
             state.step_count = next_step_count
             state.resource_usage[proposal.resource] = (
                 state.resource_usage.get(proposal.resource, 0) + step.resource_units
             )
             state.effect_usage[proposal.effect] = (
                 state.effect_usage.get(proposal.effect, 0) + step.effect_units
+            )
+            state.subject_step_count[proposal.subject] = (
+                state.subject_step_count.get(proposal.subject, 0) + 1
             )
             return self._decision(step, Decision.ALLOW, ())
 
@@ -182,4 +202,5 @@ class PlanLedger:
             step_count_after=state.step_count,
             resource_usage_after=dict(state.resource_usage),
             effect_usage_after=dict(state.effect_usage),
+            subject_step_count_after=dict(state.subject_step_count),
         )
