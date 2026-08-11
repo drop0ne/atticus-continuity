@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, timezone
 from .executor import ConstrainedExecutor
 from .monitor import MonitorPolicy, SafetyMonitor
 from .pac_gateway import (
+    ActionIntentBinding,
     ActionProposal,
     AuthorityToken,
     CircuitBreaker,
@@ -18,6 +19,24 @@ from .pac_gateway import (
 
 
 NOW = datetime(2026, 8, 11, 23, 0, tzinfo=timezone.utc)
+
+
+def trusted_intent(proposal: ActionProposal, *, intent_ref: str | None = None) -> ActionIntentBinding:
+    """Test-only trusted orchestrator binding.
+
+    Production logic must not simply trust the agent's semantic_action_id. Tests use
+    it as a convenient fixture unless a specific trusted intent_ref is supplied.
+    """
+    return ActionIntentBinding(
+        id=f"BIND-{proposal.id}",
+        issuer="trusted-test-orchestrator",
+        proposal_ref=proposal.id,
+        intent_ref=intent_ref or proposal.semantic_action_id,
+        issued_at=NOW - timedelta(minutes=1),
+        expires_at=NOW + timedelta(minutes=10),
+        provenance="test-fixture-binding",
+        authority_ref=proposal.authority_ref,
+    )
 
 
 def token(
@@ -89,6 +108,16 @@ def proposal(
     )
 
 
+def make_gateway(authorities, target, *, breaker=None, resolver=trusted_intent):
+    return Gateway(
+        authority_tokens=authorities,
+        target_scopes={target.id: target},
+        circuit_breaker=breaker,
+        intent_resolver=resolver,
+        now=lambda: NOW,
+    )
+
+
 class GatewayTests(unittest.TestCase):
     def setUp(self) -> None:
         self.target = TargetScope(
@@ -99,16 +128,19 @@ class GatewayTests(unittest.TestCase):
             real_world_effects_allowed=False,
         )
         self.auth = token()
-        self.gateway = Gateway(
-            authority_tokens={self.auth.id: self.auth},
-            target_scopes={self.target.id: self.target},
-            now=lambda: NOW,
-        )
+        self.gateway = make_gateway({self.auth.id: self.auth}, self.target)
 
     def test_valid_authority_allows(self) -> None:
         decision = self.gateway.evaluate(proposal())
         self.assertEqual(decision.decision, Decision.ALLOW)
         self.assertEqual(decision.reason_codes, ())
+        self.assertEqual(decision.intent_ref, "inspect-alpha")
+
+    def test_missing_trusted_correlation_escalates_valid_action(self) -> None:
+        gateway = make_gateway({self.auth.id: self.auth}, self.target, resolver=None)
+        decision = gateway.evaluate(proposal())
+        self.assertEqual(decision.decision, Decision.ESCALATE)
+        self.assertIn("NO_TRUSTED_ACTION_CORRELATION", decision.reason_codes)
 
     def test_missing_authority_denies(self) -> None:
         decision = self.gateway.evaluate(proposal(authority_ref=None))
@@ -117,11 +149,7 @@ class GatewayTests(unittest.TestCase):
 
     def test_missing_provenance_denies(self) -> None:
         bad = token(provenance="")
-        gateway = Gateway(
-            authority_tokens={bad.id: bad},
-            target_scopes={self.target.id: self.target},
-            now=lambda: NOW,
-        )
+        gateway = make_gateway({bad.id: bad}, self.target)
         decision = gateway.evaluate(proposal())
         self.assertEqual(decision.decision, Decision.DENY)
         self.assertIn("NO_AUTHORITY_PROVENANCE", decision.reason_codes)
@@ -131,22 +159,14 @@ class GatewayTests(unittest.TestCase):
             issued_at=NOW - timedelta(hours=2),
             expires_at=NOW - timedelta(hours=1),
         )
-        gateway = Gateway(
-            authority_tokens={expired.id: expired},
-            target_scopes={self.target.id: self.target},
-            now=lambda: NOW,
-        )
+        gateway = make_gateway({expired.id: expired}, self.target)
         decision = gateway.evaluate(proposal())
         self.assertEqual(decision.decision, Decision.DENY)
         self.assertIn("AUTHORITY_EXPIRED", decision.reason_codes)
 
     def test_revoked_authority_denies(self) -> None:
         revoked = token(status="REVOKED")
-        gateway = Gateway(
-            authority_tokens={revoked.id: revoked},
-            target_scopes={self.target.id: self.target},
-            now=lambda: NOW,
-        )
+        gateway = make_gateway({revoked.id: revoked}, self.target)
         decision = gateway.evaluate(proposal())
         self.assertEqual(decision.decision, Decision.DENY)
         self.assertIn("AUTHORITY_REVOKED", decision.reason_codes)
@@ -191,24 +211,14 @@ class GatewayTests(unittest.TestCase):
 
     def test_circuit_breaker_open_denies_valid_action(self) -> None:
         breaker = CircuitBreaker(CircuitState.OPEN, "monitoring-overload")
-        gateway = Gateway(
-            authority_tokens={self.auth.id: self.auth},
-            target_scopes={self.target.id: self.target},
-            circuit_breaker=breaker,
-            now=lambda: NOW,
-        )
+        gateway = make_gateway({self.auth.id: self.auth}, self.target, breaker=breaker)
         decision = gateway.evaluate(proposal())
         self.assertEqual(decision.decision, Decision.DENY)
         self.assertIn("CIRCUIT_BREAKER_OPEN", decision.reason_codes)
 
     def test_restricted_breaker_escalates(self) -> None:
         breaker = CircuitBreaker(CircuitState.RESTRICTED, "degraded-monitoring")
-        gateway = Gateway(
-            authority_tokens={self.auth.id: self.auth},
-            target_scopes={self.target.id: self.target},
-            circuit_breaker=breaker,
-            now=lambda: NOW,
-        )
+        gateway = make_gateway({self.auth.id: self.auth}, self.target, breaker=breaker)
         decision = gateway.evaluate(proposal())
         self.assertEqual(decision.decision, Decision.ESCALATE)
 
@@ -226,13 +236,28 @@ class GatewayTests(unittest.TestCase):
         self.assertEqual(substitute.decision, Decision.DENY)
         self.assertIn("SUBSTITUTION_AFTER_DENIAL", substitute.reason_codes)
 
-    def test_new_explicit_grant_can_authorize_previously_denied_semantic_action(self) -> None:
-        new_auth = token("AUTH-2")
-        gateway = Gateway(
-            authority_tokens={self.auth.id: self.auth, new_auth.id: new_auth},
-            target_scopes={self.target.id: self.target},
-            now=lambda: NOW,
+    def test_agent_relabel_does_not_evade_trusted_correlation(self) -> None:
+        def resolver(p: ActionProposal) -> ActionIntentBinding:
+            # Trusted layer correlates P-1 and P-2 despite different agent labels.
+            shared = "trusted-intent:change-alpha" if p.id in {"P-1", "P-2"} else p.id
+            return trusted_intent(p, intent_ref=shared)
+
+        gateway = make_gateway({self.auth.id: self.auth}, self.target, resolver=resolver)
+        first = gateway.evaluate(
+            proposal(proposal_id="P-1", capability="write", semantic_action_id="agent-label-one")
         )
+        self.assertEqual(first.decision, Decision.DENY)
+
+        second = gateway.evaluate(
+            proposal(proposal_id="P-2", capability="read", semantic_action_id="totally-new-label")
+        )
+        self.assertEqual(second.decision, Decision.DENY)
+        self.assertIn("SUBSTITUTION_AFTER_DENIAL", second.reason_codes)
+        self.assertEqual(second.intent_ref, "trusted-intent:change-alpha")
+
+    def test_new_explicit_grant_can_authorize_previously_denied_intent(self) -> None:
+        new_auth = token("AUTH-2")
+        gateway = make_gateway({self.auth.id: self.auth, new_auth.id: new_auth}, self.target)
         gateway.evaluate(proposal(capability="write", semantic_action_id="change-alpha"))
         second = gateway.evaluate(
             proposal(
@@ -243,6 +268,25 @@ class GatewayTests(unittest.TestCase):
         )
         self.assertEqual(second.decision, Decision.ALLOW)
 
+    def test_invalid_correlation_authority_binding_denies(self) -> None:
+        def bad_resolver(p: ActionProposal) -> ActionIntentBinding:
+            binding = trusted_intent(p)
+            return ActionIntentBinding(
+                id=binding.id,
+                issuer=binding.issuer,
+                proposal_ref=binding.proposal_ref,
+                intent_ref=binding.intent_ref,
+                issued_at=binding.issued_at,
+                expires_at=binding.expires_at,
+                provenance=binding.provenance,
+                authority_ref="AUTH-WRONG",
+            )
+
+        gateway = make_gateway({self.auth.id: self.auth}, self.target, resolver=bad_resolver)
+        decision = gateway.evaluate(proposal())
+        self.assertEqual(decision.decision, Decision.DENY)
+        self.assertIn("ACTION_CORRELATION_AUTHORITY_MISMATCH", decision.reason_codes)
+
     def test_invalid_delegation_inflation_is_rejected(self) -> None:
         parent = token(
             "AUTH-P",
@@ -250,11 +294,7 @@ class GatewayTests(unittest.TestCase):
             max_depth=1,
             capabilities=frozenset({"read"}),
         )
-        gateway = Gateway(
-            authority_tokens={parent.id: parent},
-            target_scopes={self.target.id: self.target},
-            now=lambda: NOW,
-        )
+        gateway = make_gateway({parent.id: parent}, self.target)
         record = DelegationRecord(
             id="DEL-1",
             parent_authority_ref="AUTH-P",
@@ -285,11 +325,7 @@ class GatewayTests(unittest.TestCase):
             capabilities=frozenset({"read", "write"}),
             parent="AUTH-P",
         )
-        gateway = Gateway(
-            authority_tokens={parent.id: parent, child.id: child},
-            target_scopes={self.target.id: self.target},
-            now=lambda: NOW,
-        )
+        gateway = make_gateway({parent.id: parent, child.id: child}, self.target)
         decision = gateway.evaluate(
             proposal(
                 authority_ref="AUTH-C",
@@ -307,11 +343,7 @@ class GatewayTests(unittest.TestCase):
         with self.assertRaises(PermissionError):
             executor.execute(denied_proposal, denied)
 
-        gateway = Gateway(
-            authority_tokens={self.auth.id: self.auth},
-            target_scopes={self.target.id: self.target},
-            now=lambda: NOW,
-        )
+        gateway = make_gateway({self.auth.id: self.auth}, self.target)
         p = proposal(proposal_id="P-allow")
         allowed = gateway.evaluate(p)
         record = executor.execute(p, allowed)
@@ -335,12 +367,7 @@ class GatewayTests(unittest.TestCase):
 
     def test_monitor_repeated_provenance_failures_restrict_future_actions(self) -> None:
         breaker = CircuitBreaker()
-        gateway = Gateway(
-            authority_tokens={self.auth.id: self.auth},
-            target_scopes={self.target.id: self.target},
-            circuit_breaker=breaker,
-            now=lambda: NOW,
-        )
+        gateway = make_gateway({self.auth.id: self.auth}, self.target, breaker=breaker)
         monitor = SafetyMonitor(
             breaker,
             MonitorPolicy(provenance_failures_before_restrict=2),
@@ -362,12 +389,7 @@ class GatewayTests(unittest.TestCase):
 
     def test_monitor_capacity_overload_opens_breaker(self) -> None:
         breaker = CircuitBreaker()
-        gateway = Gateway(
-            authority_tokens={self.auth.id: self.auth},
-            target_scopes={self.target.id: self.target},
-            circuit_breaker=breaker,
-            now=lambda: NOW,
-        )
+        gateway = make_gateway({self.auth.id: self.auth}, self.target, breaker=breaker)
         monitor = SafetyMonitor(
             breaker,
             MonitorPolicy(max_observed_events_before_open=1),
