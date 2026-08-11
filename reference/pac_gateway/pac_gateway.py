@@ -6,6 +6,8 @@ No network, shell, subprocess, dynamic import, or external execution capability 
 
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
@@ -118,6 +120,7 @@ class ActionProposal:
     authority_ref: Optional[str]
     semantic_action_id: str
     uncertain_target: bool = False
+    real_world_effect: bool = False
     authority_claim_artifact_ids: tuple[str, ...] = ()
     peer_support_count: int = 0
 
@@ -132,6 +135,8 @@ class AuditEvent:
     reason_codes: tuple[str, ...]
     authority_ref: Optional[str]
     checks: Mapping[str, str]
+    previous_event_hash: str
+    event_hash: str
 
 
 @dataclass(frozen=True)
@@ -202,6 +207,27 @@ class Gateway:
     def audit_log(self) -> Sequence[AuditEvent]:
         return tuple(self._audit)
 
+    def verify_audit_chain(self) -> bool:
+        previous = "GENESIS"
+        for event in self._audit:
+            if event.previous_event_hash != previous:
+                return False
+            expected = self._hash_audit_payload(
+                event.id,
+                event.timestamp,
+                event.proposal_ref,
+                event.subject,
+                event.decision,
+                event.reason_codes,
+                event.authority_ref,
+                event.checks,
+                event.previous_event_hash,
+            )
+            if event.event_hash != expected:
+                return False
+            previous = event.event_hash
+        return True
+
     def _next_id(self, prefix: str) -> str:
         self._counter += 1
         return f"{prefix}-{self._counter:06d}"
@@ -210,6 +236,32 @@ class Gateway:
     def _scope_contains(scope: frozenset[str], value: str) -> bool:
         # Missing scope never means wildcard/all.
         return bool(scope) and value in scope
+
+    @staticmethod
+    def _hash_audit_payload(
+        event_id: str,
+        timestamp: datetime,
+        proposal_ref: str,
+        subject: str,
+        decision: Decision,
+        reason_codes: tuple[str, ...],
+        authority_ref: Optional[str],
+        checks: Mapping[str, str],
+        previous_event_hash: str,
+    ) -> str:
+        payload = {
+            "id": event_id,
+            "timestamp": timestamp.isoformat(),
+            "proposal_ref": proposal_ref,
+            "subject": subject,
+            "decision": decision.value,
+            "reason_codes": list(reason_codes),
+            "authority_ref": authority_ref,
+            "checks": dict(sorted(checks.items())),
+            "previous_event_hash": previous_event_hash,
+        }
+        encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        return hashlib.sha256(encoded).hexdigest()
 
     def validate_delegation(self, record: DelegationRecord) -> tuple[bool, tuple[str, ...]]:
         """Validate a proposed delegation record against its parent token."""
@@ -297,6 +349,7 @@ class Gateway:
             "circuit_breaker": Check.PASS,
             "uncertainty_policy": Check.PASS,
             "route_substitution": Check.PASS,
+            "real_world_effect": Check.PASS,
         }
         reasons: list[str] = []
         decision = Decision.DENY
@@ -360,6 +413,10 @@ class Gateway:
                 if target is None:
                     reasons.append("TARGET_SCOPE_UNRESOLVED")
                 else:
+                    if proposal.real_world_effect and not target.real_world_effects_allowed:
+                        checks["real_world_effect"] = Check.FAIL
+                        reasons.append("REAL_WORLD_EFFECT_NOT_AUTHORIZED")
+
                     match = target.match(
                         proposal.target_identifiers,
                         ambiguous=proposal.uncertain_target,
@@ -400,6 +457,7 @@ class Gateway:
             "circuit_breaker",
             "uncertainty_policy",
             "route_substitution",
+            "real_world_effect",
         )
 
         if not reasons and all(checks[name] == Check.PASS for name in mandatory):
@@ -412,15 +470,32 @@ class Gateway:
         if decision in {Decision.DENY, Decision.ESCALATE}:
             self._denied_semantic_actions.add(denial_key)
 
+        reason_codes = tuple(dict.fromkeys(reasons))
+        audit_id = self._next_id("AUD")
+        previous_hash = self._audit[-1].event_hash if self._audit else "GENESIS"
+        audit_checks = {k: v.value for k, v in checks.items()}
+        event_hash = self._hash_audit_payload(
+            audit_id,
+            now,
+            proposal.id,
+            proposal.subject,
+            decision,
+            reason_codes,
+            proposal.authority_ref,
+            audit_checks,
+            previous_hash,
+        )
         audit = AuditEvent(
-            id=self._next_id("AUD"),
+            id=audit_id,
             timestamp=now,
             proposal_ref=proposal.id,
             subject=proposal.subject,
             decision=decision,
-            reason_codes=tuple(dict.fromkeys(reasons)),
+            reason_codes=reason_codes,
             authority_ref=proposal.authority_ref,
-            checks={k: v.value for k, v in checks.items()},
+            checks=audit_checks,
+            previous_event_hash=previous_hash,
+            event_hash=event_hash,
         )
         self._audit.append(audit)
 
