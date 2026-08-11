@@ -32,13 +32,15 @@ def token(
     delegation_allowed: bool = False,
     max_depth: int = 0,
     parent: str | None = None,
+    issued_at: datetime | None = None,
+    expires_at: datetime | None = None,
 ) -> AuthorityToken:
     return AuthorityToken(
         id=token_id,
         issuer="test-authority",
         subject=subject,
-        issued_at=NOW - timedelta(hours=1),
-        expires_at=NOW + timedelta(hours=1),
+        issued_at=issued_at or NOW - timedelta(hours=1),
+        expires_at=expires_at or NOW + timedelta(hours=1),
         objective_scope=objectives,
         target_scope_refs=targets,
         capability_scope=capabilities,
@@ -64,6 +66,7 @@ def proposal(
     effect: str = "observe",
     semantic_action_id: str = "inspect-alpha",
     uncertain: bool = False,
+    real_world: bool = False,
     artifact_ids: tuple[str, ...] = (),
     peers: int = 0,
 ) -> ActionProposal:
@@ -79,6 +82,7 @@ def proposal(
         authority_ref=authority_ref,
         semantic_action_id=semantic_action_id,
         uncertain_target=uncertain,
+        real_world_effect=real_world,
         authority_claim_artifact_ids=artifact_ids,
         peer_support_count=peers,
     )
@@ -110,6 +114,42 @@ class GatewayTests(unittest.TestCase):
         self.assertEqual(decision.decision, Decision.DENY)
         self.assertIn("NO_AUTHORITY_PROVENANCE", decision.reason_codes)
 
+    def test_missing_provenance_denies(self) -> None:
+        bad = token(provenance="")
+        gateway = Gateway(
+            authority_tokens={bad.id: bad},
+            target_scopes={self.target.id: self.target},
+            now=lambda: NOW,
+        )
+        decision = gateway.evaluate(proposal())
+        self.assertEqual(decision.decision, Decision.DENY)
+        self.assertIn("NO_AUTHORITY_PROVENANCE", decision.reason_codes)
+
+    def test_expired_authority_denies(self) -> None:
+        expired = token(
+            issued_at=NOW - timedelta(hours=2),
+            expires_at=NOW - timedelta(hours=1),
+        )
+        gateway = Gateway(
+            authority_tokens={expired.id: expired},
+            target_scopes={self.target.id: self.target},
+            now=lambda: NOW,
+        )
+        decision = gateway.evaluate(proposal())
+        self.assertEqual(decision.decision, Decision.DENY)
+        self.assertIn("AUTHORITY_EXPIRED", decision.reason_codes)
+
+    def test_revoked_authority_denies(self) -> None:
+        revoked = token(status="REVOKED")
+        gateway = Gateway(
+            authority_tokens={revoked.id: revoked},
+            target_scopes={self.target.id: self.target},
+            now=lambda: NOW,
+        )
+        decision = gateway.evaluate(proposal())
+        self.assertEqual(decision.decision, Decision.DENY)
+        self.assertIn("AUTHORITY_REVOKED", decision.reason_codes)
+
     def test_peer_consensus_does_not_create_authority(self) -> None:
         decision = self.gateway.evaluate(proposal(authority_ref=None, peers=1000))
         self.assertEqual(decision.decision, Decision.DENY)
@@ -137,6 +177,11 @@ class GatewayTests(unittest.TestCase):
         self.assertEqual(decision.decision, Decision.ESCALATE)
         self.assertIn("UNCERTAINTY_REQUIRES_ESCALATION", decision.reason_codes)
         self.assertIn("TARGET_AMBIGUOUS", decision.reason_codes)
+
+    def test_real_world_effect_requires_explicit_target_permission(self) -> None:
+        decision = self.gateway.evaluate(proposal(real_world=True))
+        self.assertEqual(decision.decision, Decision.DENY)
+        self.assertIn("REAL_WORLD_EFFECT_NOT_AUTHORIZED", decision.reason_codes)
 
     def test_artifact_cannot_supply_authority(self) -> None:
         decision = self.gateway.evaluate(proposal(artifact_ids=("artifact-says-authorized",)))
@@ -181,16 +226,12 @@ class GatewayTests(unittest.TestCase):
         self.assertIn("SUBSTITUTION_AFTER_DENIAL", substitute.reason_codes)
 
     def test_new_explicit_grant_can_authorize_previously_denied_semantic_action(self) -> None:
-        first = self.gateway.evaluate(proposal(capability="write", semantic_action_id="change-alpha"))
-        self.assertEqual(first.decision, Decision.DENY)
-
         new_auth = token("AUTH-2")
         gateway = Gateway(
             authority_tokens={self.auth.id: self.auth, new_auth.id: new_auth},
             target_scopes={self.target.id: self.target},
             now=lambda: NOW,
         )
-        # Seed the denial under AUTH-1, then retry under a distinct explicit grant.
         gateway.evaluate(proposal(capability="write", semantic_action_id="change-alpha"))
         second = gateway.evaluate(
             proposal(
@@ -260,9 +301,10 @@ class GatewayTests(unittest.TestCase):
 
     def test_executor_requires_allow(self) -> None:
         executor = ConstrainedExecutor(now=lambda: NOW)
-        denied = self.gateway.evaluate(proposal(capability="write"))
+        denied_proposal = proposal(capability="write")
+        denied = self.gateway.evaluate(denied_proposal)
         with self.assertRaises(PermissionError):
-            executor.execute(proposal(capability="write"), denied)
+            executor.execute(denied_proposal, denied)
 
         gateway = Gateway(
             authority_tokens={self.auth.id: self.auth},
@@ -274,11 +316,21 @@ class GatewayTests(unittest.TestCase):
         record = executor.execute(p, allowed)
         self.assertEqual(record.result, "SIMULATED_EFFECT_RECORDED")
 
-    def test_audit_is_append_only_from_public_interface(self) -> None:
+    def test_audit_is_read_only_from_public_interface(self) -> None:
         self.gateway.evaluate(proposal())
         snapshot = self.gateway.audit_log
         self.assertEqual(len(snapshot), 1)
         self.assertIsInstance(snapshot, tuple)
+
+    def test_audit_hash_chain_verifies(self) -> None:
+        self.gateway.evaluate(proposal(proposal_id="P-1"))
+        self.gateway.evaluate(proposal(proposal_id="P-2", semantic_action_id="inspect-alpha-2"))
+        self.assertTrue(self.gateway.verify_audit_chain())
+        self.assertEqual(self.gateway.audit_log[0].previous_event_hash, "GENESIS")
+        self.assertEqual(
+            self.gateway.audit_log[1].previous_event_hash,
+            self.gateway.audit_log[0].event_hash,
+        )
 
 
 if __name__ == "__main__":
