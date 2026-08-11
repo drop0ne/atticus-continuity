@@ -1,5 +1,5 @@
 repository: drop0ne/atticus-continuity
-schema_version: 0.7
+schema_version: 0.8
 last_structural_update: 2026-08-11
 
 purpose: >-
@@ -24,6 +24,7 @@ bootstrap:
     - knowledge/architectures/threat-control-matrix.md
     - knowledge/architectures/pac-authority-gateway.md
     - knowledge/architectures/implementation-objects.md
+    - knowledge/architectures/aggregate-plan-authority.md
     - reference/index.md
     - manifest.yaml
 
@@ -46,6 +47,7 @@ processes:
   implementation_evidence:
     rule: specified_not_equal_implemented_not_equal_tested_not_equal_replicated
     results_path: experiments/results/
+    result_schema: schemas/experiment-result.md
 
 schemas:
   knowledge_record: schemas/knowledge-record.md
@@ -61,6 +63,8 @@ schemas:
   gateway_decision: schemas/gateway-decision.md
   circuit_breaker_state: schemas/circuit-breaker-state.md
   audit_event: schemas/audit-event.md
+  experiment_result: schemas/experiment-result.md
+  action_plan_envelope: schemas/action-plan-envelope.md
 
 indexes:
   incidents: incidents/index.md
@@ -70,6 +74,7 @@ indexes:
   threat_models: knowledge/threat-models/index.md
   implementation_objects: knowledge/architectures/implementation-objects.md
   reference_implementations: reference/index.md
+  experiment_results: experiments/results/README.md
 
 architectures:
   threat_control_matrix:
@@ -78,13 +83,22 @@ architectures:
   pac_authority_gateway:
     file: knowledge/architectures/pac-authority-gateway.md
     status: WORKING_ARCHITECTURE
+  aggregate_plan_authority:
+    file: knowledge/architectures/aggregate-plan-authority.md
+    status: WORKING_ARCHITECTURE
 
 reference_implementations:
   - id: REF-PAC-GW-0001
     title: PAC Authority Gateway v0.1
     path: reference/pac_gateway/
     status: IMPLEMENTED_UNEXECUTED
-    test_command: python -m unittest reference.pac_gateway.test_gateway -v
+    evidence_runner: python -m reference.pac_gateway.run_exp0004 --revision <REVISION>
+    components:
+      - gateway
+      - constrained_executor
+      - safety_monitor
+      - aggregate_plan_ledger
+      - audit_hash_chain
     network_capability: false
     external_execution_capability: false
     production_security_claim: false
@@ -125,6 +139,10 @@ invariants:
   - id: PAC-INV-0009
     title: Missing Authority Provenance Denies Action
     file: pac/invariants/PAC-INV-0009-missing-authority-provenance-denies-action.md
+    status: HYPOTHESIS_IMPLEMENTATION_TARGET
+  - id: PAC-INV-0010
+    title: Decomposition Does Not Expand Authority
+    file: pac/invariants/PAC-INV-0010-decomposition-does-not-expand-authority.md
     status: HYPOTHESIS_IMPLEMENTATION_TARGET
 
 incidents:
@@ -257,6 +275,10 @@ experiments:
     title: PAC Authority Gateway Conformance
     file: experiments/proposed/EXP-0004-authority-gateway-conformance.md
     status: REFERENCE_IMPLEMENTATION_CANDIDATE_UNEXECUTED
+  - id: EXP-0005
+    title: Decomposition and Aggregate Authority Laundering
+    file: experiments/proposed/EXP-0005-decomposition-authority-laundering.md
+    status: REFERENCE_IMPLEMENTATION_CANDIDATE_UNEXECUTED
 
 ingestion_batches:
   - id: ING-2026-0001
@@ -284,6 +306,9 @@ decisions:
   - id: ADR-0005
     file: decisions/ADR-0005-reference-implementation-inert-by-default.md
     status: ACCEPTED_AS_RESEARCH_IMPLEMENTATION_POLICY
+  - id: ADR-0006
+    file: decisions/ADR-0006-dual-gate-local-and-aggregate-authority.md
+    status: ACCEPTED_AS_RESEARCH_ARCHITECTURE
 
 security:
   unknown_external_agent_write_access: false
@@ -298,5 +323,7 @@ security:
   persistence_confers_trust: false
   delegation_can_exceed_parent: false
   missing_authority_provenance_defaults_allow: false
+  decomposition_expands_authority: false
+  plan_membership_confers_local_authority: false
   reference_implementations_inert_by_default: true
   implementation_status_implies_test_success: false
