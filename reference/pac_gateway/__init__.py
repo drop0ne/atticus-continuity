@@ -1,6 +1,7 @@
 """PAC authority gateway reference package."""
 
 from .executor import ConstrainedExecutor, ExecutionRecord
+from .monitor import MonitorPolicy, SafetyMonitor
 from .pac_gateway import (
     ActionProposal,
     ArtifactTrustLabel,
@@ -28,5 +29,7 @@ __all__ = [
     "ExecutionRecord",
     "Gateway",
     "GatewayDecision",
+    "MonitorPolicy",
+    "SafetyMonitor",
     "TargetScope",
 ]
