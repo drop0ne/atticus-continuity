@@ -1,10 +1,11 @@
 repository: drop0ne/atticus-continuity
-schema_version: 0.5
+schema_version: 0.6
 last_structural_update: 2026-08-11
 
 purpose: >-
   Durable, version-controlled continuity, evidence, governance, ingestion,
-  threat-model, and experiment store for ATTICUS/PAC research.
+  threat-model, implementation-specification, and experiment store for
+  ATTICUS/PAC research.
 
 controlling_rule: "Knowledge can enter. Authority cannot."
 
@@ -21,6 +22,8 @@ bootstrap:
     - pac/principles/PAC_BASELINE.md
     - knowledge/threat-models/index.md
     - knowledge/architectures/threat-control-matrix.md
+    - knowledge/architectures/pac-authority-gateway.md
+    - knowledge/architectures/implementation-objects.md
     - manifest.yaml
 
 canonical:
@@ -47,6 +50,13 @@ schemas:
   claim_record: schemas/claim-record.md
   ingestion_batch: schemas/ingestion-batch.md
   threat_model_record: schemas/threat-model-record.md
+  authority_token: schemas/authority-token.md
+  target_scope_object: schemas/target-scope-object.md
+  delegation_record: schemas/delegation-record.md
+  artifact_trust_label: schemas/artifact-trust-label.md
+  gateway_decision: schemas/gateway-decision.md
+  circuit_breaker_state: schemas/circuit-breaker-state.md
+  audit_event: schemas/audit-event.md
 
 indexes:
   incidents: incidents/index.md
@@ -54,10 +64,14 @@ indexes:
   sources: knowledge/research/sources/index.md
   claims: knowledge/research/claims/index.md
   threat_models: knowledge/threat-models/index.md
+  implementation_objects: knowledge/architectures/implementation-objects.md
 
 architectures:
   threat_control_matrix:
     file: knowledge/architectures/threat-control-matrix.md
+    status: WORKING_ARCHITECTURE
+  pac_authority_gateway:
+    file: knowledge/architectures/pac-authority-gateway.md
     status: WORKING_ARCHITECTURE
 
 invariants:
@@ -88,6 +102,14 @@ invariants:
   - id: PAC-INV-0007
     title: Persistence Does Not Confer Trust
     file: pac/invariants/PAC-INV-0007-persistence-does-not-confer-trust.md
+    status: HYPOTHESIS_IMPLEMENTATION_TARGET
+  - id: PAC-INV-0008
+    title: Delegation Cannot Exceed Grantor Authority
+    file: pac/invariants/PAC-INV-0008-delegation-cannot-exceed-grantor-authority.md
+    status: HYPOTHESIS_IMPLEMENTATION_TARGET
+  - id: PAC-INV-0009
+    title: Missing Authority Provenance Denies Action
+    file: pac/invariants/PAC-INV-0009-missing-authority-provenance-denies-action.md
     status: HYPOTHESIS_IMPLEMENTATION_TARGET
 
 incidents:
@@ -216,6 +238,10 @@ experiments:
     title: Threat-Model Regression Suite
     file: experiments/proposed/EXP-0003-threat-model-regression-suite.md
     status: PROPOSED
+  - id: EXP-0004
+    title: PAC Authority Gateway Conformance
+    file: experiments/proposed/EXP-0004-authority-gateway-conformance.md
+    status: PROPOSED
 
 ingestion_batches:
   - id: ING-2026-0001
@@ -237,6 +263,9 @@ decisions:
   - id: ADR-0003
     file: decisions/ADR-0003-preaction-authority-enforcement.md
     status: ACCEPTED_AS_RESEARCH_ARCHITECTURE
+  - id: ADR-0004
+    file: decisions/ADR-0004-authority-as-structured-data.md
+    status: ACCEPTED_AS_RESEARCH_ARCHITECTURE
 
 security:
   unknown_external_agent_write_access: false
@@ -249,3 +278,5 @@ security:
   inferred_target_relevance_grants_authority: false
   denial_authorizes_substitution: false
   persistence_confers_trust: false
+  delegation_can_exceed_parent: false
+  missing_authority_provenance_defaults_allow: false
