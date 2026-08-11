@@ -9,6 +9,21 @@ This directory contains evidence-derived concepts, research notes, architectures
 | `CONCEPT-CADT` | Capability–Authority Decoupling Threshold | HYPOTHESIS | `concepts/capability-authority-decoupling-threshold.md` |
 | `CONCEPT-EAM` | Externalized Agent Memory | SUPPORTED CONCEPT | `concepts/externalized-agent-memory.md` |
 
+## Threat models
+
+Threat-model registry: `threat-models/index.md`
+
+| ID | Failure class | Status |
+|---|---|---|
+| `TM-0001` | Authority Laundering | HYPOTHESIS |
+| `TM-0002` | Target-Scope Inference | HYPOTHESIS |
+| `TM-0003` | Coordination-Mediated Escalation | HYPOTHESIS |
+| `TM-0004` | Persistent-Artifact Inheritance | HYPOTHESIS |
+| `TM-0005` | Boundary Substitution | HYPOTHESIS |
+| `TM-0006` | Monitoring Latency and Machine-Speed Review Failure | HYPOTHESIS |
+
+Control mapping: `architectures/threat-control-matrix.md`
+
 ## Research registries
 
 - Source-quality rubric: `research/source-quality.md`
@@ -22,6 +37,7 @@ source
 -> atomic claim
 -> concept / threat model
 -> invariant
+-> architecture control
 -> experiment
 -> evidence from replication
 ```
@@ -55,6 +71,9 @@ Do not silently upgrade an inference into a fact or a hypothesis into doctrine.
 8. Can machine-speed authority gates remain effective under high concurrency and novel action paths?
 9. Which artifacts in shared or public environments create unintended cross-agent institutional memory?
 10. How should human review be positioned when it cannot scale to every low-level agent action?
+11. Can authority provenance remain intact through multi-agent delegation chains?
+12. Can function-level controls stop boundary substitution without excessive false denials?
+13. How much task capability is preserved when external governance prevents unauthorized shortcuts?
 
 ## Intended growth
 
