@@ -5,10 +5,29 @@ from __future__ import annotations
 import json
 from datetime import datetime, timedelta, timezone
 
-from .pac_gateway import ActionProposal, AuthorityToken, Gateway, TargetScope
+from .pac_gateway import (
+    ActionIntentBinding,
+    ActionProposal,
+    AuthorityToken,
+    Gateway,
+    TargetScope,
+)
 
 
 NOW = datetime(2026, 8, 11, 23, 0, tzinfo=timezone.utc)
+
+
+def trusted_demo_intent(proposal: ActionProposal) -> ActionIntentBinding:
+    return ActionIntentBinding(
+        id=f"BIND-{proposal.id}",
+        issuer="trusted-demo-orchestrator",
+        proposal_ref=proposal.id,
+        intent_ref=proposal.semantic_action_id,
+        issued_at=NOW - timedelta(minutes=1),
+        expires_at=NOW + timedelta(minutes=10),
+        provenance="demo-correlation",
+        authority_ref=proposal.authority_ref,
+    )
 
 
 def build_gateway() -> Gateway:
@@ -33,6 +52,7 @@ def build_gateway() -> Gateway:
     return Gateway(
         authority_tokens={authority.id: authority},
         target_scopes={target.id: target},
+        intent_resolver=trusted_demo_intent,
         now=lambda: NOW,
     )
 
@@ -79,6 +99,7 @@ def main() -> None:
         output.append(
             {
                 "proposal": item.id,
+                "trusted_intent": decision.intent_ref,
                 "decision": decision.decision.value,
                 "reason_codes": list(decision.reason_codes),
                 "audit_hash": decision.audit_event.event_hash,
