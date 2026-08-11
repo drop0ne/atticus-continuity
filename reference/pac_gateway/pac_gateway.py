@@ -6,10 +6,10 @@ No network, shell, subprocess, dynamic import, or external execution capability 
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Callable, Iterable, Mapping, Optional, Sequence
+from typing import Callable, Mapping, Optional, Sequence
 
 
 class Decision(str, Enum):
@@ -118,7 +118,7 @@ class ActionProposal:
     authority_ref: Optional[str]
     semantic_action_id: str
     uncertain_target: bool = False
-    relies_on_artifact_ids: tuple[str, ...] = ()
+    authority_claim_artifact_ids: tuple[str, ...] = ()
     peer_support_count: int = 0
 
 
@@ -193,7 +193,9 @@ class Gateway:
         self.circuit_breaker = circuit_breaker or CircuitBreaker()
         self._now = now or (lambda: datetime.now(timezone.utc))
         self._audit: list[AuditEvent] = []
-        self._denied_semantic_actions: set[tuple[str, str]] = set()
+        # A denial is sticky only under the same authority grant. A new explicit
+        # grant can authorize the semantic action without inheriting the old denial.
+        self._denied_semantic_actions: set[tuple[str, str, Optional[str]]] = set()
         self._counter = 0
 
     @property
@@ -210,6 +212,7 @@ class Gateway:
         return bool(scope) and value in scope
 
     def validate_delegation(self, record: DelegationRecord) -> tuple[bool, tuple[str, ...]]:
+        """Validate a proposed delegation record against its parent token."""
         reasons: list[str] = []
         parent = self.authority_tokens.get(record.parent_authority_ref)
         now = self._now()
@@ -243,6 +246,43 @@ class Gateway:
             reasons.append("DELEGATION_EXPIRED")
         return not reasons, tuple(reasons)
 
+    def validate_token_lineage(self, token: AuthorityToken) -> tuple[bool, tuple[str, ...]]:
+        """Validate delegated token ancestry and subset monotonicity."""
+        if not token.parent_authority_ref:
+            return True, ()
+
+        reasons: list[str] = []
+        seen: set[str] = {token.id}
+        child = token
+        depth = 0
+
+        while child.parent_authority_ref:
+            parent = self.authority_tokens.get(child.parent_authority_ref)
+            if parent is None:
+                reasons.append("DELEGATION_CHAIN_UNRESOLVED")
+                break
+            if parent.id in seen:
+                reasons.append("DELEGATION_CYCLE")
+                break
+            seen.add(parent.id)
+            depth += 1
+
+            if not parent.delegation_allowed:
+                reasons.append("DELEGATION_NOT_ALLOWED")
+            if depth > parent.max_delegation_depth:
+                reasons.append("DELEGATION_DEPTH_EXHAUSTED")
+            if not child.objective_scope <= parent.objective_scope:
+                reasons.append("DELEGATION_EXCEEDS_PARENT_OBJECTIVE")
+            if not child.target_scope_refs <= parent.target_scope_refs:
+                reasons.append("DELEGATION_EXCEEDS_PARENT_TARGET")
+            if not child.capability_scope <= parent.capability_scope:
+                reasons.append("DELEGATION_EXCEEDS_PARENT_CAPABILITY")
+            if not child.resource_scope <= parent.resource_scope:
+                reasons.append("DELEGATION_EXCEEDS_PARENT_RESOURCE")
+            child = parent
+
+        return not reasons, tuple(dict.fromkeys(reasons))
+
     def evaluate(self, proposal: ActionProposal) -> GatewayDecision:
         now = self._now()
         checks: dict[str, Check] = {
@@ -261,7 +301,7 @@ class Gateway:
         reasons: list[str] = []
         decision = Decision.DENY
 
-        # Circuit-breaker state is checked before authority so emergency state never grants privilege.
+        # Emergency state only narrows authority; it never grants privilege.
         if self.circuit_breaker.state == CircuitState.OPEN:
             checks["circuit_breaker"] = Check.FAIL
             reasons.append("CIRCUIT_BREAKER_OPEN")
@@ -274,13 +314,10 @@ class Gateway:
             checks["uncertainty_policy"] = Check.ESCALATE
             reasons.append("UNCERTAINTY_REQUIRES_ESCALATION")
 
-        # Persistent artifacts may inform reasoning but may not confer authority.
-        for artifact_id in proposal.relies_on_artifact_ids:
-            label = self.artifact_labels.get(artifact_id)
-            if label is None or label.may_confer_authority:
-                checks["artifact_trust"] = Check.FAIL
-                reasons.append("UNTRUSTED_ARTIFACT_DEPENDENCY")
-                break
+        # Artifacts may inform reasoning but cannot serve as the authority source.
+        if proposal.authority_claim_artifact_ids:
+            checks["artifact_trust"] = Check.FAIL
+            reasons.append("UNTRUSTED_ARTIFACT_DEPENDENCY")
 
         # Peer consensus is deliberately not an authorization input.
         _ = proposal.peer_support_count
@@ -342,17 +379,12 @@ class Gateway:
             else:
                 reasons.append("TARGET_NOT_AUTHORIZED")
 
+            lineage_ok, lineage_reasons = self.validate_token_lineage(token)
             if token.parent_authority_ref:
-                delegation = self.delegations.get(token.parent_authority_ref)
-                if delegation is None:
-                    checks["delegation_chain"] = Check.FAIL
-                    reasons.append("DELEGATION_CHAIN_UNRESOLVED")
-                else:
-                    ok, del_reasons = self.validate_delegation(delegation)
-                    checks["delegation_chain"] = Check.PASS if ok else Check.FAIL
-                    reasons.extend(del_reasons)
+                checks["delegation_chain"] = Check.PASS if lineage_ok else Check.FAIL
+            reasons.extend(lineage_reasons)
 
-        denial_key = (proposal.subject, proposal.semantic_action_id)
+        denial_key = (proposal.subject, proposal.semantic_action_id, proposal.authority_ref)
         if denial_key in self._denied_semantic_actions:
             checks["route_substitution"] = Check.FAIL
             reasons.append("SUBSTITUTION_AFTER_DENIAL")
