@@ -6,7 +6,19 @@ Reference code in this directory exists to turn ATTICUS/PAC hypotheses into fals
 
 | ID | Component | Status | Path |
 |---|---|---|---|
-| `REF-PAC-GW-0001` | PAC Authority Gateway v0.1 | IMPLEMENTED / UNEXECUTED | `pac_gateway/` |
+| `REF-PAC-GW-0001` | PAC Authority Gateway v0.2 | IMPLEMENTED / UNEXECUTED | `pac_gateway/` |
+
+### REF-PAC-GW-0001 components
+
+- local pre-action authority gateway;
+- trusted action-intent correlation interface;
+- constrained synthetic executor;
+- secondary safety monitor/circuit breaker;
+- tamper-evident local audit hash chain;
+- aggregate plan ledger;
+- multiple subject-bound local authority references per aggregate plan;
+- in-process atomic budget reservation;
+- conformance suites and JSON result runner.
 
 ## Status vocabulary
 
