@@ -1,5 +1,5 @@
 repository: drop0ne/atticus-continuity
-schema_version: 0.8
+schema_version: 0.9
 last_structural_update: 2026-08-11
 
 purpose: >-
@@ -65,6 +65,7 @@ schemas:
   audit_event: schemas/audit-event.md
   experiment_result: schemas/experiment-result.md
   action_plan_envelope: schemas/action-plan-envelope.md
+  action_intent_binding: schemas/action-intent-binding.md
 
 indexes:
   incidents: incidents/index.md
@@ -86,18 +87,24 @@ architectures:
   aggregate_plan_authority:
     file: knowledge/architectures/aggregate-plan-authority.md
     status: WORKING_ARCHITECTURE
+  trusted_action_correlation:
+    file: schemas/action-intent-binding.md
+    status: WORKING_IMPLEMENTATION_SPECIFICATION
 
 reference_implementations:
   - id: REF-PAC-GW-0001
-    title: PAC Authority Gateway v0.1
+    title: PAC Authority Gateway v0.2
     path: reference/pac_gateway/
     status: IMPLEMENTED_UNEXECUTED
     evidence_runner: python -m reference.pac_gateway.run_exp0004 --revision <REVISION>
     components:
       - gateway
+      - trusted_action_correlation_interface
       - constrained_executor
       - safety_monitor
       - aggregate_plan_ledger
+      - cross_agent_plan_authority_bindings
+      - local_atomic_budget_reservation
       - audit_hash_chain
     network_capability: false
     external_execution_capability: false
@@ -143,6 +150,10 @@ invariants:
   - id: PAC-INV-0010
     title: Decomposition Does Not Expand Authority
     file: pac/invariants/PAC-INV-0010-decomposition-does-not-expand-authority.md
+    status: HYPOTHESIS_IMPLEMENTATION_TARGET
+  - id: PAC-INV-0011
+    title: Governed Agent Cannot Self-Define Action Equivalence
+    file: pac/invariants/PAC-INV-0011-governed-agent-cannot-self-define-action-equivalence.md
     status: HYPOTHESIS_IMPLEMENTATION_TARGET
 
 incidents:
@@ -279,6 +290,10 @@ experiments:
     title: Decomposition and Aggregate Authority Laundering
     file: experiments/proposed/EXP-0005-decomposition-authority-laundering.md
     status: REFERENCE_IMPLEMENTATION_CANDIDATE_UNEXECUTED
+  - id: EXP-0006
+    title: Trusted Action Correlation and Route-Substitution Evasion
+    file: experiments/proposed/EXP-0006-trusted-action-correlation.md
+    status: REFERENCE_IMPLEMENTATION_CANDIDATE_UNEXECUTED
 
 ingestion_batches:
   - id: ING-2026-0001
@@ -309,6 +324,9 @@ decisions:
   - id: ADR-0006
     file: decisions/ADR-0006-dual-gate-local-and-aggregate-authority.md
     status: ACCEPTED_AS_RESEARCH_ARCHITECTURE
+  - id: ADR-0007
+    file: decisions/ADR-0007-trusted-action-correlation-outside-governed-agent.md
+    status: ACCEPTED_AS_RESEARCH_ARCHITECTURE
 
 security:
   unknown_external_agent_write_access: false
@@ -325,5 +343,8 @@ security:
   missing_authority_provenance_defaults_allow: false
   decomposition_expands_authority: false
   plan_membership_confers_local_authority: false
+  governed_agent_self_label_controls_security_correlation: false
+  missing_trusted_correlation_defaults_allow: false
+  hard_failure_can_be_softened_by_escalation: false
   reference_implementations_inert_by_default: true
   implementation_status_implies_test_success: false
