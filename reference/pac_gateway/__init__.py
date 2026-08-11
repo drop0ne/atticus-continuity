@@ -3,6 +3,7 @@
 from .executor import ConstrainedExecutor, ExecutionRecord
 from .monitor import MonitorPolicy, SafetyMonitor
 from .pac_gateway import (
+    ActionIntentBinding,
     ActionProposal,
     ArtifactTrustLabel,
     AuthorityToken,
@@ -18,6 +19,7 @@ from .pac_gateway import (
 from .plan import PlanDecision, PlanEnvelope, PlanLedger, PlanSnapshot, PlanStep
 
 __all__ = [
+    "ActionIntentBinding",
     "ActionProposal",
     "ArtifactTrustLabel",
     "AuthorityToken",
