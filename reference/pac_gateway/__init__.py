@@ -15,6 +15,7 @@ from .pac_gateway import (
     GatewayDecision,
     TargetScope,
 )
+from .plan import PlanDecision, PlanEnvelope, PlanLedger, PlanStep
 
 __all__ = [
     "ActionProposal",
@@ -30,6 +31,10 @@ __all__ = [
     "Gateway",
     "GatewayDecision",
     "MonitorPolicy",
+    "PlanDecision",
+    "PlanEnvelope",
+    "PlanLedger",
+    "PlanStep",
     "SafetyMonitor",
     "TargetScope",
 ]
