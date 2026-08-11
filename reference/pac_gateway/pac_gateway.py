@@ -1,7 +1,8 @@
 """Deterministic PAC Authority Gateway reference implementation.
 
-Research-only implementation for controlled sandbox testing.
-No network, shell, subprocess, dynamic import, or external execution capability is exposed.
+Research-only implementation for controlled sandbox testing. The module exposes
+no network, shell, subprocess, dynamic-import, browser, or external execution
+capability.
 """
 
 from __future__ import annotations
@@ -118,7 +119,7 @@ class ActionProposal:
     resource: str
     effect: str
     authority_ref: Optional[str]
-    # Agent-supplied hint only. It is not used directly as a security correlation key.
+    # This is an agent-side descriptive hint only, never the trusted security key.
     semantic_action_id: str
     uncertain_target: bool = False
     real_world_effect: bool = False
@@ -195,7 +196,7 @@ class CircuitBreaker:
 
 
 class Gateway:
-    """PAC authority gateway with fail-closed deterministic checks."""
+    """PAC authority gateway with explicit fail-closed pre-action checks."""
 
     def __init__(
         self,
@@ -216,7 +217,6 @@ class Gateway:
         self._intent_resolver = intent_resolver
         self._now = now or (lambda: datetime.now(timezone.utc))
         self._audit: list[AuditEvent] = []
-        # Denials are sticky by trusted intent, subject, and authority grant.
         self._denied_intents: set[tuple[str, str, Optional[str]]] = set()
         self._counter = 0
 
@@ -224,35 +224,12 @@ class Gateway:
     def audit_log(self) -> Sequence[AuditEvent]:
         return tuple(self._audit)
 
-    def verify_audit_chain(self) -> bool:
-        previous = "GENESIS"
-        for event in self._audit:
-            if event.previous_event_hash != previous:
-                return False
-            expected = self._hash_audit_payload(
-                event.id,
-                event.timestamp,
-                event.proposal_ref,
-                event.subject,
-                event.decision,
-                event.reason_codes,
-                event.authority_ref,
-                event.intent_ref,
-                event.checks,
-                event.previous_event_hash,
-            )
-            if event.event_hash != expected:
-                return False
-            previous = event.event_hash
-        return True
-
     def _next_id(self, prefix: str) -> str:
         self._counter += 1
         return f"{prefix}-{self._counter:06d}"
 
     @staticmethod
     def _scope_contains(scope: frozenset[str], value: str) -> bool:
-        # Missing scope never means wildcard/all.
         return bool(scope) and value in scope
 
     @staticmethod
@@ -283,10 +260,30 @@ class Gateway:
         encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
         return hashlib.sha256(encoded).hexdigest()
 
+    def verify_audit_chain(self) -> bool:
+        previous = "GENESIS"
+        for event in self._audit:
+            if event.previous_event_hash != previous:
+                return False
+            expected = self._hash_audit_payload(
+                event.id,
+                event.timestamp,
+                event.proposal_ref,
+                event.subject,
+                event.decision,
+                event.reason_codes,
+                event.authority_ref,
+                event.intent_ref,
+                event.checks,
+                event.previous_event_hash,
+            )
+            if event.event_hash != expected:
+                return False
+            previous = event.event_hash
+        return True
+
     def _resolve_intent(
-        self,
-        proposal: ActionProposal,
-        now: datetime,
+        self, proposal: ActionProposal, now: datetime
     ) -> tuple[Optional[ActionIntentBinding], Check, tuple[str, ...]]:
         if self._intent_resolver is None:
             return None, Check.ESCALATE, ("NO_TRUSTED_ACTION_CORRELATION",)
@@ -308,20 +305,14 @@ class Gateway:
             reasons.append("ACTION_CORRELATION_AUTHORITY_MISMATCH")
         if not (binding.issued_at <= now <= binding.expires_at):
             reasons.append("ACTION_CORRELATION_EXPIRED")
-
-        if reasons:
-            return binding, Check.FAIL, tuple(reasons)
-        return binding, Check.PASS, ()
+        return binding, Check.FAIL if reasons else Check.PASS, tuple(reasons)
 
     def validate_delegation(self, record: DelegationRecord) -> tuple[bool, tuple[str, ...]]:
-        """Validate a proposed delegation record against its parent token."""
         reasons: list[str] = []
         parent = self.authority_tokens.get(record.parent_authority_ref)
         now = self._now()
-
         if parent is None:
-            reasons.append("NO_PARENT_AUTHORITY")
-            return False, tuple(reasons)
+            return False, ("NO_PARENT_AUTHORITY",)
         if parent.status != "ACTIVE":
             reasons.append("PARENT_AUTHORITY_REVOKED")
         if not (parent.issued_at <= now <= parent.expires_at):
@@ -349,15 +340,12 @@ class Gateway:
         return not reasons, tuple(reasons)
 
     def validate_token_lineage(self, token: AuthorityToken) -> tuple[bool, tuple[str, ...]]:
-        """Validate delegated token ancestry and subset monotonicity."""
         if not token.parent_authority_ref:
             return True, ()
-
         reasons: list[str] = []
-        seen: set[str] = {token.id}
+        seen = {token.id}
         child = token
         depth = 0
-
         while child.parent_authority_ref:
             parent = self.authority_tokens.get(child.parent_authority_ref)
             if parent is None:
@@ -368,7 +356,6 @@ class Gateway:
                 break
             seen.add(parent.id)
             depth += 1
-
             if not parent.delegation_allowed:
                 reasons.append("DELEGATION_NOT_ALLOWED")
             if depth > parent.max_delegation_depth:
@@ -382,7 +369,6 @@ class Gateway:
             if not child.resource_scope <= parent.resource_scope:
                 reasons.append("DELEGATION_EXCEEDS_PARENT_RESOURCE")
             child = parent
-
         return not reasons, tuple(dict.fromkeys(reasons))
 
     def evaluate(self, proposal: ActionProposal) -> GatewayDecision:
@@ -403,14 +389,12 @@ class Gateway:
             "real_world_effect": Check.PASS,
         }
         reasons: list[str] = []
-        decision = Decision.DENY
 
         binding, correlation_check, correlation_reasons = self._resolve_intent(proposal, now)
         checks["trusted_correlation"] = correlation_check
         reasons.extend(correlation_reasons)
-        intent_ref = binding.intent_ref if binding is not None and binding.intent_ref else None
+        intent_ref = binding.intent_ref if binding and binding.intent_ref else None
 
-        # Emergency state only narrows authority; it never grants privilege.
         if self.circuit_breaker.state == CircuitState.OPEN:
             checks["circuit_breaker"] = Check.FAIL
             reasons.append("CIRCUIT_BREAKER_OPEN")
@@ -418,17 +402,15 @@ class Gateway:
             checks["circuit_breaker"] = Check.ESCALATE
             reasons.append("CIRCUIT_BREAKER_RESTRICTED")
 
-        # Uncertainty cannot expand authority.
         if proposal.uncertain_target:
             checks["uncertainty_policy"] = Check.ESCALATE
             reasons.append("UNCERTAINTY_REQUIRES_ESCALATION")
 
-        # Artifacts may inform reasoning but cannot serve as the authority source.
         if proposal.authority_claim_artifact_ids:
             checks["artifact_trust"] = Check.FAIL
             reasons.append("UNTRUSTED_ARTIFACT_DEPENDENCY")
 
-        # Peer consensus is deliberately not an authorization input.
+        # Peer support is observable context, never an authorization input.
         _ = proposal.peer_support_count
 
         token = self.authority_tokens.get(proposal.authority_ref or "")
@@ -464,7 +446,9 @@ class Gateway:
             else:
                 reasons.append("RESOURCE_OUT_OF_SCOPE")
 
-            if proposal.target_scope_ref in token.target_scope_refs:
+            if proposal.target_scope_ref not in token.target_scope_refs:
+                reasons.append("TARGET_NOT_AUTHORIZED")
+            else:
                 target = self.target_scopes.get(proposal.target_scope_ref)
                 if target is None:
                     reasons.append("TARGET_SCOPE_UNRESOLVED")
@@ -472,7 +456,6 @@ class Gateway:
                     if proposal.real_world_effect and not target.real_world_effects_allowed:
                         checks["real_world_effect"] = Check.FAIL
                         reasons.append("REAL_WORLD_EFFECT_NOT_AUTHORIZED")
-
                     match = target.match(
                         proposal.target_identifiers,
                         ambiguous=proposal.uncertain_target,
@@ -485,12 +468,10 @@ class Gateway:
                         else:
                             checks["target_scope"] = Check.PASS
                     elif match == TargetMatch.AMBIGUOUS:
-                        reasons.append("TARGET_AMBIGUOUS")
                         checks["target_scope"] = Check.ESCALATE
+                        reasons.append("TARGET_AMBIGUOUS")
                     else:
                         reasons.append("TARGET_NOT_AUTHORIZED")
-            else:
-                reasons.append("TARGET_NOT_AUTHORIZED")
 
             lineage_ok, lineage_reasons = self.validate_token_lineage(token)
             if token.parent_authority_ref:
@@ -504,35 +485,27 @@ class Gateway:
                 checks["route_substitution"] = Check.FAIL
                 reasons.append("SUBSTITUTION_AFTER_DENIAL")
 
-        mandatory = (
-            "authority_provenance",
-            "objective_scope",
-            "target_scope",
-            "capability_scope",
-            "resource_scope",
-            "time_scope",
-            "artifact_trust",
-            "circuit_breaker",
-            "uncertainty_policy",
-            "trusted_correlation",
-            "route_substitution",
-            "real_world_effect",
-        )
-
-        if not reasons and all(checks[name] == Check.PASS for name in mandatory):
+        reason_codes = tuple(dict.fromkeys(reasons))
+        if not reason_codes and all(
+            value in {Check.PASS, Check.NOT_APPLICABLE} for value in checks.values()
+        ):
             decision = Decision.ALLOW
-        elif any(checks[name] == Check.ESCALATE for name in mandatory):
+        elif any(value == Check.FAIL for value in checks.values()):
+            # A hard failure always dominates an escalation request.
+            decision = Decision.DENY
+        elif any(value == Check.ESCALATE for value in checks.values()):
             decision = Decision.ESCALATE
         else:
             decision = Decision.DENY
 
-        if decision in {Decision.DENY, Decision.ESCALATE} and denial_key is not None:
+        # Escalation is not denial. A clarified proposal may be reevaluated under the
+        # same authority grant; only a hard denial creates sticky substitution state.
+        if decision == Decision.DENY and denial_key is not None:
             self._denied_intents.add(denial_key)
 
-        reason_codes = tuple(dict.fromkeys(reasons))
         audit_id = self._next_id("AUD")
         previous_hash = self._audit[-1].event_hash if self._audit else "GENESIS"
-        audit_checks = {k: v.value for k, v in checks.items()}
+        audit_checks = {key: value.value for key, value in checks.items()}
         event_hash = self._hash_audit_payload(
             audit_id,
             now,
@@ -570,6 +543,6 @@ class Gateway:
             intent_ref=intent_ref,
             checks=checks,
             decision=decision,
-            reason_codes=audit.reason_codes,
+            reason_codes=reason_codes,
             audit_event=audit,
         )
