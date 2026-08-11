@@ -1,11 +1,11 @@
 repository: drop0ne/atticus-continuity
-schema_version: 0.6
+schema_version: 0.7
 last_structural_update: 2026-08-11
 
 purpose: >-
   Durable, version-controlled continuity, evidence, governance, ingestion,
-  threat-model, implementation-specification, and experiment store for
-  ATTICUS/PAC research.
+  threat-model, implementation-specification, reference-implementation,
+  and experiment store for ATTICUS/PAC research.
 
 controlling_rule: "Knowledge can enter. Authority cannot."
 
@@ -24,6 +24,7 @@ bootstrap:
     - knowledge/architectures/threat-control-matrix.md
     - knowledge/architectures/pac-authority-gateway.md
     - knowledge/architectures/implementation-objects.md
+    - reference/index.md
     - manifest.yaml
 
 canonical:
@@ -42,6 +43,9 @@ processes:
     file: incoming/README.md
   source_quality:
     file: knowledge/research/source-quality.md
+  implementation_evidence:
+    rule: specified_not_equal_implemented_not_equal_tested_not_equal_replicated
+    results_path: experiments/results/
 
 schemas:
   knowledge_record: schemas/knowledge-record.md
@@ -65,6 +69,7 @@ indexes:
   claims: knowledge/research/claims/index.md
   threat_models: knowledge/threat-models/index.md
   implementation_objects: knowledge/architectures/implementation-objects.md
+  reference_implementations: reference/index.md
 
 architectures:
   threat_control_matrix:
@@ -73,6 +78,16 @@ architectures:
   pac_authority_gateway:
     file: knowledge/architectures/pac-authority-gateway.md
     status: WORKING_ARCHITECTURE
+
+reference_implementations:
+  - id: REF-PAC-GW-0001
+    title: PAC Authority Gateway v0.1
+    path: reference/pac_gateway/
+    status: IMPLEMENTED_UNEXECUTED
+    test_command: python -m unittest reference.pac_gateway.test_gateway -v
+    network_capability: false
+    external_execution_capability: false
+    production_security_claim: false
 
 invariants:
   - id: PAC-INV-0001
@@ -241,7 +256,7 @@ experiments:
   - id: EXP-0004
     title: PAC Authority Gateway Conformance
     file: experiments/proposed/EXP-0004-authority-gateway-conformance.md
-    status: PROPOSED
+    status: REFERENCE_IMPLEMENTATION_CANDIDATE_UNEXECUTED
 
 ingestion_batches:
   - id: ING-2026-0001
@@ -266,6 +281,9 @@ decisions:
   - id: ADR-0004
     file: decisions/ADR-0004-authority-as-structured-data.md
     status: ACCEPTED_AS_RESEARCH_ARCHITECTURE
+  - id: ADR-0005
+    file: decisions/ADR-0005-reference-implementation-inert-by-default.md
+    status: ACCEPTED_AS_RESEARCH_IMPLEMENTATION_POLICY
 
 security:
   unknown_external_agent_write_access: false
@@ -280,3 +298,5 @@ security:
   persistence_confers_trust: false
   delegation_can_exceed_parent: false
   missing_authority_provenance_defaults_allow: false
+  reference_implementations_inert_by_default: true
+  implementation_status_implies_test_success: false
