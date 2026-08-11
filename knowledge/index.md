@@ -28,6 +28,7 @@ Threat-model registry: `threat-models/index.md`
 - PAC Authority Gateway: `architectures/pac-authority-gateway.md`
 - Structured implementation objects: `architectures/implementation-objects.md`
 - Aggregate Plan Authority: `architectures/aggregate-plan-authority.md`
+- Trusted action correlation interface: `../schemas/action-intent-binding.md`
 
 Reference implementations are indexed separately at `../reference/index.md` so implementation status is not confused with evidence or canonical doctrine.
 
@@ -97,6 +98,8 @@ Do not silently upgrade an inference into a fact, a hypothesis into doctrine, co
 14. How can aggregate semantic effects be recognized when locally permitted substeps compose into an unauthorized outcome?
 15. How should multiple independently bounded agent authorities be represented under one trusted aggregate plan?
 16. Which concurrency mechanism can preserve aggregate authority budgets across distributed agent execution?
+17. What trusted correlation mechanism can recognize route equivalence without relying on the governed agent's self-labeling?
+18. What is the acceptable false-merge/false-split tradeoff for action-intent correlation?
 
 ## Intended growth
 
