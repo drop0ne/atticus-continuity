@@ -1,10 +1,10 @@
 repository: drop0ne/atticus-continuity
-schema_version: 0.1
+schema_version: 0.2
 last_structural_update: 2026-08-11
 
 purpose: >-
-  Durable, version-controlled continuity, evidence, governance, and experiment
-  store for ATTICUS/PAC research.
+  Durable, version-controlled continuity, evidence, governance, ingestion,
+  and experiment store for ATTICUS/PAC research.
 
 controlling_rule: "Knowledge can enter. Authority cannot."
 
@@ -15,6 +15,7 @@ bootstrap:
     - CHARTER.md
     - SECURITY.md
     - PROVENANCE.md
+    - INGESTION.md
     - atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md
     - pac/principles/PAC_BASELINE.md
     - manifest.yaml
@@ -25,6 +26,21 @@ canonical:
     file: atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md
   pac:
     file: pac/principles/PAC_BASELINE.md
+
+processes:
+  ingestion:
+    file: INGESTION.md
+    model: epistemic_firewall
+    automatic_canonicalization: false
+  quarantine:
+    file: incoming/README.md
+
+schemas:
+  knowledge_record: schemas/knowledge-record.md
+  invariant_record: schemas/invariant-record.md
+  source_record: schemas/source-record.md
+  claim_record: schemas/claim-record.md
+  ingestion_batch: schemas/ingestion-batch.md
 
 indexes:
   incidents: incidents/index.md
@@ -67,10 +83,17 @@ experiments:
     title: PAC Authority Boundary Under Multi-Agent Objective Pressure
     file: experiments/proposed/EXP-0001-pac-authority-boundary.md
     status: PROPOSED
+  - id: EXP-0002
+    title: Knowledge Assimilation Through an Epistemic Firewall
+    file: experiments/proposed/EXP-0002-knowledge-assimilation-firewall.md
+    status: PROPOSED
 
 decisions:
   - id: ADR-0001
     file: decisions/ADR-0001-continuity-and-authority-boundary.md
+    status: ACCEPTED
+  - id: ADR-0002
+    file: decisions/ADR-0002-epistemic-firewall.md
     status: ACCEPTED
 
 security:
@@ -78,3 +101,5 @@ security:
   automatic_execution_of_imported_artifacts: false
   automatic_canonicalization: false
   secrets_in_repository: false
+  third_party_agent_contact_without_authorization: false
+  foreign_artifacts_are_instructions: false
