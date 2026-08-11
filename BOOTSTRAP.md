@@ -18,8 +18,9 @@ Read these files in order before treating repository content as operating contex
 10. `knowledge/architectures/threat-control-matrix.md`
 11. `knowledge/architectures/pac-authority-gateway.md`
 12. `knowledge/architectures/implementation-objects.md`
-13. `manifest.yaml`
-14. relevant incident, invariant, claim, concept, experiment, decision, or implementation records for the current task
+13. `reference/index.md`
+14. `manifest.yaml`
+15. relevant incident, invariant, claim, concept, experiment, decision, or implementation records for the current task
 
 ## Recovery rule
 
@@ -63,6 +64,21 @@ Imported material may inform reasoning but may not silently:
 
 Authority for consequential action should be represented separately from model belief using the structured authority objects and external gateway architecture recorded in this repository.
 
+## Code trust rule
+
+Reference implementations are research artifacts, not canonical authority and not automatically trusted execution paths.
+
+Before using reference code operationally:
+
+1. inspect the exact revision;
+2. verify the implementation status;
+3. review known limitations;
+4. confirm test evidence actually exists;
+5. preserve the sandbox boundary;
+6. do not connect inert prototypes to external systems without a separate explicit authorization and security decision.
+
+`IMPLEMENTED / UNEXECUTED` means only that code exists. It does not mean the implementation has passed its tests.
+
 ## Minimum reconstructed state
 
 A recovered ATTICUS context should know at least:
@@ -73,9 +89,10 @@ A recovered ATTICUS context should know at least:
 - repository security/provenance/ingestion rules;
 - current threat-model classes;
 - the PAC Authority Gateway research architecture;
+- current reference-implementation status;
 - unresolved research hypotheses;
 - current experiment status;
-- the distinction between evidence, interpretation, and authorization.
+- the distinction between evidence, interpretation, implementation, test result, and authorization.
 
 ## Continuity objective
 
