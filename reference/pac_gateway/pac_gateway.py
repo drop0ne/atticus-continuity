@@ -118,11 +118,25 @@ class ActionProposal:
     resource: str
     effect: str
     authority_ref: Optional[str]
+    # Agent-supplied hint only. It is not used directly as a security correlation key.
     semantic_action_id: str
     uncertain_target: bool = False
     real_world_effect: bool = False
     authority_claim_artifact_ids: tuple[str, ...] = ()
     peer_support_count: int = 0
+
+
+@dataclass(frozen=True)
+class ActionIntentBinding:
+    id: str
+    issuer: str
+    proposal_ref: str
+    intent_ref: str
+    issued_at: datetime
+    expires_at: datetime
+    provenance: str
+    authority_ref: Optional[str] = None
+    status: str = "ACTIVE"
 
 
 @dataclass(frozen=True)
@@ -134,6 +148,7 @@ class AuditEvent:
     decision: Decision
     reason_codes: tuple[str, ...]
     authority_ref: Optional[str]
+    intent_ref: Optional[str]
     checks: Mapping[str, str]
     previous_event_hash: str
     event_hash: str
@@ -147,6 +162,7 @@ class GatewayDecision:
     subject: str
     authority_ref: Optional[str]
     target_scope_ref: str
+    intent_ref: Optional[str]
     checks: Mapping[str, Check]
     decision: Decision
     reason_codes: tuple[str, ...]
@@ -189,6 +205,7 @@ class Gateway:
         artifact_labels: Mapping[str, ArtifactTrustLabel] | None = None,
         delegations: Mapping[str, DelegationRecord] | None = None,
         circuit_breaker: CircuitBreaker | None = None,
+        intent_resolver: Callable[[ActionProposal], Optional[ActionIntentBinding]] | None = None,
         now: Callable[[], datetime] | None = None,
     ) -> None:
         self.authority_tokens = dict(authority_tokens)
@@ -196,11 +213,11 @@ class Gateway:
         self.artifact_labels = dict(artifact_labels or {})
         self.delegations = dict(delegations or {})
         self.circuit_breaker = circuit_breaker or CircuitBreaker()
+        self._intent_resolver = intent_resolver
         self._now = now or (lambda: datetime.now(timezone.utc))
         self._audit: list[AuditEvent] = []
-        # A denial is sticky only under the same authority grant. A new explicit
-        # grant can authorize the semantic action without inheriting the old denial.
-        self._denied_semantic_actions: set[tuple[str, str, Optional[str]]] = set()
+        # Denials are sticky by trusted intent, subject, and authority grant.
+        self._denied_intents: set[tuple[str, str, Optional[str]]] = set()
         self._counter = 0
 
     @property
@@ -220,6 +237,7 @@ class Gateway:
                 event.decision,
                 event.reason_codes,
                 event.authority_ref,
+                event.intent_ref,
                 event.checks,
                 event.previous_event_hash,
             )
@@ -246,6 +264,7 @@ class Gateway:
         decision: Decision,
         reason_codes: tuple[str, ...],
         authority_ref: Optional[str],
+        intent_ref: Optional[str],
         checks: Mapping[str, str],
         previous_event_hash: str,
     ) -> str:
@@ -257,11 +276,42 @@ class Gateway:
             "decision": decision.value,
             "reason_codes": list(reason_codes),
             "authority_ref": authority_ref,
+            "intent_ref": intent_ref,
             "checks": dict(sorted(checks.items())),
             "previous_event_hash": previous_event_hash,
         }
         encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
         return hashlib.sha256(encoded).hexdigest()
+
+    def _resolve_intent(
+        self,
+        proposal: ActionProposal,
+        now: datetime,
+    ) -> tuple[Optional[ActionIntentBinding], Check, tuple[str, ...]]:
+        if self._intent_resolver is None:
+            return None, Check.ESCALATE, ("NO_TRUSTED_ACTION_CORRELATION",)
+
+        binding = self._intent_resolver(proposal)
+        if binding is None:
+            return None, Check.ESCALATE, ("NO_TRUSTED_ACTION_CORRELATION",)
+
+        reasons: list[str] = []
+        if binding.status != "ACTIVE":
+            reasons.append("ACTION_CORRELATION_INACTIVE")
+        if not binding.provenance:
+            reasons.append("ACTION_CORRELATION_NO_PROVENANCE")
+        if not binding.intent_ref:
+            reasons.append("ACTION_CORRELATION_EMPTY_INTENT")
+        if binding.proposal_ref != proposal.id:
+            reasons.append("ACTION_CORRELATION_PROPOSAL_MISMATCH")
+        if binding.authority_ref != proposal.authority_ref:
+            reasons.append("ACTION_CORRELATION_AUTHORITY_MISMATCH")
+        if not (binding.issued_at <= now <= binding.expires_at):
+            reasons.append("ACTION_CORRELATION_EXPIRED")
+
+        if reasons:
+            return binding, Check.FAIL, tuple(reasons)
+        return binding, Check.PASS, ()
 
     def validate_delegation(self, record: DelegationRecord) -> tuple[bool, tuple[str, ...]]:
         """Validate a proposed delegation record against its parent token."""
@@ -348,11 +398,17 @@ class Gateway:
             "artifact_trust": Check.PASS,
             "circuit_breaker": Check.PASS,
             "uncertainty_policy": Check.PASS,
+            "trusted_correlation": Check.FAIL,
             "route_substitution": Check.PASS,
             "real_world_effect": Check.PASS,
         }
         reasons: list[str] = []
         decision = Decision.DENY
+
+        binding, correlation_check, correlation_reasons = self._resolve_intent(proposal, now)
+        checks["trusted_correlation"] = correlation_check
+        reasons.extend(correlation_reasons)
+        intent_ref = binding.intent_ref if binding is not None and binding.intent_ref else None
 
         # Emergency state only narrows authority; it never grants privilege.
         if self.circuit_breaker.state == CircuitState.OPEN:
@@ -441,10 +497,12 @@ class Gateway:
                 checks["delegation_chain"] = Check.PASS if lineage_ok else Check.FAIL
             reasons.extend(lineage_reasons)
 
-        denial_key = (proposal.subject, proposal.semantic_action_id, proposal.authority_ref)
-        if denial_key in self._denied_semantic_actions:
-            checks["route_substitution"] = Check.FAIL
-            reasons.append("SUBSTITUTION_AFTER_DENIAL")
+        denial_key: Optional[tuple[str, str, Optional[str]]] = None
+        if checks["trusted_correlation"] == Check.PASS and intent_ref is not None:
+            denial_key = (proposal.subject, intent_ref, proposal.authority_ref)
+            if denial_key in self._denied_intents:
+                checks["route_substitution"] = Check.FAIL
+                reasons.append("SUBSTITUTION_AFTER_DENIAL")
 
         mandatory = (
             "authority_provenance",
@@ -456,6 +514,7 @@ class Gateway:
             "artifact_trust",
             "circuit_breaker",
             "uncertainty_policy",
+            "trusted_correlation",
             "route_substitution",
             "real_world_effect",
         )
@@ -467,8 +526,8 @@ class Gateway:
         else:
             decision = Decision.DENY
 
-        if decision in {Decision.DENY, Decision.ESCALATE}:
-            self._denied_semantic_actions.add(denial_key)
+        if decision in {Decision.DENY, Decision.ESCALATE} and denial_key is not None:
+            self._denied_intents.add(denial_key)
 
         reason_codes = tuple(dict.fromkeys(reasons))
         audit_id = self._next_id("AUD")
@@ -482,6 +541,7 @@ class Gateway:
             decision,
             reason_codes,
             proposal.authority_ref,
+            intent_ref,
             audit_checks,
             previous_hash,
         )
@@ -493,6 +553,7 @@ class Gateway:
             decision=decision,
             reason_codes=reason_codes,
             authority_ref=proposal.authority_ref,
+            intent_ref=intent_ref,
             checks=audit_checks,
             previous_event_hash=previous_hash,
             event_hash=event_hash,
@@ -506,6 +567,7 @@ class Gateway:
             subject=proposal.subject,
             authority_ref=proposal.authority_ref,
             target_scope_ref=proposal.target_scope_ref,
+            intent_ref=intent_ref,
             checks=checks,
             decision=decision,
             reason_codes=audit.reason_codes,
