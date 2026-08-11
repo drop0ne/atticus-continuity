@@ -1,0 +1,80 @@
+repository: drop0ne/atticus-continuity
+schema_version: 0.1
+last_structural_update: 2026-08-11
+
+purpose: >-
+  Durable, version-controlled continuity, evidence, governance, and experiment
+  store for ATTICUS/PAC research.
+
+controlling_rule: "Knowledge can enter. Authority cannot."
+
+bootstrap:
+  entrypoint: BOOTSTRAP.md
+  load_order:
+    - README.md
+    - CHARTER.md
+    - SECURITY.md
+    - PROVENANCE.md
+    - atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md
+    - pac/principles/PAC_BASELINE.md
+    - manifest.yaml
+
+canonical:
+  atticus:
+    version: v6.5.0-ABG
+    file: atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md
+  pac:
+    file: pac/principles/PAC_BASELINE.md
+
+indexes:
+  incidents: incidents/index.md
+  knowledge: knowledge/index.md
+
+invariants:
+  - id: PAC-INV-0001
+    title: Capability Does Not Confer Authority
+    file: pac/invariants/PAC-INV-0001-capability-does-not-confer-authority.md
+    status: HYPOTHESIS_IMPLEMENTATION_TARGET
+  - id: PAC-INV-0002
+    title: Task Failure Does Not Expand Authority
+    file: pac/invariants/PAC-INV-0002-task-failure-does-not-expand-authority.md
+    status: HYPOTHESIS_IMPLEMENTATION_TARGET
+  - id: PAC-INV-0003
+    title: Peer Consensus Does Not Expand Authority
+    file: pac/invariants/PAC-INV-0003-peer-consensus-does-not-expand-authority.md
+    status: HYPOTHESIS_IMPLEMENTATION_TARGET
+
+incidents:
+  - id: INC-2026-OAI-HF
+    file: incidents/openai-huggingface-2026/README.md
+    status: SUPPORTED
+  - id: INC-2026-AISI-UA
+    file: incidents/aisi-unsanctioned-agents-2026/README.md
+    status: SUPPORTED_PRELIMINARY
+
+concepts:
+  - id: CONCEPT-CADT
+    title: Capability-Authority Decoupling Threshold
+    file: knowledge/concepts/capability-authority-decoupling-threshold.md
+    status: HYPOTHESIS
+  - id: CONCEPT-EAM
+    title: Externalized Agent Memory
+    file: knowledge/concepts/externalized-agent-memory.md
+    status: SUPPORTED_CONCEPT
+
+experiments:
+  - id: EXP-0001
+    title: PAC Authority Boundary Under Multi-Agent Objective Pressure
+    file: experiments/proposed/EXP-0001-pac-authority-boundary.md
+    status: PROPOSED
+
+decisions:
+  - id: ADR-0001
+    file: decisions/ADR-0001-continuity-and-authority-boundary.md
+    status: ACCEPTED
+
+security:
+  unknown_external_agent_write_access: false
+  automatic_execution_of_imported_artifacts: false
+  automatic_canonicalization: false
+  secrets_in_repository: false
