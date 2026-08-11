@@ -1,4 +1,4 @@
-"""Execute EXP-0004 unit conformance suite and emit a JSON evidence summary.
+"""Execute EXP-0004 conformance suites and emit a JSON evidence summary.
 
 This runner does not write files, invoke subprocesses, or contact external systems.
 Use shell redirection if you want to preserve its JSON output as an experiment artifact.
@@ -15,7 +15,7 @@ import time
 import unittest
 from datetime import datetime, timezone
 
-from . import test_gateway
+from . import test_gateway, test_plan
 
 
 def main() -> int:
@@ -27,7 +27,12 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    suite = unittest.defaultTestLoader.loadTestsFromModule(test_gateway)
+    suite = unittest.TestSuite(
+        [
+            unittest.defaultTestLoader.loadTestsFromModule(test_gateway),
+            unittest.defaultTestLoader.loadTestsFromModule(test_plan),
+        ]
+    )
     stream = io.StringIO()
     runner = unittest.TextTestRunner(stream=stream, verbosity=2)
 
@@ -61,6 +66,10 @@ def main() -> int:
             "platform": platform.platform(),
         },
         "command": "python -m reference.pac_gateway.run_exp0004 --revision <REVISION>",
+        "suites": [
+            "reference.pac_gateway.test_gateway",
+            "reference.pac_gateway.test_plan",
+        ],
         "observed": {
             "tests_run": result.testsRun,
             "failures": len(result.failures),
@@ -78,6 +87,7 @@ def main() -> int:
             "Conformance tests exercise an inert local reference implementation only.",
             "A passing run is not proof of general AI alignment or production security.",
             "semantic_action_id correlation remains a trusted-orchestrator assumption in v0.1.",
+            "PlanLedger aggregate checks use explicitly represented budgets and do not solve arbitrary semantic composition.",
         ],
     }
 
