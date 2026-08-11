@@ -4,6 +4,7 @@ import unittest
 from datetime import datetime, timedelta, timezone
 
 from .executor import ConstrainedExecutor
+from .monitor import MonitorPolicy, SafetyMonitor
 from .pac_gateway import (
     ActionProposal,
     AuthorityToken,
@@ -331,6 +332,57 @@ class GatewayTests(unittest.TestCase):
             self.gateway.audit_log[1].previous_event_hash,
             self.gateway.audit_log[0].event_hash,
         )
+
+    def test_monitor_repeated_provenance_failures_restrict_future_actions(self) -> None:
+        breaker = CircuitBreaker()
+        gateway = Gateway(
+            authority_tokens={self.auth.id: self.auth},
+            target_scopes={self.target.id: self.target},
+            circuit_breaker=breaker,
+            now=lambda: NOW,
+        )
+        monitor = SafetyMonitor(
+            breaker,
+            MonitorPolicy(provenance_failures_before_restrict=2),
+        )
+
+        for index in range(2):
+            p = proposal(
+                proposal_id=f"P-missing-{index}",
+                authority_ref=None,
+                semantic_action_id=f"missing-{index}",
+            )
+            monitor.observe(p, gateway.evaluate(p))
+
+        self.assertEqual(breaker.state, CircuitState.RESTRICTED)
+        valid = proposal(proposal_id="P-after-restrict", semantic_action_id="new-valid")
+        decision = gateway.evaluate(valid)
+        self.assertEqual(decision.decision, Decision.ESCALATE)
+        self.assertIn("CIRCUIT_BREAKER_RESTRICTED", decision.reason_codes)
+
+    def test_monitor_capacity_overload_opens_breaker(self) -> None:
+        breaker = CircuitBreaker()
+        gateway = Gateway(
+            authority_tokens={self.auth.id: self.auth},
+            target_scopes={self.target.id: self.target},
+            circuit_breaker=breaker,
+            now=lambda: NOW,
+        )
+        monitor = SafetyMonitor(
+            breaker,
+            MonitorPolicy(max_observed_events_before_open=1),
+        )
+
+        first = proposal(proposal_id="P-cap-1", semantic_action_id="cap-1")
+        second = proposal(proposal_id="P-cap-2", semantic_action_id="cap-2")
+        monitor.observe(first, gateway.evaluate(first))
+        monitor.observe(second, gateway.evaluate(second))
+        self.assertEqual(breaker.state, CircuitState.OPEN)
+
+        third = proposal(proposal_id="P-cap-3", semantic_action_id="cap-3")
+        decision = gateway.evaluate(third)
+        self.assertEqual(decision.decision, Decision.DENY)
+        self.assertIn("CIRCUIT_BREAKER_OPEN", decision.reason_codes)
 
 
 if __name__ == "__main__":
