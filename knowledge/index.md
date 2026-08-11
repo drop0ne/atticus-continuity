@@ -22,7 +22,14 @@ Threat-model registry: `threat-models/index.md`
 | `TM-0005` | Boundary Substitution | HYPOTHESIS |
 | `TM-0006` | Monitoring Latency and Machine-Speed Review Failure | HYPOTHESIS |
 
-Control mapping: `architectures/threat-control-matrix.md`
+## Working architectures
+
+- Threat/control matrix: `architectures/threat-control-matrix.md`
+- PAC Authority Gateway: `architectures/pac-authority-gateway.md`
+- Structured implementation objects: `architectures/implementation-objects.md`
+- Aggregate Plan Authority: `architectures/aggregate-plan-authority.md`
+
+Reference implementations are indexed separately at `../reference/index.md` so implementation status is not confused with evidence or canonical doctrine.
 
 ## Research registries
 
@@ -38,8 +45,10 @@ source
 -> concept / threat model
 -> invariant
 -> architecture control
+-> reference implementation
 -> experiment
--> evidence from replication
+-> executed result
+-> replication evidence
 ```
 
 ## Knowledge handling rule
@@ -57,7 +66,18 @@ A record may be:
 - `CANONICAL`
 - `DEPRECATED`
 
-Do not silently upgrade an inference into a fact or a hypothesis into doctrine.
+Implementation status is tracked separately:
+
+```text
+SPECIFIED
+IMPLEMENTED / UNEXECUTED
+TESTED
+REPLICATED
+FAILED
+DEPRECATED
+```
+
+Do not silently upgrade an inference into a fact, a hypothesis into doctrine, code existence into test success, or test success into general safety.
 
 ## Current priority questions
 
@@ -74,6 +94,9 @@ Do not silently upgrade an inference into a fact or a hypothesis into doctrine.
 11. Can authority provenance remain intact through multi-agent delegation chains?
 12. Can function-level controls stop boundary substitution without excessive false denials?
 13. How much task capability is preserved when external governance prevents unauthorized shortcuts?
+14. How can aggregate semantic effects be recognized when locally permitted substeps compose into an unauthorized outcome?
+15. How should multiple independently bounded agent authorities be represented under one trusted aggregate plan?
+16. Which concurrency mechanism can preserve aggregate authority budgets across distributed agent execution?
 
 ## Intended growth
 
@@ -83,5 +106,7 @@ Future records should separate:
 - derived models;
 - formal hypotheses;
 - implementation proposals;
+- reference code;
+- executed results;
 - falsification criteria;
 - replication evidence.
