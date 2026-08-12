@@ -1,0 +1,110 @@
+schema_version: 0.1
+status: WORKING
+
+always_load:
+  - CORE
+
+routes:
+  atticus_runtime:
+    match:
+      - atticus
+      - framework
+      - module
+      - runtime
+      - cognition
+      - w-stack
+      - abg
+    bundles:
+      - ATTICUS_RUNTIME
+
+  pac_governance:
+    match:
+      - pac
+      - power avoidance
+      - authority
+      - governance
+      - invariant
+    bundles:
+      - PAC_GOVERNANCE
+
+  pac_source_text:
+    match:
+      - pac book
+      - volume
+      - chapter
+      - exact source
+      - quote
+    bundles:
+      - PAC_SOURCE_INDEX
+
+  ai_safety_incidents:
+    match:
+      - ai safety
+      - incident
+      - unsanctioned agent
+      - hugging face
+      - aisi
+      - agent coordination
+    bundles:
+      - AI_SAFETY_INCIDENTS
+
+  authority_gateway:
+    match:
+      - gateway
+      - authority token
+      - delegation
+      - circuit breaker
+      - conformance
+    bundles:
+      - AUTHORITY_GATEWAY
+
+  multi_agent:
+    match:
+      - multi-agent
+      - swarm
+      - shared memory
+      - cross-run
+      - collective
+      - externalized memory
+    bundles:
+      - MULTI_AGENT
+
+  historical_lineage:
+    match:
+      - history
+      - lineage
+      - v5
+      - v5.2
+      - old atticus
+      - deprecated
+    bundles:
+      - HISTORICAL_LINEAGE
+
+  local_lab:
+    match:
+      - local ai
+      - server
+      - sandbox
+      - local deployment
+      - ollama
+      - llama.cpp
+    bundles:
+      - LOCAL_LAB
+
+  public_agent_observatory:
+    match:
+      - public agent traces
+      - chatbot swarm
+      - rogue agents
+      - agent artifacts
+      - public multi-agent
+    bundles:
+      - PUBLIC_AGENT_OBSERVATORY
+
+routing_rules:
+  max_initial_task_bundles: 3
+  prefer_minimum_sufficient_context: true
+  deep_source_requires_task_dependency: true
+  historical_context_requires_task_dependency: true
+  ambiguous_task_behavior: CORE_ONLY_THEN_REASSESS
+  bundle_match_is_not_authority: true
