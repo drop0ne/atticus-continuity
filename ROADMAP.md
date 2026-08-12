@@ -1,62 +1,133 @@
 # Roadmap
 
-## Phase 1 — Continuity foundation
+`MASTER_PLAN.md` is the controlling expansion plan. This file is the execution queue.
 
-Goal: make critical project state reconstructable outside platform memory.
+## Phase 0 — Existing foundation
 
-- [x] Repository purpose and README
-- [x] Charter
-- [x] Security policy
-- [x] Provenance policy
-- [x] Knowledge record schema
-- [x] Invariant record schema
-- [ ] Canonical ATTICUS state record
-- [ ] PAC baseline record
-- [ ] Decision log index
-- [ ] Incident index
+- [x] Repository charter/security/provenance
+- [x] Canonical ATTICUS state record
+- [x] PAC baseline and initial invariants
+- [x] Incident/source/claim corpus
+- [x] Threat models and control matrix
+- [x] PAC Authority Gateway reference implementation
+- [x] Aggregate plan authority
+- [x] Trusted action correlation
+- [x] Proposed EXP-0001 through EXP-0006
 
-## Phase 2 — Evidence base
+## Phase 1 — Source preservation
 
-Goal: build a sourced knowledge corpus before active experimentation.
+Goal: prevent loss of the actual PAC and ATTICUS source material.
 
-- [ ] OpenAI–Hugging Face 2026 incident record
-- [ ] UK AISI unsanctioned-agent incident record
-- [ ] Frontier-agent capability timeline
-- [ ] External-memory / cross-run coordination concept record
-- [ ] Capability–authority decoupling hypothesis
-- [ ] Source archive and citation map
+- [x] Initial PAC/ATTICUS Library discovery
+- [x] Source migration inventory
+- [ ] Hash and compare duplicate PAC candidates
+- [ ] Preserve complete PAC Volume I source
+- [ ] Preserve complete PAC Volume II source
+- [ ] Preserve complete PAC Volume III source
+- [ ] Preserve complete PAC Volume IV source
+- [ ] Locate/resolve PAC Volumes V–X status
+- [ ] Hash and compare ATTICUS v6.5.0-ABG full-stack candidates
+- [ ] Preserve complete canonical ATTICUS v6.5.0-ABG source
+- [ ] Build stable source/chapter/module indexes
+- [ ] Preserve AMAS-Symbalics manuscript sources separately
 
-## Phase 3 — Governance library
+## Phase 2 — Platform-independent continuity
 
-Goal: convert principles into falsifiable safety mechanisms.
+Goal: make provider memory optional.
 
-- [ ] Formalize initial PAC invariants
-- [ ] Define enforcement-layer taxonomy
-- [ ] Map known incidents to invariant failures
-- [ ] Specify adversarial tests
-- [ ] Track known bypasses and unresolved problems
+- [x] `PORTABLE_BOOTSTRAP.md`
+- [x] Context hydration layer
+- [x] `CORE` bundle
+- [x] Task-router specification
+- [x] Session-state/checkpoint schema
+- [x] ChatGPT provider adapter
+- [ ] Create latest continuity checkpoint pointer
+- [ ] Create initial task-specific bundles
+- [ ] Build provider-neutral context manifest
+- [ ] Build reference context loader
+- [ ] Build checkpoint writer/validator
+- [ ] Add provider adapter template
+- [ ] Add Claude adapter
+- [ ] Add Gemini adapter
+- [ ] Add local OpenAI-compatible adapter
+- [ ] Add llama.cpp/Ollama-style adapter
+- [ ] Create cross-provider bootstrap conformance suite
 
-## Phase 4 — Controlled experiments
+## Phase 3 — Execute safety research
 
-Goal: test governance under conditions resembling observed multi-agent failure modes.
+Goal: turn implementation existence into evidence.
 
-- [ ] Multi-agent sandbox design
-- [ ] External-memory persistence test
-- [ ] Impossible-task pressure test
-- [ ] Peer-consensus authority test
-- [ ] Discovered-capability test
-- [ ] Fail-closed benchmark
-- [ ] Reproduction and independent review protocol
+- [ ] Execute EXP-0004 against exact revision
+- [ ] Preserve raw EXP-0004 result
+- [ ] Fix failures without rewriting pass criteria after the fact
+- [ ] Execute EXP-0005 aggregate-authority suite
+- [ ] Execute EXP-0006 trusted-correlation suite
+- [ ] Add independent replication procedure
+- [ ] Build multi-agent sandbox harness
+- [ ] Test impossible-task pressure
+- [ ] Test peer normalization
+- [ ] Test cross-agent persistent memory
+- [ ] Test route substitution under trusted correlation
+- [ ] Test distributed/concurrent authority state
 
-## Phase 5 — Researcher-facing extraction
+## Phase 4 — Public multi-agent knowledge observatory
 
-Only after records mature:
+Goal: continuously improve the evidence corpus using passive lawful public research.
 
-- [ ] Evaluate separate `pac-invariants` repository
-- [ ] Evaluate separate `agent-governance-lab` repository
-- [ ] Prepare minimal implementation guidance
-- [ ] Publish only material intentionally cleared for release
+- [x] Public Agent Artifact Acquisition Policy
+- [ ] Public artifact schema/index
+- [ ] Public-source discovery queue
+- [ ] Cross-agent trace relationship graph
+- [ ] Safe artifact-to-test-fixture transformation process
+- [ ] Source deduplication and hash registry
+- [ ] Periodic primary-source review for new incidents
+
+No unauthorized probing, exploitation, prompt injection, external-agent control, or access-control evasion is part of this phase.
+
+## Phase 5 — Local AI laboratory
+
+Goal: test continuity and governance on user-owned infrastructure.
+
+- [ ] Define network-isolated lab architecture
+- [ ] Define model/runtime abstraction layer
+- [ ] Implement local repository retrieval adapter
+- [ ] Implement controlled external-memory substrate
+- [ ] Implement synthetic multi-agent environment
+- [ ] Implement authority gateway between agents and tools
+- [ ] Add resource quotas and kill switch
+- [ ] Add tamper-evident/external audit storage
+- [ ] Run ATTICUS/PAC portability tests across local model families
+
+## Phase 6 — Resilience
+
+- [ ] Local Git clone recovery procedure
+- [ ] Encrypted offline backup procedure
+- [ ] Source hash verification command
+- [ ] Disaster-recovery bootstrap from clean machine
+- [ ] Repository integrity checks
+- [ ] Release/tagging policy
+- [ ] Archive/delete obsolete development branches after preserving historical state
+
+## Phase 7 — Researcher-facing extraction
+
+Only after source completeness and executed evidence improve:
+
+- [ ] Evaluate `pac-invariants`
+- [ ] Evaluate `agent-governance-lab`
+- [ ] Evaluate `atticus-portability-spec`
+- [ ] Produce implementation-neutral PAC specification
+- [ ] Produce reproducible experiment package
+- [ ] Seek independent adversarial review
+- [ ] Publish only material explicitly cleared for release
 
 ## Current priority
 
-**Preserve state and build the evidence base first.** Avoid unnecessary expansion of the framework until current knowledge, provenance, and governance rules are durable and reviewable.
+```text
+P0 preserve complete PAC + ATTICUS source
+P1 make `continue` provider-neutral and repository-first
+P2 execute existing inert reference tests and preserve evidence
+P3 expand passive public evidence corpus
+P4 build isolated local laboratory
+```
+
+Growth is measured by recoverability, evidence quality, portability, falsifiability, implementation quality, and safety—not repository size.
