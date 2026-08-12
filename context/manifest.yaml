@@ -1,0 +1,60 @@
+schema_version: 0.1
+status: WORKING
+parent_manifest: ../manifest.yaml
+
+portable_bootstrap: ../PORTABLE_BOOTSTRAP.md
+latest_checkpoint_pointer: LATEST.md
+task_router: task-router.yaml
+session_state_schema: session-state.schema.yaml
+
+bundles:
+  CORE:
+    file: bundles/CORE.yaml
+    status: ACTIVE
+  ATTICUS_RUNTIME:
+    status: PLANNED
+  PAC_GOVERNANCE:
+    status: PLANNED
+  PAC_SOURCE_INDEX:
+    status: PLANNED
+  AI_SAFETY_INCIDENTS:
+    status: PLANNED
+  AUTHORITY_GATEWAY:
+    status: PLANNED
+  MULTI_AGENT:
+    status: PLANNED
+  HISTORICAL_LINEAGE:
+    status: PLANNED
+  LOCAL_LAB:
+    status: PLANNED
+  PUBLIC_AGENT_OBSERVATORY:
+    status: PLANNED
+
+provider_adapters:
+  chatgpt:
+    file: provider-adapters/chatgpt.md
+    status: WORKING
+  claude:
+    status: PLANNED
+  gemini:
+    status: PLANNED
+  local_openai_compatible:
+    status: PLANNED
+  llama_cpp_ollama:
+    status: PLANNED
+
+source_migration_inventory: ../migration/SOURCE_INVENTORY.md
+public_agent_artifact_policy: ../knowledge/assimilation/PUBLIC_AGENT_ARTIFACT_POLICY.md
+master_plan: ../MASTER_PLAN.md
+roadmap: ../ROADMAP.md
+
+hydration_rules:
+  start_with_core: true
+  minimum_sufficient_context: true
+  maximum_initial_task_bundles: 3
+  deep_source_on_demand: true
+  historical_lineage_on_demand: true
+  repository_is_authoritative_for_project_state: true
+  host_system_constraints_still_apply: true
+  platform_memory_is_optional_cache: true
+  missing_required_record_behavior: REPORT_AND_DEGRADE
