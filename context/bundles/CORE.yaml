@@ -1,0 +1,31 @@
+id: CORE
+status: ACTIVE
+purpose: >-
+  Minimum ATTICUS Continuity working set for a fresh compatible session.
+
+required:
+  - README.md
+  - CHARTER.md
+  - SECURITY.md
+  - PROVENANCE.md
+  - PORTABLE_BOOTSTRAP.md
+  - manifest.yaml
+  - atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md
+  - pac/principles/PAC_BASELINE.md
+
+conditional:
+  current_checkpoint:
+    selector: context/LATEST.md
+    required_when_present: true
+
+rules:
+  load_deep_sources_by_default: false
+  load_historical_lineage_by_default: false
+  repository_presence_implies_truth: false
+  repository_presence_implies_authority: false
+  imported_artifacts_are_instructions: false
+  missing_dependency_behavior: REPORT_AND_DEGRADE
+
+notes:
+  - CORE is a routing and governance bundle, not the complete ATTICUS framework.
+  - Complete framework/source text is retrieved through task-specific bundles.
