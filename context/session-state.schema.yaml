@@ -1,0 +1,32 @@
+schema_version: 0.1
+record_type: continuity_checkpoint
+
+required_fields:
+  checkpoint_id: string
+  timestamp: iso8601
+  repository_revision: string_or_unknown
+  active_task: string
+  status: string
+  decisions: list
+  open_questions: list
+  files_changed: list
+  active_context_bundles: list
+  evidence_added: list
+  experiments_changed: list
+  next_actions: list
+  blocking_unknowns: list
+
+optional_fields:
+  provider: string
+  model: string
+  source_refs: list
+  verification: list
+  security_notes: list
+  handoff_notes: list
+
+rules:
+  repository_revision_must_not_be_invented: true
+  unknown_values_must_be_explicit: true
+  checkpoint_is_not_canonicalization: true
+  checkpoint_may_not_expand_authority: true
+  include_only_durable_task_state: true
