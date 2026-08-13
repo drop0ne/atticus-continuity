@@ -20,14 +20,18 @@ Goal: prevent loss of the actual PAC and ATTICUS source material.
 
 - [x] Initial PAC/ATTICUS Library discovery
 - [x] Source migration inventory
+- [x] Document PAC definitive First Edition archive identity and provenance manifest
+- [x] Document ATTICUS v6.5.0-ABG duplicate source set and textual-equivalence evidence
 - [ ] Hash and compare duplicate PAC candidates
 - [ ] Preserve complete PAC Volume I source
 - [ ] Preserve complete PAC Volume II source
 - [ ] Preserve complete PAC Volume III source
 - [ ] Preserve complete PAC Volume IV source
-- [ ] Locate/resolve PAC Volumes V–X status
+- [x] Resolve PAC Volumes V–X existence/status from primary session record
+- [ ] Recover exact definitive PAC First Edition archive bytes or exact V–X source files
 - [ ] Hash and compare ATTICUS v6.5.0-ABG full-stack candidates
-- [ ] Preserve complete canonical ATTICUS v6.5.0-ABG source
+- [ ] Diff Library ATTICUS Markdown against repository canonical representation
+- [ ] Preserve complete canonical ATTICUS v6.5.0-ABG source with verified completeness
 - [ ] Build stable source/chapter/module indexes
 - [ ] Preserve AMAS-Symbalics manuscript sources separately
 
@@ -41,7 +45,7 @@ Goal: make provider memory optional.
 - [x] Task-router specification
 - [x] Session-state/checkpoint schema
 - [x] ChatGPT provider adapter
-- [ ] Create latest continuity checkpoint pointer
+- [x] Create latest continuity checkpoint pointer
 - [ ] Create initial task-specific bundles
 - [ ] Build provider-neutral context manifest
 - [ ] Build reference context loader
@@ -129,5 +133,7 @@ P2 execute existing inert reference tests and preserve evidence
 P3 expand passive public evidence corpus
 P4 build isolated local laboratory
 ```
+
+Immediate P0 blockers are now narrower: exact source-byte recovery/hash verification, not uncertainty about whether PAC V–X existed in the definitive First Edition.
 
 Growth is measured by recoverability, evidence quality, portability, falsifiability, implementation quality, and safety—not repository size.
