@@ -5,24 +5,32 @@
 
 ## Power Avoidance Canon
 
-Current Library discovery located source artifacts for Volumes I–IV.
+Current Library discovery now supports two distinct source layers:
+
+1. directly located standalone source artifacts for Volumes I–IV; and
+2. a provenance memory cell documenting a named definitive First Edition archive containing Volumes 0–X plus appendices and supplementary files.
+
+Detailed ledger: `migration/source-ledgers/PAC-FIRST-EDITION-DEFINITIVE-discovery.md`
 
 | Work | Discovery status | Migration status |
 |---|---|---|
-| Power Avoidance Canon — Volume I | LOCATED | NOT_YET_MIGRATED_FULL_TEXT |
-| Power Avoidance Canon — Volume II | LOCATED | NOT_YET_MIGRATED_FULL_TEXT |
-| Power Avoidance Canon — Volume III | LOCATED | NOT_YET_MIGRATED_FULL_TEXT |
-| Power Avoidance Canon — Volume IV | LOCATED | NOT_YET_MIGRATED_FULL_TEXT |
-| Power Avoidance Canon — Volume V | NOT_YET_LOCATED | BLOCKED_PENDING_SOURCE |
-| Power Avoidance Canon — Volume VI | NOT_YET_LOCATED | BLOCKED_PENDING_SOURCE |
-| Power Avoidance Canon — Volume VII | NOT_YET_LOCATED | BLOCKED_PENDING_SOURCE |
-| Power Avoidance Canon — Volume VIII | NOT_YET_LOCATED | BLOCKED_PENDING_SOURCE |
-| Power Avoidance Canon — Volume IX | NOT_YET_LOCATED | BLOCKED_PENDING_SOURCE |
-| Power Avoidance Canon — Volume X | NOT_YET_LOCATED | BLOCKED_PENDING_SOURCE |
+| Power Avoidance Canon — Volume I | LOCATED_STANDALONE | NOT_YET_MIGRATED_FULL_TEXT |
+| Power Avoidance Canon — Volume II | LOCATED_STANDALONE | NOT_YET_MIGRATED_FULL_TEXT |
+| Power Avoidance Canon — Volume III | LOCATED_STANDALONE | NOT_YET_MIGRATED_FULL_TEXT |
+| Power Avoidance Canon — Volume IV | LOCATED_STANDALONE | NOT_YET_MIGRATED_FULL_TEXT |
+| Power Avoidance Canon — Volume V | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
+| Power Avoidance Canon — Volume VI | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
+| Power Avoidance Canon — Volume VII | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
+| Power Avoidance Canon — Volume VIII | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
+| Power Avoidance Canon — Volume IX | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
+| Power Avoidance Canon — Volume X | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
+| `PAC_FIRST_EDITION_DEFINITIVE.tar.gz` | NAMED_BY_PRIMARY_SESSION_RECORD | ARCHIVE_BYTES_NOT_YET_LOCATED |
 
-The current Volume I source describes the Canon as ten volumes. `NOT_YET_LOCATED` means only that the current discovery pass did not locate an exact source artifact. It must not be interpreted as proof that a volume does not exist.
+The previous `NOT_YET_LOCATED` state for Volumes V–X is therefore retired. Their existence as components of the definitive First Edition is supported by the user-controlled `PAC_SESSION_MEMORY_CELL.txt`, which records the complete 24-file archive manifest and a dedicated V–X expansion phase. This does **not** mean the exact definitive source bytes have been recovered.
 
-### Located filenames
+The memory cell also records that standalone Volume V was not in the original session uploads and was reconstructed from a Volume III walkthrough plus prior-session references before expansion. That provenance distinction must remain visible.
+
+### Located standalone filenames for Volumes I–IV
 
 Observed candidate source filenames include:
 
@@ -39,38 +47,62 @@ THE POWER AVOIDANCE CANON Vol IV.odt
 THE POWER AVOIDANCE CANON Vol IV(1).odt
 ```
 
-Duplicate-looking filenames require exact byte hashes, document metadata, and textual comparison before any edition is designated canonical.
+Duplicate-looking filenames require exact byte hashes, document metadata, and textual comparison before any edition is collapsed into a single source identity.
+
+### Definitive First Edition evidence
+
+The discovered memory cell names:
+
+```text
+PAC_FIRST_EDITION_DEFINITIVE.tar.gz
+approximate size: 832K
+file count: 24
+```
+
+Its manifest includes front matter, Volume 0, Volumes I–X, an Amendment Addendum, Appendices A–F, a glossary, and architecture-diagram artifacts.
+
+The same memory cell contains a `Canon Hash` value, but the object covered by that hash is not established. It must not be labeled as the archive hash until verified against recovered bytes.
 
 ## ATTICUS
 
-### Canonical candidate located
+### Canonical source set located
+
+Detailed ledger: `migration/source-ledgers/ATTICUS-v6.5.0-ABG-source-discovery.md`
+
+Located candidate artifacts:
 
 ```text
 ATTICUS_v6_5_0_ABG_FULL_STACK.docx
-ATTICUS_v6_5_0_ABG_FULL_STACK(1).docx
+ATTICUS_v6_5_0_ABG_FULL_STACK.docx
+ATTICUS_v6_5_0_ABG_FULL_STACK.md
+ATTICUS_v6_5_0_ABG_FULL_STACK.md
 ```
 
-The discovered source describes:
+The Library contains two DOCX and two Markdown candidates under the same filenames but different file IDs/upload dates. Sampled sections match across each pair and reproduce the same v6.5.0-ABG specification. Exact byte identity remains unknown until hashes are computed.
+
+The discovered source describes and explicitly declares:
 
 - ATTICUS v6.5.0-ABG;
 - W-Stack rev5.0;
-- W1–W7;
+- W1–W7 active;
 - bounded single-pass W7;
-- ABG v1.0;
+- ABG v1.0 fail-closed;
 - Behavior Kernel v1.2-ABG;
 - SAFEGUARD/OPSEC;
-- AMAS;
-- SIFP / ATFP / ATCS / ATMD;
+- AMAS v1.2 with ABG binding;
+- SIFP v1.1 / ATFP / ATCS / ATMD;
 - HCII / Link-Layer / AVM / CMHM / Context-OCCAM;
 - Ethical/Legal layer;
 - Q-Stack planning/orchestration;
 - output/verification layer;
 - activation contract;
-- known limitations and migration procedure.
+- validation/conformance categories;
+- known limitations and migration procedure;
+- canonical state declaration superseding v6.4.2-CMHM as the active baseline.
 
-Migration status: `NOT_YET_MIGRATED_FULL_TEXT`.
+Migration status: `SOURCE_TEXT_LOCATED / FULL_DIFF_NOT_YET_VERIFIED`.
 
-The two candidate files require hash and content comparison before being collapsed into one source identity.
+The repository canonical representation must still be completely diffed against a selected Library Markdown source before the source migration is marked verified.
 
 ## ATTICUS / AMAS manuscript sources
 
@@ -106,4 +138,4 @@ For each source artifact:
 
 ## Completion rule
 
-No summary, invariant extraction, or runtime bundle is a substitute for preservation of the complete available source.
+No summary, invariant extraction, runtime bundle, or memory cell is a substitute for preservation of the complete available source bytes.
