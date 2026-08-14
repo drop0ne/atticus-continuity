@@ -1,0 +1,96 @@
+id: ATTICUS-v6.5.0-ABG-SOURCE-MAP
+status: SOURCE_INDEX_VERIFIED_FROM_LOCATED_PRIMARY_TEXT
+release:
+  framework: ATTICUS v6.5.0-ABG
+  label: Authority-Bounded Cognition and W7 Restoration
+  patch_identity: ATTICUS_ABG_W7_INTEGRATION_v1_0
+  release_date: 2026-07-10
+  supersedes: ATTICUS v6.4.2-CMHM
+
+source_candidates:
+  markdown:
+    - file_id: file_00000000090c722f951a76cd7058b15d
+      created_at: 2026-07-11T00:50:20Z
+      filename: ATTICUS_v6_5_0_ABG_FULL_STACK.md
+      byte_hash: UNKNOWN
+    - file_id: file_000000002ea0820c9ed1207992156b5b
+      created_at: 2026-07-21T14:17:00Z
+      filename: ATTICUS_v6_5_0_ABG_FULL_STACK.md
+      byte_hash: UNKNOWN
+  docx:
+    - file_id: file_000000009294722fa0d76b7d749718a4
+      created_at: 2026-07-11T00:50:19Z
+      filename: ATTICUS_v6_5_0_ABG_FULL_STACK.docx
+      byte_hash: UNKNOWN
+    - file_id: file_000000002bd081f58b1db228ebd8c9bb
+      created_at: 2026-07-21T14:17:00Z
+      filename: ATTICUS_v6_5_0_ABG_FULL_STACK.docx
+      byte_hash: UNKNOWN
+
+textual_equivalence:
+  status: STRONGLY_SUPPORTED_BY_SAMPLED_SECTIONS
+  byte_identity: UNVERIFIED
+  rule: Sampled textual agreement must not be promoted to byte identity without hashes.
+
+sections:
+  - {id: ATTICUS-S01, number: 1, title: Release Identity}
+  - {id: ATTICUS-S02, number: 2, title: System Definition}
+  - {id: ATTICUS-S03, number: 3, title: Canonical Principles}
+  - {id: ATTICUS-S04, number: 4, title: Canonical Layer Stack}
+  - {id: ATTICUS-S05, number: 5, title: Governance and Authority Hierarchy}
+  - {id: ATTICUS-S06, number: 6, title: Behavior Kernel v1.2-ABG}
+  - {id: ATTICUS-S07, number: 7, title: W-Stack rev5.0}
+  - {id: ATTICUS-S08, number: 8, title: ABG v1.0 — Authority Boundary Governor}
+  - {id: ATTICUS-S09, number: 9, title: SAFEGUARD and OPSEC}
+  - {id: ATTICUS-S10, number: 10, title: Narrative-First Governance}
+  - {id: ATTICUS-S11, number: 11, title: AMAS v1.2 and Memory Authority}
+  - {id: ATTICUS-S12, number: 12, title: SIFP v1.1}
+  - {id: ATTICUS-S13, number: 13, title: ATFP / ATCS / ATMD}
+  - {id: ATTICUS-S14, number: 14, title: HCII, Context Hydration, and Link-Layer}
+  - {id: ATTICUS-S15, number: 15, title: AVM and Literalist Ladder}
+  - {id: ATTICUS-S16, number: 16, title: CMHM v0.1}
+  - {id: ATTICUS-S17, number: 17, title: Q-Stack and Quantizer}
+  - {id: ATTICUS-S18, number: 18, title: RED FLAG and Recovery Viability Check}
+  - {id: ATTICUS-S19, number: 19, title: Planning and Definition of Done}
+  - {id: ATTICUS-S20, number: 20, title: Tool and Action Governance}
+  - {id: ATTICUS-S21, number: 21, title: Multi-Agent Orchestration}
+  - {id: ATTICUS-S22, number: 22, title: Modes and Overlays}
+  - {id: ATTICUS-S23, number: 23, title: Command Surface}
+  - {id: ATTICUS-S24, number: 24, title: Output and Reporting Contract}
+  - {id: ATTICUS-S25, number: 25, title: W7 Visible Diagnostic Format}
+  - {id: ATTICUS-S26, number: 26, title: Failure Modes and Defenses}
+  - {id: ATTICUS-S27, number: 27, title: Validation and Conformance}
+  - {id: ATTICUS-S28, number: 28, title: Migration from v6.4.2-CMHM}
+  - {id: ATTICUS-S29, number: 29, title: Current Activation Contract}
+  - {id: ATTICUS-S30, number: 30, title: Known Limits}
+  - {id: ATTICUS-S31, number: 31, title: Canonical State Declaration}
+
+module_index:
+  SAFEGUARD_OPSEC: [ATTICUS-S04, ATTICUS-S05, ATTICUS-S09, ATTICUS-S20]
+  ABG_v1_0: [ATTICUS-S04, ATTICUS-S06, ATTICUS-S08, ATTICUS-S20, ATTICUS-S21]
+  AMAS_v1_2: [ATTICUS-S04, ATTICUS-S05, ATTICUS-S11]
+  SIFP_v1_1: [ATTICUS-S04, ATTICUS-S12]
+  ATFP_ATCS_ATMD: [ATTICUS-S04, ATTICUS-S13]
+  W_STACK_rev5_0: [ATTICUS-S04, ATTICUS-S07, ATTICUS-S25, ATTICUS-S27, ATTICUS-S28]
+  W7_v2_0: [ATTICUS-S06, ATTICUS-S07, ATTICUS-S25, ATTICUS-S26, ATTICUS-S28, ATTICUS-S29, ATTICUS-S31]
+  HCII_CONTEXT_LINK: [ATTICUS-S04, ATTICUS-S14]
+  AVM_LITERALIST: [ATTICUS-S04, ATTICUS-S15]
+  CMHM_v0_1: [ATTICUS-S04, ATTICUS-S16]
+  Q_STACK_QUANTIZER: [ATTICUS-S04, ATTICUS-S17, ATTICUS-S19]
+  RED_FLAG_RVC: [ATTICUS-S18]
+  MULTI_AGENT: [ATTICUS-S21]
+  OUTPUT_VERIFICATION: [ATTICUS-S24, ATTICUS-S25, ATTICUS-S27]
+
+migration_state:
+  exact_source_bytes_preserved_in_repo: false
+  complete_library_to_repo_diff: false
+  duplicate_hashes_computed: false
+  stable_section_ids_created: true
+  stable_module_index_created: true
+
+next_required_verification:
+  - Materialize exact Markdown and DOCX source bytes.
+  - Compute SHA-256 and byte sizes for all four candidates.
+  - Perform complete Markdown duplicate diff.
+  - Compare selected Markdown source against repository canonical representation.
+  - Preserve the selected complete source only after discrepancies are classified.
