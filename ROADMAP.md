@@ -32,7 +32,8 @@ Goal: prevent loss of the actual PAC and ATTICUS source material.
 - [ ] Hash and compare ATTICUS v6.5.0-ABG full-stack candidates
 - [ ] Diff Library ATTICUS Markdown against repository canonical representation
 - [ ] Preserve complete canonical ATTICUS v6.5.0-ABG source with verified completeness
-- [ ] Build stable source/chapter/module indexes
+- [x] Build stable ATTICUS source-section/module index
+- [ ] Build stable PAC source/chapter index after exact source recovery
 - [ ] Preserve AMAS-Symbalics manuscript sources separately
 
 ## Phase 2 — Platform-independent continuity
