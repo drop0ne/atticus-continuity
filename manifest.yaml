@@ -1,6 +1,6 @@
 repository: drop0ne/atticus-continuity
 schema_version: 0.9
-last_structural_update: 2026-08-11
+last_structural_update: 2026-08-14
 
 purpose: >-
   Durable, version-controlled continuity, evidence, governance, ingestion,
@@ -19,6 +19,7 @@ bootstrap:
     - INGESTION.md
     - knowledge/research/source-quality.md
     - atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md
+    - atticus/canonical/AMAS_v2.0_CANONICAL_BINDING.md
     - pac/principles/PAC_BASELINE.md
     - knowledge/threat-models/index.md
     - knowledge/architectures/threat-control-matrix.md
@@ -32,6 +33,17 @@ canonical:
   atticus:
     version: v6.5.0-ABG
     file: atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md
+  amas:
+    status: CANONICAL_COMPONENT_BINDING
+    file: atticus/canonical/AMAS_v2.0_CANONICAL_BINDING.md
+    source_repository: drop0ne/amas-spec
+    source_commit: c997fa75981e3ccfe921ef7fbd6d3cae46913425
+    core_version: 2.0-draft
+    core_revision: 2026-08-12
+    aab_version: 0.4.1-draft
+    amcs_engine_version: 0.3.3
+    amcs_protocol_version: v1.2.1-INTERNAL
+    auto_follow_upstream: false
   pac:
     file: pac/principles/PAC_BASELINE.md
 
@@ -327,6 +339,9 @@ decisions:
   - id: ADR-0007
     file: decisions/ADR-0007-trusted-action-correlation-outside-governed-agent.md
     status: ACCEPTED_AS_RESEARCH_ARCHITECTURE
+  - id: ADR-0008
+    file: decisions/ADR-0008-canonical-amas-component-binding.md
+    status: ACCEPTED
 
 security:
   unknown_external_agent_write_access: false
@@ -348,3 +363,5 @@ security:
   hard_failure_can_be_softened_by_escalation: false
   reference_implementations_inert_by_default: true
   implementation_status_implies_test_success: false
+  external_dependency_recency_confers_authority: false
+  canonical_external_dependency_auto_updates: false
