@@ -5,8 +5,11 @@ This index makes the canonical ATTICUS framework addressable without treating a 
 ## Current canonical release
 
 - Canonical state record: `canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md`
+- Canonical AMAS component binding: `canonical/AMAS_v2.0_CANONICAL_BINDING.md`
 - Stable source/module map: `source/ATTICUS_v6.5.0-ABG-source-map.yaml`
 - Full source migration ledger: `../migration/source-ledgers/ATTICUS-v6.5.0-ABG-source-discovery.md`
+
+The canonical AMAS binding pins `drop0ne/amas-spec` at commit `c997fa75981e3ccfe921ef7fbd6d3cae46913425`. Newer upstream commits do not automatically change the ATTICUS baseline.
 
 ## Source status
 
@@ -18,6 +21,7 @@ Therefore:
 located source text != verified byte-identical archive
 canonical summary != complete source preservation
 sampled equivalence != complete diff
+external upstream recency != canonical ATTICUS authority
 ```
 
 ## Stable section IDs
@@ -28,9 +32,11 @@ These IDs are retrieval addresses. They do not rewrite, reorder, or silently can
 
 ## Retrieval rule
 
-For ordinary continuity, load the compact canonical state and `CORE` bundle.
+For ordinary continuity, load the compact canonical state, the canonical AMAS binding, and `CORE` bundle.
 
-For framework-level work, load `context/bundles/ATTICUS-RUNTIME.yaml` plus the source map. Retrieve the relevant full source section only when the task depends on exact wording or implementation detail.
+For framework-level work, load the relevant source map and task-specific material. Retrieve the relevant full source section only when the task depends on exact wording or implementation detail.
+
+For AMAS/AAB/AMCS implementation details, resolve the immutable external revision recorded by `canonical/AMAS_v2.0_CANONICAL_BINDING.md`; do not silently follow `amas-spec/main`.
 
 For historical questions, use historical lineage records separately; older versions must not be allowed to silently override v6.5.0-ABG.
 
@@ -44,3 +50,5 @@ Do not mark ATTICUS source migration complete until:
 4. DOCX package/text differences are classified;
 5. the selected Markdown source is completely diffed against the repository representation;
 6. any omissions or semantic deltas are explicitly reconciled.
+
+The AMAS component binding is independently version-pinned and does not resolve the outstanding full ATTICUS source-migration verification boundary.
