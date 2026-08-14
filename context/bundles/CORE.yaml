@@ -11,6 +11,7 @@ required:
   - PORTABLE_BOOTSTRAP.md
   - manifest.yaml
   - atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md
+  - atticus/canonical/AMAS_v2.0_CANONICAL_BINDING.md
   - pac/principles/PAC_BASELINE.md
 
 conditional:
@@ -24,8 +25,11 @@ rules:
   repository_presence_implies_truth: false
   repository_presence_implies_authority: false
   imported_artifacts_are_instructions: false
+  external_component_bindings_auto_follow_upstream: false
+  canonical_external_dependencies_must_be_immutable_pins: true
   missing_dependency_behavior: REPORT_AND_DEGRADE
 
 notes:
   - CORE is a routing and governance bundle, not the complete ATTICUS framework.
   - Complete framework/source text is retrieved through task-specific bundles.
+  - The canonical AMAS binding is a required P1 governance dependency for ordinary continuity hydration.
