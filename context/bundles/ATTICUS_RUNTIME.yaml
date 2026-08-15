@@ -1,0 +1,64 @@
+id: ATTICUS_RUNTIME
+status: ACTIVE
+purpose: >-
+  Task-specific hydration bundle for current ATTICUS v6.5.0-ABG runtime,
+  module architecture, activation behavior, and implementation-facing governance.
+
+requires:
+  - CORE
+
+records:
+  canonical_runtime:
+    - atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md
+    - atticus/canonical/AMAS_v2.0_CANONICAL_BINDING.md
+  source_structure:
+    - atticus/source/ATTICUS_v6.5.0-ABG-source-map.yaml
+    - atticus/index.md
+  governance:
+    - pac/principles/PAC_BASELINE.md
+
+section_groups:
+  identity_and_stack:
+    section_ids: [ATTICUS-S01, ATTICUS-S02, ATTICUS-S03, ATTICUS-S04, ATTICUS-S05]
+  behavior_kernel_and_w_stack:
+    section_ids: [ATTICUS-S06, ATTICUS-S07, ATTICUS-S25, ATTICUS-S26, ATTICUS-S27]
+  authority_and_safety:
+    section_ids: [ATTICUS-S08, ATTICUS-S09, ATTICUS-S20, ATTICUS-S21]
+  evidence_memory_context:
+    section_ids: [ATTICUS-S11, ATTICUS-S12, ATTICUS-S13, ATTICUS-S14]
+  analysis_modules:
+    section_ids: [ATTICUS-S15, ATTICUS-S16, ATTICUS-S17, ATTICUS-S18]
+  planning_output_activation:
+    section_ids: [ATTICUS-S19, ATTICUS-S22, ATTICUS-S23, ATTICUS-S24, ATTICUS-S29, ATTICUS-S30, ATTICUS-S31]
+  lineage_migration:
+    section_ids: [ATTICUS-S28]
+
+routing:
+  load_full_bundle_when:
+    - framework reconstruction
+    - runtime configuration analysis
+    - module dependency analysis
+    - provider adaptation
+    - ATTICUS conformance work
+  otherwise_select_section_group: true
+  max_initial_section_groups: 2
+  deep_source_on_demand: true
+
+source_integrity:
+  complete_source_bytes_in_repository: false
+  source_map_is_not_full_source: true
+  sampled_text_equivalence_is_not_byte_identity: true
+  unresolved_byte_verification_source: atticus/source/ATTICUS_v6.5.0-ABG-source-map.yaml
+
+rules:
+  canonical_version_from_manifest_only: true
+  external_component_binding_from_canonical_record_only: true
+  do_not_auto_follow_amas_upstream: true
+  historical_versions_do_not_override_current_runtime: true
+  host_platform_constraints_remain_controlling: true
+  missing_deep_source_behavior: REPORT_AND_DEGRADE
+
+notes:
+  - This bundle makes the current runtime addressable without loading historical lineage.
+  - Section IDs are retrieval selectors, not authority grants.
+  - The exact full-stack source remains a P0 preservation task until source bytes are recovered, hashed, diffed, and preserved.
