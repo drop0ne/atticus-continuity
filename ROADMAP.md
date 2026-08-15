@@ -47,8 +47,9 @@ Goal: make provider memory optional.
 - [x] Session-state/checkpoint schema
 - [x] ChatGPT provider adapter
 - [x] Create latest continuity checkpoint pointer
-- [ ] Create initial task-specific bundles
-- [ ] Build provider-neutral context manifest
+- [x] Create initial task-specific bundles (`ATTICUS_RUNTIME`, `PAC_GOVERNANCE`)
+- [x] Build provider-neutral context manifest v0.2
+- [x] Define provider-neutral hydration policy
 - [ ] Build reference context loader
 - [ ] Build checkpoint writer/validator
 - [ ] Add provider adapter template
@@ -135,6 +136,6 @@ P3 expand passive public evidence corpus
 P4 build isolated local laboratory
 ```
 
-Immediate P0 blockers are now narrower: exact source-byte recovery/hash verification, not uncertainty about whether PAC V–X existed in the definitive First Edition.
+Immediate P0 blockers are now narrower: exact source-byte recovery/hash verification, not uncertainty about whether PAC V–X existed in the definitive First Edition. When raw Library bytes are unavailable to the active tool environment, continue advancing reversible P1/P2 work without weakening the source-verification standard.
 
 Growth is measured by recoverability, evidence quality, portability, falsifiability, implementation quality, and safety—not repository size.
