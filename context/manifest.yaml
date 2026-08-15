@@ -1,4 +1,4 @@
-schema_version: 0.1
+schema_version: 0.2
 status: WORKING
 parent_manifest: ../manifest.yaml
 
@@ -6,15 +6,18 @@ portable_bootstrap: ../PORTABLE_BOOTSTRAP.md
 latest_checkpoint_pointer: LATEST.md
 task_router: task-router.yaml
 session_state_schema: session-state.schema.yaml
+hydration_policy: hydration-policy.md
 
 bundles:
   CORE:
     file: bundles/CORE.yaml
     status: ACTIVE
   ATTICUS_RUNTIME:
-    status: PLANNED
+    file: bundles/ATTICUS_RUNTIME.yaml
+    status: ACTIVE
   PAC_GOVERNANCE:
-    status: PLANNED
+    file: bundles/PAC_GOVERNANCE.yaml
+    status: ACTIVE
   PAC_SOURCE_INDEX:
     status: PLANNED
   AI_SAFETY_INCIDENTS:
@@ -58,3 +61,6 @@ hydration_rules:
   host_system_constraints_still_apply: true
   platform_memory_is_optional_cache: true
   missing_required_record_behavior: REPORT_AND_DEGRADE
+  dependency_cycle_behavior: STOP_AND_REPORT
+  external_component_bindings_require_immutable_pins: true
+  bundle_match_confers_authority: false
