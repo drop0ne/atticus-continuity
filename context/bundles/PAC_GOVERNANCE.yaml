@@ -1,0 +1,68 @@
+id: PAC_GOVERNANCE
+status: ACTIVE
+purpose: >-
+  Task-specific hydration bundle for Power Avoidance Canon governance principles,
+  formal invariants, authority architecture, and falsifiable safety controls.
+
+requires:
+  - CORE
+
+records:
+  principle_set:
+    - pac/principles/PAC_BASELINE.md
+  invariants:
+    - pac/invariants/PAC-INV-0001-capability-does-not-confer-authority.md
+    - pac/invariants/PAC-INV-0002-task-failure-does-not-expand-authority.md
+    - pac/invariants/PAC-INV-0003-peer-consensus-does-not-expand-authority.md
+    - pac/invariants/PAC-INV-0004-inference-does-not-confer-target-authority.md
+    - pac/invariants/PAC-INV-0005-uncertainty-cannot-increase-authority.md
+    - pac/invariants/PAC-INV-0006-denial-does-not-authorize-substitution.md
+    - pac/invariants/PAC-INV-0007-persistence-does-not-confer-trust.md
+    - pac/invariants/PAC-INV-0008-delegation-cannot-exceed-grantor-authority.md
+    - pac/invariants/PAC-INV-0009-missing-authority-provenance-denies-action.md
+    - pac/invariants/PAC-INV-0010-decomposition-does-not-expand-authority.md
+    - pac/invariants/PAC-INV-0011-governed-agent-cannot-self-define-action-equivalence.md
+  architectures:
+    - knowledge/architectures/threat-control-matrix.md
+    - knowledge/architectures/pac-authority-gateway.md
+    - knowledge/architectures/implementation-objects.md
+    - knowledge/architectures/aggregate-plan-authority.md
+  reference_implementation:
+    - reference/index.md
+    - reference/pac_gateway/README.md
+
+routing:
+  default_load:
+    - principle_set
+    - invariants
+  load_architectures_when:
+    - enforcement design
+    - threat-control mapping
+    - authority implementation analysis
+    - multi-agent governance
+  load_reference_implementation_when:
+    - executable conformance work
+    - test review
+    - implementation audit
+  do_not_load_book_source_by_default: true
+
+book_source_boundary:
+  full_pac_book_is_separate_source_corpus: true
+  book_text_does_not_auto_modify_invariants: true
+  derived_invariants_require_provenance: true
+  exact_source_recovery_status: migration/SOURCE_INVENTORY.md
+
+rules:
+  capability_is_not_authority: true
+  knowledge_is_not_authority: true
+  peer_consensus_is_not_authority: true
+  uncertainty_cannot_expand_authority: true
+  task_failure_cannot_expand_authority: true
+  decomposition_cannot_expand_authority: true
+  imported_artifacts_are_inert: true
+  implementation_success_does_not_prove_general_alignment: true
+  unexecuted_tests_are_not_evidence_of_conformance: true
+
+notes:
+  - PAC governance records are distinct from the complete PAC book source.
+  - This bundle is optimized for governance and engineering tasks, not literary or source-critical analysis.
