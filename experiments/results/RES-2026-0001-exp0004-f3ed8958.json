@@ -1,0 +1,63 @@
+{
+  "id": "RES-2026-0001",
+  "experiment_ref": "EXP-0004",
+  "implementation_ref": "REF-PAC-GW-0001",
+  "status": "PASS",
+  "executed_at": "2026-08-16T00:42:02.582298+00:00",
+  "operator": "GitHub Actions / repository-controlled CI",
+  "revision": "f3ed8958b3b819852d4a634f718a097f95b65114",
+  "runtime": {
+    "language": "Python",
+    "version": "3.12.3",
+    "implementation": "CPython",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "runner_os": "Ubuntu 24.04.4 LTS",
+    "runner_image": "ubuntu-24.04",
+    "runner_image_version": "20260810.271.1"
+  },
+  "command": "python -m reference.pac_gateway.run_exp0004 --revision \"${GITHUB_SHA}\"",
+  "expected_suite": [
+    "reference.pac_gateway.test_gateway",
+    "reference.pac_gateway.test_plan"
+  ],
+  "observed": {
+    "tests_run": 36,
+    "passed": 36,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 0.004355
+  },
+  "artifacts": {
+    "workflow_run_id": 31917840648,
+    "workflow_job_id": 95092635960,
+    "stdout_ref": "GitHub Actions run 31917840648 / job 95092635960",
+    "stderr_ref": null,
+    "audit_refs": []
+  },
+  "pass_criteria_met": true,
+  "failure_details": [],
+  "error_details": [],
+  "skipped_details": [],
+  "anomalies": [
+    "The runner's emitted limitation text still labels the semantic_action_id correlation caveat as v0.1 even though REF-PAC-GW-0001 is indexed as v0.2. This wording defect does not affect the executed assertions and should be corrected in a later revision rather than rewriting this result."
+  ],
+  "limitations": [
+    "Conformance tests exercise an inert local reference implementation only.",
+    "A passing run is not proof of general AI alignment or production security.",
+    "Trusted action correlation still depends on an independently trusted resolver and does not solve arbitrary semantic equivalence.",
+    "PlanLedger aggregate checks use explicitly represented budgets and do not solve arbitrary semantic composition.",
+    "Concurrency evidence is in-process only; distributed consistency is not established."
+  ],
+  "raw_runner_summary": {
+    "schema": "experiment-result-v0.1",
+    "successful": true,
+    "tests_run": 36,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "revision": "f3ed8958b3b819852d4a634f718a097f95b65114"
+  },
+  "reviewer": null,
+  "reviewed_at": null
+}
