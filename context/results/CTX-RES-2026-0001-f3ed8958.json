@@ -1,0 +1,42 @@
+{
+  "id": "CTX-RES-2026-0001",
+  "implementation_ref": "REF-CTX-0001",
+  "status": "PASS",
+  "executed_at": "2026-08-16T00:42:02Z",
+  "revision": "f3ed8958b3b819852d4a634f718a097f95b65114",
+  "runtime": {
+    "language": "Python",
+    "version": "3.12.3",
+    "platform": "Ubuntu 24.04.4 LTS / GitHub Actions ubuntu-24.04"
+  },
+  "command": "python -m unittest reference.context_loader.test_loader -v",
+  "observed": {
+    "tests_run": 8,
+    "passed": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds_reported": 0.001
+  },
+  "tests": [
+    "test_empty_revision_fails_but_unknown_is_allowed",
+    "test_missing_required_field_fails",
+    "test_valid_checkpoint_passes",
+    "test_ambiguous_task_loads_core_only",
+    "test_atticus_route_resolves_core_dependency_first",
+    "test_dependency_cycle_stops_and_reports",
+    "test_multiple_routes_deduplicate_core_and_records",
+    "test_planned_bundle_is_not_hydrated"
+  ],
+  "workflow": {
+    "run_id": 31917840648,
+    "job_id": 95092635960,
+    "job_name": "inert-reference-tests"
+  },
+  "pass_criteria_met": true,
+  "limitations": [
+    "Tests use already parsed in-memory mappings and do not yet exercise a repository/filesystem YAML adapter.",
+    "The loader plans retrieval only; it does not prove provider-specific retrieval correctness.",
+    "Checkpoint validation is structural and does not verify Git revisions, citations, or canonicality."
+  ]
+}
