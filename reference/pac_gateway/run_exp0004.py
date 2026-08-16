@@ -86,8 +86,9 @@ def main() -> int:
         "limitations": [
             "Conformance tests exercise an inert local reference implementation only.",
             "A passing run is not proof of general AI alignment or production security.",
-            "semantic_action_id correlation remains a trusted-orchestrator assumption in v0.1.",
+            "Trusted action correlation depends on an independently trusted resolver and does not solve arbitrary semantic equivalence.",
             "PlanLedger aggregate checks use explicitly represented budgets and do not solve arbitrary semantic composition.",
+            "Concurrency coverage is in-process only; distributed consistency is not established.",
         ],
     }
 
