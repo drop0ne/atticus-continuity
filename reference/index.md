@@ -1,12 +1,13 @@
 # Reference Implementations
 
-Reference code in this directory exists to turn ATTICUS/PAC hypotheses into falsifiable, reproducible experiments.
+Reference code in this directory exists to turn ATTICUS/PAC hypotheses and continuity architecture into falsifiable, reproducible implementations.
 
 ## Current implementations
 
 | ID | Component | Status | Path |
 |---|---|---|---|
 | `REF-PAC-GW-0001` | PAC Authority Gateway v0.2 | IMPLEMENTED / UNEXECUTED | `pac_gateway/` |
+| `REF-CTX-0001` | Portable Context Loader + Checkpoint Validator v0.1 | IMPLEMENTED / UNEXECUTED | `context_loader/` |
 
 ### REF-PAC-GW-0001 components
 
@@ -19,6 +20,20 @@ Reference code in this directory exists to turn ATTICUS/PAC hypotheses into fals
 - multiple subject-bound local authority references per aggregate plan;
 - in-process atomic budget reservation;
 - conformance suites and JSON result runner.
+
+### REF-CTX-0001 components
+
+- parser-neutral metadata interface;
+- deterministic task-to-bundle routing;
+- always-load CORE behavior;
+- ACTIVE-bundle enforcement;
+- dependency resolution and cycle rejection;
+- record-path collection without content execution;
+- CORE-only ambiguous-task fallback;
+- structural continuity-checkpoint validation;
+- standard-library unit tests.
+
+The loader returns a retrieval plan only. Bundle matches and retrieved repository records do not create truth or authority.
 
 ## Status vocabulary
 
@@ -33,8 +48,8 @@ Reference code in this directory exists to turn ATTICUS/PAC hypotheses into fals
 
 Code existence is not evidence of conformance.
 
-A reference implementation may move to `TESTED` only when the exact revision, interpreter/runtime, command, output, and failures are preserved under `experiments/results/`.
+A reference implementation may move to `TESTED` only when the exact revision, interpreter/runtime, command, output, and failures are preserved under `experiments/results/` or another explicitly indexed results path.
 
 ## Security boundary
 
-Reference implementations must default to inert simulated resources. Adding real external capabilities requires a separate security review and explicit authorization; research convenience is not sufficient justification.
+Reference implementations must default to inert simulated resources or metadata planning. Adding real external capabilities requires a separate security review and explicit authorization; research convenience is not sufficient justification.
