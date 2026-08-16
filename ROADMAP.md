@@ -50,8 +50,10 @@ Goal: make provider memory optional.
 - [x] Create initial task-specific bundles (`ATTICUS_RUNTIME`, `PAC_GOVERNANCE`)
 - [x] Build provider-neutral context manifest v0.2
 - [x] Define provider-neutral hydration policy
-- [ ] Build reference context loader
-- [ ] Build checkpoint writer/validator
+- [x] Build reference context loader
+- [x] Build structural checkpoint validator
+- [ ] Build checkpoint writer
+- [ ] Add repository/filesystem metadata adapter for the reference loader
 - [ ] Add provider adapter template
 - [ ] Add Claude adapter
 - [ ] Add Gemini adapter
