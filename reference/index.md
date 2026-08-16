@@ -4,10 +4,12 @@ Reference code in this directory exists to turn ATTICUS/PAC hypotheses and conti
 
 ## Current implementations
 
-| ID | Component | Status | Path |
-|---|---|---|---|
-| `REF-PAC-GW-0001` | PAC Authority Gateway v0.2 | IMPLEMENTED / UNEXECUTED | `pac_gateway/` |
-| `REF-CTX-0001` | Portable Context Loader + Checkpoint Validator v0.1 | IMPLEMENTED / UNEXECUTED | `context_loader/` |
+| ID | Component | Status | Path | Preserved result |
+|---|---|---|---|---|
+| `REF-PAC-GW-0001` | PAC Authority Gateway v0.2 | TESTED | `pac_gateway/` | `experiments/results/RES-2026-0001-exp0004-f3ed8958.json` |
+| `REF-CTX-0001` | Portable Context Loader + Checkpoint Validator v0.1 | TESTED | `context_loader/` | `context/results/CTX-RES-2026-0001-f3ed8958.json` |
+
+Both TESTED statuses refer to exact revision `f3ed8958b3b819852d4a634f718a097f95b65114`. Later changes require their own executed evidence before being treated as tested changes.
 
 ### REF-PAC-GW-0001 components
 
@@ -39,7 +41,7 @@ The loader returns a retrieval plan only. Bundle matches and retrieved repositor
 
 - `SPECIFIED` — implementation design exists but code does not.
 - `IMPLEMENTED / UNEXECUTED` — code exists but repository-preserved test results do not yet exist.
-- `TESTED` — tests were executed and exact results were preserved.
+- `TESTED` — tests were executed and exact results were preserved for a named revision.
 - `REPLICATED` — an independent environment reproduced the tested result.
 - `FAILED` — implementation did not meet preregistered criteria.
 - `DEPRECATED` — retained for history, no longer the active reference.
@@ -49,6 +51,8 @@ The loader returns a retrieval plan only. Bundle matches and retrieved repositor
 Code existence is not evidence of conformance.
 
 A reference implementation may move to `TESTED` only when the exact revision, interpreter/runtime, command, output, and failures are preserved under `experiments/results/` or another explicitly indexed results path.
+
+A later untested code change does not retroactively inherit a prior revision's TESTED status.
 
 ## Security boundary
 
