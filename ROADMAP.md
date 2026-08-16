@@ -52,6 +52,7 @@ Goal: make provider memory optional.
 - [x] Define provider-neutral hydration policy
 - [x] Build reference context loader
 - [x] Build structural checkpoint validator
+- [x] Execute and preserve initial context-loader/validator test evidence
 - [ ] Build checkpoint writer
 - [ ] Add repository/filesystem metadata adapter for the reference loader
 - [ ] Add provider adapter template
@@ -65,11 +66,12 @@ Goal: make provider memory optional.
 
 Goal: turn implementation existence into evidence.
 
-- [ ] Execute EXP-0004 against exact revision
-- [ ] Preserve raw EXP-0004 result
-- [ ] Fix failures without rewriting pass criteria after the fact
-- [ ] Execute EXP-0005 aggregate-authority suite
-- [ ] Execute EXP-0006 trusted-correlation suite
+- [x] Execute EXP-0004 against exact revision
+- [x] Preserve EXP-0004 result record
+- [x] Establish read-only GitHub Actions conformance workflow for inert reference tests
+- [ ] Preserve any future failing run before fixing it; never rewrite pass criteria after the fact
+- [ ] Execute EXP-0005 aggregate-authority suite as its own experiment record
+- [ ] Execute EXP-0006 trusted-correlation suite as its own experiment record
 - [ ] Add independent replication procedure
 - [ ] Build multi-agent sandbox harness
 - [ ] Test impossible-task pressure
