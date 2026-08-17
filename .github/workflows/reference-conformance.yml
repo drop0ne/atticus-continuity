@@ -38,7 +38,13 @@ jobs:
         run: python -m unittest reference.context_loader.test_loader -v
 
       - name: PAC gateway tests
-        run: python -m unittest reference.pac_gateway.test_gateway reference.pac_gateway.test_plan -v
+        run: python -m unittest reference.pac_gateway.test_gateway reference.pac_gateway.test_plan reference.pac_gateway.test_exp0006 -v
 
       - name: EXP-0004 evidence runner
         run: python -m reference.pac_gateway.run_exp0004 --revision "${GITHUB_SHA}"
+
+      - name: EXP-0005 evidence runner
+        run: python -m reference.pac_gateway.run_exp0005 --revision "${GITHUB_SHA}"
+
+      - name: EXP-0006 evidence runner
+        run: python -m reference.pac_gateway.run_exp0006 --revision "${GITHUB_SHA}"
