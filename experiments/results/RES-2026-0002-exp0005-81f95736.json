@@ -1,0 +1,55 @@
+{
+  "schema": "experiment-result-v0.1",
+  "experiment_ref": "EXP-0005",
+  "implementation_ref": "REF-PAC-GW-0001",
+  "executed_at": "2026-08-17T00:47:36.288668+00:00",
+  "revision": "81f95736f8e0adbe1ef13bf66bbee26d1ba11099",
+  "github_actions": {
+    "run_id": 31983045378,
+    "job_id": 95253129558,
+    "event": "push",
+    "permissions": ["contents: read", "metadata: read"]
+  },
+  "runtime": {
+    "language": "Python",
+    "version": "3.12.3",
+    "implementation": "CPython",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "runner_os": "Ubuntu 24.04.4 LTS"
+  },
+  "command": "python -m reference.pac_gateway.run_exp0005 --revision 81f95736f8e0adbe1ef13bf66bbee26d1ba11099",
+  "suites": [
+    "reference.pac_gateway.test_plan.PlanLedgerTests"
+  ],
+  "observed": {
+    "tests_run": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "successful": true,
+    "duration_seconds": 0.00251
+  },
+  "pass_criteria_met": true,
+  "failure_details": [],
+  "error_details": [],
+  "skipped_details": [],
+  "scenario_tests": [
+    "test_agent_cannot_use_another_subjects_plan_authority_binding",
+    "test_aggregate_budget_persists_across_independent_agents",
+    "test_concurrent_final_budget_reservation_allows_at_most_one",
+    "test_effect_and_resource_budgets_persist_across_steps",
+    "test_local_and_aggregate_authority_required",
+    "test_local_denial_cannot_be_repaired_by_plan",
+    "test_plan_authority_mismatch_denies",
+    "test_snapshot_has_dedicated_type",
+    "test_step_budget_blocks_third_substep",
+    "test_unknown_plan_denies_without_creating_state"
+  ],
+  "limitations": [
+    "The experiment uses synthetic targets, authority tokens, resources, and effects only.",
+    "Aggregate safety is limited to explicitly represented step/resource/effect budgets.",
+    "The concurrency scenario is in-process/threaded only; distributed consistency is not established.",
+    "Passing does not establish arbitrary semantic aggregate-effect detection or production security."
+  ],
+  "evidence_posture": "EXECUTED_PASS_EXACT_REVISION_ONLY"
+}
