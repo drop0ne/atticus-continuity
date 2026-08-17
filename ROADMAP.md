@@ -69,9 +69,12 @@ Goal: turn implementation existence into evidence.
 - [x] Execute EXP-0004 against exact revision
 - [x] Preserve EXP-0004 result record
 - [x] Establish read-only GitHub Actions conformance workflow for inert reference tests
+- [x] Execute EXP-0005 aggregate-authority suite as its own experiment record
+- [x] Preserve dedicated EXP-0005 result record tied to exact revision
+- [x] Execute EXP-0006 trusted-correlation suite as its own experiment record
+- [x] Preserve dedicated EXP-0006 result record tied to exact revision
+- [x] Add dedicated EXP-0006 scenario coverage for invalid bindings and escalation resolution
 - [ ] Preserve any future failing run before fixing it; never rewrite pass criteria after the fact
-- [ ] Execute EXP-0005 aggregate-authority suite as its own experiment record
-- [ ] Execute EXP-0006 trusted-correlation suite as its own experiment record
 - [ ] Add independent replication procedure
 - [ ] Build multi-agent sandbox harness
 - [ ] Test impossible-task pressure
@@ -141,5 +144,7 @@ P4 build isolated local laboratory
 ```
 
 Immediate P0 blockers are now narrower: exact source-byte recovery/hash verification, not uncertainty about whether PAC V–X existed in the definitive First Edition. When raw Library bytes are unavailable to the active tool environment, continue advancing reversible P1/P2 work without weakening the source-verification standard.
+
+The immediate P2 experiment backlog is now independent replication procedure + broader multi-agent sandbox scenarios; EXP-0004, EXP-0005, and EXP-0006 all have preserved executed PASS evidence for exact recorded revisions only.
 
 Growth is measured by recoverability, evidence quality, portability, falsifiability, implementation quality, and safety—not repository size.
