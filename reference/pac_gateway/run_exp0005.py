@@ -29,7 +29,11 @@ def main() -> int:
 
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(PlanLedgerTests)
     stream = io.StringIO()
-    result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
+    runner = unittest.TextTestRunner(stream=stream, verbosity=2)
+
+    started = time.perf_counter()
+    result = runner.run(suite)
+    duration = time.perf_counter() - started
 
     failures = [
         {"test": str(test), "traceback": traceback}
@@ -43,11 +47,6 @@ def main() -> int:
         {"test": str(test), "reason": reason}
         for test, reason in getattr(result, "skipped", [])
     ]
-
-    # Re-run timing is intentionally measured around no external effects; unittest
-    # output itself is the evidence of scenario execution.
-    started = time.perf_counter()
-    duration = time.perf_counter() - started
 
     payload = {
         "schema": "experiment-result-v0.1",
