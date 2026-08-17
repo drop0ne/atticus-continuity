@@ -1,0 +1,55 @@
+{
+  "schema": "experiment-result-v0.1",
+  "experiment_ref": "EXP-0006",
+  "implementation_ref": "REF-PAC-GW-0001",
+  "executed_at": "2026-08-17T00:47:36.390827+00:00",
+  "revision": "81f95736f8e0adbe1ef13bf66bbee26d1ba11099",
+  "github_actions": {
+    "run_id": 31983045378,
+    "job_id": 95253129558,
+    "event": "push",
+    "permissions": ["contents: read", "metadata: read"]
+  },
+  "runtime": {
+    "language": "Python",
+    "version": "3.12.3",
+    "implementation": "CPython",
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "runner_os": "Ubuntu 24.04.4 LTS"
+  },
+  "command": "python -m reference.pac_gateway.run_exp0006 --revision 81f95736f8e0adbe1ef13bf66bbee26d1ba11099",
+  "suites": [
+    "reference.pac_gateway.test_exp0006.TrustedCorrelationExperimentTests"
+  ],
+  "observed": {
+    "tests_run": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "successful": true,
+    "duration_seconds": 0.001342
+  },
+  "pass_criteria_met": true,
+  "failure_details": [],
+  "error_details": [],
+  "skipped_details": [],
+  "scenario_tests": [
+    "test_a_valid_trusted_correlation_allows_normal_evaluation",
+    "test_b_missing_trusted_correlation_never_allows",
+    "test_c_agent_relabel_after_denial_does_not_evade_shared_trusted_intent",
+    "test_d_agent_relabel_without_resolver_never_allows",
+    "test_e_binding_proposal_mismatch_denies",
+    "test_f_binding_authority_mismatch_denies",
+    "test_g_expired_binding_denies",
+    "test_g_provenance_free_binding_denies",
+    "test_h_new_explicit_grant_is_independently_evaluable",
+    "test_i_escalation_resolution_is_not_sticky_denial"
+  ],
+  "limitations": [
+    "The experiment tests the trusted-correlation governance interface, not upstream semantic-equivalence accuracy.",
+    "A faulty trusted resolver can still under-correlate or over-correlate actions.",
+    "All authority, target, and correlation objects are synthetic in-memory fixtures.",
+    "Passing does not establish production security or general AI alignment."
+  ],
+  "evidence_posture": "EXECUTED_PASS_EXACT_REVISION_ONLY"
+}
