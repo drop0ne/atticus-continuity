@@ -1,13 +1,14 @@
 # Portable Context Loader Reference
 
-**Status:** IMPLEMENTED / UNEXECUTED
+**Status:** IMPLEMENTED / EXACT-REVISION EVIDENCE REQUIRED AFTER CHANGE
 
-This package provides a parser-neutral reference implementation for two Phase-2 continuity controls:
+This package provides provider-neutral reference controls for repository-first continuity:
 
 1. deterministic minimum-context bundle planning;
-2. structural continuity-checkpoint validation.
+2. structural continuity-checkpoint validation;
+3. fail-closed continuity-checkpoint preparation and local persistence.
 
-It is intentionally inert. It does not execute retrieved repository text, contact providers, write checkpoints, modify canonical state, or infer authority from routing metadata.
+The routing core remains inert: it does not execute retrieved repository text, contact providers, modify canonical state, or infer authority from routing metadata. The checkpoint writer is read-only by default and requires explicit write enablement before any filesystem mutation.
 
 ## Design boundary
 
@@ -70,27 +71,62 @@ It does **not**:
 
 Those are separate controls.
 
+## Checkpoint writer
+
+`CheckpointWriter` converts a validated checkpoint mapping into deterministic Markdown containing a machine-readable JSON payload.
+
+JSON is used deliberately because it can be serialized deterministically with the Python standard library and is also valid YAML 1.2. The writer does not depend on a YAML package.
+
+Mutation rules:
+
+- `write_enabled=False` by default;
+- invalid checkpoints cannot be prepared for write;
+- unsafe checkpoint IDs and path traversal are rejected;
+- existing checkpoint files are never overwritten;
+- `context/LATEST.md` is not updated unless explicitly requested;
+- a `LATEST.md` update requires the caller to supply the exact current text as a compare-and-swap precondition;
+- stale writers fail before creating a checkpoint when the pointer precondition no longer matches;
+- checkpoint contents remain continuity metadata and do not confer canonical authority.
+
+Reference sequence:
+
+```text
+checkpoint mapping
+    -> CheckpointValidator
+    -> prepare CheckpointWritePlan
+    -> explicit write enablement
+    -> exclusive checkpoint create
+    -> optional compare-and-swap LATEST update
+    -> CheckpointWriteReceipt
+```
+
+The local writer is not a GitHub commit adapter. Provider-specific repository commit semantics remain a separate layer.
+
 ## Tests
 
-The package includes standard-library `unittest` cases for:
-
-- CORE-only ambiguous routing;
-- ATTICUS runtime dependency resolution;
-- multi-route deduplication;
-- rejection of planned bundles;
-- dependency-cycle detection;
-- valid checkpoint acceptance;
-- missing required checkpoint fields;
-- explicit revision handling.
+The package includes standard-library `unittest` coverage for routing, validation, and checkpoint writing.
 
 Run from the repository root:
 
 ```bash
-python -m unittest reference.context_loader.test_loader -v
+python -m unittest \
+  reference.context_loader.test_loader \
+  reference.context_loader.test_checkpoint -v
 ```
 
-No claim of successful execution should be made until exact revision, interpreter version, command, and raw output are preserved under `experiments/results/` or an equivalent continuity test-results path.
+Checkpoint-writer tests cover:
+
+- valid plan preparation;
+- missing required fields;
+- path traversal rejection;
+- read-only default behavior;
+- exclusive create / no overwrite;
+- compare-and-swap requirement for `LATEST.md`;
+- stale-pointer rejection before checkpoint creation;
+- successful explicit pointer update.
+
+No successful test claim should be attached to a changed revision until the exact revision, interpreter/runtime, command, and raw output are preserved or independently retrievable from CI.
 
 ## Next implementation step
 
-Add a thin provider/filesystem adapter that parses repository YAML and feeds the mappings into this core. That adapter should remain separate from the deterministic planner so provider-specific retrieval behavior cannot silently redefine routing semantics.
+Add the thin repository/filesystem metadata adapter that parses or accepts parsed repository metadata and feeds it into this core. Keep provider-specific retrieval and commit behavior outside the deterministic planner/writer so a provider cannot silently redefine routing, validation, or checkpoint mutation semantics.
