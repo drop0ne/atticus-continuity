@@ -53,7 +53,8 @@ Goal: make provider memory optional.
 - [x] Build reference context loader
 - [x] Build structural checkpoint validator
 - [x] Execute and preserve initial context-loader/validator test evidence
-- [ ] Build checkpoint writer
+- [x] Build fail-closed checkpoint writer with explicit write enablement, exclusive create, and compare-and-swap `LATEST.md` update
+- [ ] Preserve exact-revision executed checkpoint-writer conformance evidence
 - [ ] Add repository/filesystem metadata adapter for the reference loader
 - [ ] Add provider adapter template
 - [ ] Add Claude adapter
@@ -143,8 +144,10 @@ P3 expand passive public evidence corpus
 P4 build isolated local laboratory
 ```
 
-Immediate P0 blockers are now narrower: exact source-byte recovery/hash verification, not uncertainty about whether PAC V–X existed in the definitive First Edition. When raw Library bytes are unavailable to the active tool environment, continue advancing reversible P1/P2 work without weakening the source-verification standard.
+Immediate P0 blockers are now narrower: exact source-byte recovery/hash verification, not uncertainty about whether PAC V–X existed in the definitive First Edition. File Library discovery still exposes extracted/indexed ATTICUS and PAC records, but this active tool path does not provide hashable raw Library bytes; do not substitute extracted-text similarity for byte identity. When raw source bytes remain unavailable, continue advancing reversible P1/P2 work without weakening the source-verification standard.
 
-The immediate P2 experiment backlog is now independent replication procedure + broader multi-agent sandbox scenarios; EXP-0004, EXP-0005, and EXP-0006 all have preserved executed PASS evidence for exact recorded revisions only.
+The immediate P1 backlog is exact-revision checkpoint-writer evidence, then the repository/filesystem metadata adapter and provider adapter template.
+
+The immediate P2 experiment backlog is independent replication procedure + broader multi-agent sandbox scenarios; EXP-0004, EXP-0005, and EXP-0006 all have preserved executed PASS evidence for exact recorded revisions only.
 
 Growth is measured by recoverability, evidence quality, portability, falsifiability, implementation quality, and safety—not repository size.
