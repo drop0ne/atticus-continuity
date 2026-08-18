@@ -35,7 +35,10 @@ jobs:
           echo "revision=${GITHUB_SHA}"
 
       - name: Portable continuity tests
-        run: python -m unittest reference.context_loader.test_loader -v
+        run: |
+          python -m unittest \
+            reference.context_loader.test_loader \
+            reference.context_loader.test_checkpoint -v
 
       - name: PAC gateway tests
         run: python -m unittest reference.pac_gateway.test_gateway reference.pac_gateway.test_plan reference.pac_gateway.test_exp0006 -v
