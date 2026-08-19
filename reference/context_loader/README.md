@@ -6,7 +6,8 @@ This package provides provider-neutral reference controls for repository-first c
 
 1. deterministic minimum-context bundle planning;
 2. structural continuity-checkpoint validation;
-3. fail-closed continuity-checkpoint preparation and local persistence.
+3. fail-closed continuity-checkpoint preparation and local persistence;
+4. a read-only filesystem metadata adapter for checked-out repositories.
 
 The routing core remains inert: it does not execute retrieved repository text, contact providers, modify canonical state, or infer authority from routing metadata. The checkpoint writer is read-only by default and requires explicit write enablement before any filesystem mutation.
 
@@ -24,6 +25,22 @@ A provider adapter may parse:
 and pass those mappings into `MappingRepository`.
 
 This allows providers with different native tooling to share the same routing and validation semantics.
+
+## Filesystem metadata adapter
+
+`FilesystemMetadataAdapter` bridges an ordinary checked-out repository into `MappingRepository` while keeping parsing provider-neutral through an injected `parser(text, source)` callable.
+
+It is read-only and fail-closed. It:
+
+- requires every resolved metadata path to remain beneath the repository root;
+- loads only bundles marked `ACTIVE` by the context manifest;
+- requires each active bundle to have an explicit file path;
+- requires the parsed bundle `id` to match the manifest bundle ID;
+- requires the bundle metadata itself to remain `ACTIVE`;
+- rejects missing required files and non-mapping parser results;
+- returns a source ledger recording the exact repository paths used to construct the in-memory metadata view.
+
+It does **not** make filesystem reachability, parser output, filename recency, or manifest presence canonical authority. Canonical resolution remains governed by `PORTABLE_BOOTSTRAP.md` and the repository's controlling manifest records.
 
 ## Hydration relation
 
@@ -55,7 +72,9 @@ The reference implementation reports and degrades when:
 - parsed bundle metadata is missing;
 - a dependency cycle is detected.
 
-For an ambiguous task under the current router policy, it returns CORE-only hydration plus a reassessment diagnostic.
+The filesystem adapter instead raises a deterministic `MetadataAdapterError` when required continuity metadata cannot be mapped safely into the core.
+
+For an ambiguous task under the current router policy, the loader returns CORE-only hydration plus a reassessment diagnostic.
 
 ## Checkpoint validation
 
@@ -104,14 +123,15 @@ The local writer is not a GitHub commit adapter. Provider-specific repository co
 
 ## Tests
 
-The package includes standard-library `unittest` coverage for routing, validation, and checkpoint writing.
+The package includes standard-library `unittest` coverage for routing, validation, checkpoint writing, and filesystem metadata mapping.
 
 Run from the repository root:
 
 ```bash
 python -m unittest \
   reference.context_loader.test_loader \
-  reference.context_loader.test_checkpoint -v
+  reference.context_loader.test_checkpoint \
+  reference.context_loader.test_adapter -v
 ```
 
 Checkpoint-writer tests cover:
@@ -125,8 +145,20 @@ Checkpoint-writer tests cover:
 - stale-pointer rejection before checkpoint creation;
 - successful explicit pointer update.
 
+Filesystem-adapter tests cover:
+
+- loading active bundle metadata;
+- excluding planned bundles;
+- end-to-end handoff into `PortableContextLoader`;
+- relative and absolute path escape rejection;
+- missing active-bundle file declarations;
+- bundle-ID mismatch;
+- manifest/bundle status disagreement;
+- missing required metadata files;
+- non-mapping parser output.
+
 No successful test claim should be attached to a changed revision until the exact revision, interpreter/runtime, command, and raw output are preserved or independently retrievable from CI.
 
 ## Next implementation step
 
-Add the thin repository/filesystem metadata adapter that parses or accepts parsed repository metadata and feeds it into this core. Keep provider-specific retrieval and commit behavior outside the deterministic planner/writer so a provider cannot silently redefine routing, validation, or checkpoint mutation semantics.
+Add the provider-adapter template that standardizes repository retrieval, parser integration, hydration-plan retrieval, capability reporting, and checkpoint handoff without allowing a provider to redefine the deterministic planner or writer semantics.
