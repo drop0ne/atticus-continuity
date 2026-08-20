@@ -1,4 +1,4 @@
-schema_version: 0.2
+schema_version: 0.3
 status: WORKING
 parent_manifest: ../manifest.yaml
 
@@ -7,6 +7,8 @@ latest_checkpoint_pointer: LATEST.md
 task_router: task-router.yaml
 session_state_schema: session-state.schema.yaml
 hydration_policy: hydration-policy.md
+provider_adapter_template: provider-adapters/TEMPLATE.md
+provider_adapter_index: provider-adapters/README.md
 
 bundles:
   CORE:
