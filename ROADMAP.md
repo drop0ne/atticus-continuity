@@ -48,7 +48,7 @@ Goal: make provider memory optional.
 - [x] ChatGPT provider adapter
 - [x] Create latest continuity checkpoint pointer
 - [x] Create initial task-specific bundles (`ATTICUS_RUNTIME`, `PAC_GOVERNANCE`)
-- [x] Build provider-neutral context manifest v0.2
+- [x] Build provider-neutral context manifest v0.3
 - [x] Define provider-neutral hydration policy
 - [x] Build reference context loader
 - [x] Build structural checkpoint validator
@@ -57,7 +57,7 @@ Goal: make provider memory optional.
 - [ ] Preserve exact-revision executed checkpoint-writer conformance evidence
 - [x] Add repository/filesystem metadata adapter for the reference loader
 - [ ] Preserve exact-revision executed filesystem-adapter conformance evidence
-- [ ] Add provider adapter template
+- [x] Add provider adapter template and provider-adapter status model
 - [ ] Add Claude adapter
 - [ ] Add Gemini adapter
 - [ ] Add local OpenAI-compatible adapter
@@ -147,7 +147,7 @@ P4 build isolated local laboratory
 
 Immediate P0 blockers remain exact source-byte recovery/hash verification. File Library discovery re-confirms two Markdown and two DOCX ATTICUS v6.5.0-ABG candidates, but this active tool path still exposes indexed/extracted content rather than a raw-byte materialization path; do not substitute extracted-text similarity for byte identity. The definitive PAC First Edition archive bytes also remain unrecovered. When raw source bytes remain unavailable, continue advancing reversible P1/P2 work without weakening the source-verification standard.
 
-The immediate P1 backlog is exact-revision checkpoint-writer/filesystem-adapter evidence, then the provider adapter template and provider-specific adapters. The filesystem adapter is implemented read-only with repository-root path containment, ACTIVE-bundle-only loading, bundle-ID/status consistency checks, explicit source-path accounting, and an injected parser boundary.
+The provider-neutral adapter template is now defined and registered in context manifest v0.3. The immediate P1 backlog is exact-revision checkpoint-writer/filesystem-adapter evidence, then provider-specific adapters and the cross-provider bootstrap conformance suite. Provider adapters must report capabilities, keep retrieval inert, preserve source/type provenance, distinguish read capability from write authority, and fail closed when required continuity state is unavailable.
 
 The immediate P2 experiment backlog is independent replication procedure + broader multi-agent sandbox scenarios; EXP-0004, EXP-0005, and EXP-0006 all have preserved executed PASS evidence for exact recorded revisions only.
 
