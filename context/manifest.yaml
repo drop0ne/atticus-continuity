@@ -1,4 +1,4 @@
-schema_version: 0.3
+schema_version: 0.4
 status: WORKING
 parent_manifest: ../manifest.yaml
 
@@ -44,7 +44,8 @@ provider_adapters:
   gemini:
     status: PLANNED
   local_openai_compatible:
-    status: PLANNED
+    file: provider-adapters/local-openai-compatible.md
+    status: WORKING
   llama_cpp_ollama:
     status: PLANNED
 
