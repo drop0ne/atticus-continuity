@@ -48,7 +48,7 @@ Goal: make provider memory optional.
 - [x] ChatGPT provider adapter
 - [x] Create latest continuity checkpoint pointer
 - [x] Create initial task-specific bundles (`ATTICUS_RUNTIME`, `PAC_GOVERNANCE`)
-- [x] Build provider-neutral context manifest v0.3
+- [x] Build provider-neutral context manifest v0.4
 - [x] Define provider-neutral hydration policy
 - [x] Build reference context loader
 - [x] Build structural checkpoint validator
@@ -60,9 +60,10 @@ Goal: make provider memory optional.
 - [x] Add provider adapter template and provider-adapter status model
 - [ ] Add Claude adapter
 - [ ] Add Gemini adapter
-- [ ] Add local OpenAI-compatible adapter
+- [x] Add local OpenAI-compatible adapter
 - [ ] Add llama.cpp/Ollama-style adapter
 - [ ] Create cross-provider bootstrap conformance suite
+- [ ] Execute local OpenAI-compatible adapter against a named local runtime/model and preserve evidence
 
 ## Phase 3 — Execute safety research
 
@@ -105,6 +106,7 @@ Goal: test continuity and governance on user-owned infrastructure.
 
 - [ ] Define network-isolated lab architecture
 - [ ] Define model/runtime abstraction layer
+- [x] Define local OpenAI-compatible continuity adapter
 - [ ] Implement local repository retrieval adapter
 - [ ] Implement controlled external-memory substrate
 - [ ] Implement synthetic multi-agent environment
@@ -147,7 +149,7 @@ P4 build isolated local laboratory
 
 Immediate P0 blockers remain exact source-byte recovery/hash verification. File Library discovery re-confirms two Markdown and two DOCX ATTICUS v6.5.0-ABG candidates, but this active tool path still exposes indexed/extracted content rather than a raw-byte materialization path; do not substitute extracted-text similarity for byte identity. The definitive PAC First Edition archive bytes also remain unrecovered. When raw source bytes remain unavailable, continue advancing reversible P1/P2 work without weakening the source-verification standard.
 
-The provider-neutral adapter template is now defined and registered in context manifest v0.3. The immediate P1 backlog is exact-revision checkpoint-writer/filesystem-adapter evidence, then provider-specific adapters and the cross-provider bootstrap conformance suite. Provider adapters must report capabilities, keep retrieval inert, preserve source/type provenance, distinguish read capability from write authority, and fail closed when required continuity state is unavailable.
+The provider-neutral adapter template is registered in context manifest v0.4. A working local OpenAI-compatible adapter is now defined with an explicit host-side continuity boundary, conditional capability matrix, read-only default, bounded hydration flow, stale-write protection requirements, runtime identity record, and conformance cases. It is not `TESTED` until executed against a named runtime/model. The immediate P1 backlog is exact-revision checkpoint-writer/filesystem-adapter evidence, Claude/Gemini/llama.cpp-Ollama adapters, and the cross-provider bootstrap conformance suite.
 
 The immediate P2 experiment backlog is independent replication procedure + broader multi-agent sandbox scenarios; EXP-0004, EXP-0005, and EXP-0006 all have preserved executed PASS evidence for exact recorded revisions only.
 
