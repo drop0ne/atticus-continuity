@@ -8,6 +8,7 @@ They do **not** redefine ATTICUS, PAC, canonical state, or repository authority.
 
 - `TEMPLATE.md` — required structure and conformance expectations for new adapters.
 - `chatgpt.md` — current ChatGPT/OpenAI working adapter.
+- `local-openai-compatible.md` — working adapter for user-controlled local runtimes exposing an OpenAI-compatible API surface; not yet tested against a named runtime/model.
 - future provider-specific adapters live beside these files.
 
 ## Status model
