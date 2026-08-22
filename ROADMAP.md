@@ -48,7 +48,7 @@ Goal: make provider memory optional.
 - [x] ChatGPT provider adapter
 - [x] Create latest continuity checkpoint pointer
 - [x] Create initial task-specific bundles (`ATTICUS_RUNTIME`, `PAC_GOVERNANCE`)
-- [x] Build provider-neutral context manifest v0.4
+- [x] Build provider-neutral context manifest v0.5
 - [x] Define provider-neutral hydration policy
 - [x] Build reference context loader
 - [x] Build structural checkpoint validator
@@ -62,8 +62,11 @@ Goal: make provider memory optional.
 - [ ] Add Gemini adapter
 - [x] Add local OpenAI-compatible adapter
 - [ ] Add llama.cpp/Ollama-style adapter
-- [ ] Create cross-provider bootstrap conformance suite
+- [x] Create cross-provider bootstrap conformance suite
+- [ ] Preserve exact-revision executed validator evidence for the cross-provider conformance suite
+- [ ] Execute ChatGPT adapter under CPBC-01 through CPBC-12 and preserve named-provider evidence
 - [ ] Execute local OpenAI-compatible adapter against a named local runtime/model and preserve evidence
+- [ ] Reach three distinct provider/model-family PASS records under one CPBC contract
 
 ## Phase 3 — Execute safety research
 
@@ -147,9 +150,9 @@ P3 expand passive public evidence corpus
 P4 build isolated local laboratory
 ```
 
-Immediate P0 blockers remain exact source-byte recovery/hash verification. File Library discovery re-confirms two Markdown and two DOCX ATTICUS v6.5.0-ABG candidates, but this active tool path still exposes indexed/extracted content rather than a raw-byte materialization path; do not substitute extracted-text similarity for byte identity. The definitive PAC First Edition archive bytes also remain unrecovered. When raw source bytes remain unavailable, continue advancing reversible P1/P2 work without weakening the source-verification standard.
+Immediate P0 blockers remain exact source-byte recovery/hash verification. File Library discovery re-confirms two Markdown and two DOCX ATTICUS v6.5.0-ABG candidates, but the active retrieval path still exposes indexed/extracted content rather than a raw-byte materialization path; do not substitute extracted-text similarity for byte identity. The definitive PAC First Edition archive bytes also remain unrecovered. When raw source bytes remain unavailable, continue advancing reversible P1/P2 work without weakening the source-verification standard.
 
-The provider-neutral adapter template is registered in context manifest v0.4. A working local OpenAI-compatible adapter is now defined with an explicit host-side continuity boundary, conditional capability matrix, read-only default, bounded hydration flow, stale-write protection requirements, runtime identity record, and conformance cases. It is not `TESTED` until executed against a named runtime/model. The immediate P1 backlog is exact-revision checkpoint-writer/filesystem-adapter evidence, Claude/Gemini/llama.cpp-Ollama adapters, and the cross-provider bootstrap conformance suite.
+The provider-neutral adapter layer is now registered in context manifest v0.5. A common twelve-scenario cross-provider bootstrap contract (`CPBC-01` through `CPBC-12`) and executable evidence validator now exist. This makes provider portability falsifiable without treating adapter documentation as proof. The immediate P1 backlog is exact-revision executed evidence for the checkpoint writer/filesystem adapter/conformance validator, Claude/Gemini/llama.cpp-Ollama adapters, and first named-provider CPBC runs.
 
 The immediate P2 experiment backlog is independent replication procedure + broader multi-agent sandbox scenarios; EXP-0004, EXP-0005, and EXP-0006 all have preserved executed PASS evidence for exact recorded revisions only.
 
