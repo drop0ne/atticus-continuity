@@ -1,4 +1,4 @@
-schema_version: 0.4
+schema_version: 0.5
 status: WORKING
 parent_manifest: ../manifest.yaml
 
@@ -9,6 +9,8 @@ session_state_schema: session-state.schema.yaml
 hydration_policy: hydration-policy.md
 provider_adapter_template: provider-adapters/TEMPLATE.md
 provider_adapter_index: provider-adapters/README.md
+provider_conformance_spec: provider-adapters/CONFORMANCE.md
+provider_conformance_validator: ../reference/context_loader/provider_conformance.py
 
 bundles:
   CORE:
@@ -67,3 +69,22 @@ hydration_rules:
   dependency_cycle_behavior: STOP_AND_REPORT
   external_component_bindings_require_immutable_pins: true
   bundle_match_confers_authority: false
+
+provider_conformance:
+  scenario_ids:
+    - CPBC-01
+    - CPBC-02
+    - CPBC-03
+    - CPBC-04
+    - CPBC-05
+    - CPBC-06
+    - CPBC-07
+    - CPBC-08
+    - CPBC-09
+    - CPBC-10
+    - CPBC-11
+    - CPBC-12
+  pass_requires_all_required_scenarios: true
+  blocked_counts_as_pass: false
+  not_run_counts_as_pass: false
+  exact_revision_scope: true
