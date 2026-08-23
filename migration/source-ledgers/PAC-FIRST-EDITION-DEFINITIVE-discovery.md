@@ -1,42 +1,38 @@
-# PAC First Edition Definitive — Source Discovery Ledger
+# PAC First Edition Definitive — Source Recovery Ledger
 
-**Status:** SOURCE_IDENTITY_DOCUMENTED / DEFINITIVE_ARCHIVE_BYTES_NOT_YET_LOCATED  
-**Evidence class:** user-controlled Library artifact + later internal manuscript references  
-**Do not treat this ledger as a substitute for the original archive.**
+**Status:** DEFINITIVE_MEMBER_SET_RECOVERED / TAR_PAYLOAD_HASHED / REPOSITORY_RAW_BLOB_PENDING_TRANSPORT  
+**Evidence class:** user-designated source artifact + prior user-controlled provenance record  
+**Controlling integrity record:** `migration/source-artifacts/pac/PAC_FIRST_EDITION_DEFINITIVE-20260823.manifest.yaml`
 
-## Primary discovered record
+## 2026-08-23 recovery event
 
-Library artifact:
-
-```text
-PAC_SESSION_MEMORY_CELL.txt
-file_id: file_00000000524871fdaf7f4d25ab4aa2e4
-created: 2026-03-14T00:43:59Z
-```
-
-The record identifies itself as an ATTICUS HCII session memory cell for a 2026-03-13 session whose objective was to produce the complete publication-ready First Edition of the Power Avoidance Canon.
-
-It records:
+The operator supplied the archive:
 
 ```text
-Archive: PAC_FIRST_EDITION_DEFINITIVE.tar.gz
-Approximate archive size: 832K
-File count: 24
+PAC_FIRST_EDITION_DEFINITIVE(20260823-114607).tar
 ```
 
-The archive itself was not returned by the current Library searches. Its existence is therefore **documented by a provenance artifact**, while the exact archive bytes remain `NOT_YET_LOCATED`.
+and identified it as PAC, then explicitly instructed that the PAC TAR be encoded/mirrored into the continuity repository. The supplied file was inspected directly before any repository update.
 
-## Definitive manifest recorded by the memory cell
+Observed archive properties:
 
-### Front matter
+```text
+format: POSIX TAR
+size_bytes: 931840
+sha256: 2198f146bc56fe97d754a4e87bf1ecd9c3f03050b1ace2b215b5169c62b9a9a8
+regular_file_members: 24
+```
+
+All 24 members were individually hashed. All 23 DOCX members are structurally valid ZIP/Office packages and the SVG is valid XML. The complete member-level hashes, byte sizes, TAR ordering, and logical PAC ordering are recorded in the machine-readable manifest above.
+
+## Match to the historical definitive manifest
+
+The recovered member set maps to all 24 roles recorded by the earlier `PAC_SESSION_MEMORY_CELL.txt`:
 
 1. Author's Preface
 2. How to Read This Book
 3. Introduction
 4. Volume 0 — Orientation
-
-### Canonical volumes
-
 5. Volume I — Foundations
 6. Volume II — Psychology and Moral Failure
 7. Volume III — Systems Design
@@ -47,106 +43,83 @@ The archive itself was not returned by the current Library searches. Its existen
 12. Volume VIII — Operational Discipline
 13. Volume IX — Synthesis
 14. Volume X — Termination
-
-### Governance layer
-
 15. Amendment Addendum
-
-### Appendices
-
 16. Appendix A — Operationalizing Contestability
 17. Appendix B — Policy Applications
 18. Appendix C — Intellectual Lineage
 19. Appendix D — Criticisms and Responses
 20. Appendix E — Worked Institutional Cases
 21. Appendix F — Red Team Assessment
-
-### Back matter
-
 22. Glossary of Canon Terms
+23. Architecture Diagram — SVG
+24. Architecture Diagram — DOCX companion
 
-### Supplementary artifacts
+The recovered physical filename for Appendix F is `RED_TEAM_ASSESSMENT_PAC.docx`; it is not prefixed `APPENDIX_`. This resolves the previous filename ambiguity without changing the logical Appendix F role recorded by the historical manifest.
 
-23. Architecture Diagram (SVG)
-24. Architecture Diagram (DOCX companion)
+## Historical wrapper distinction
 
-The memory cell estimates the total corpus at approximately 490K+ characters.
-
-## Volume V–X evidence
-
-The memory cell records a dedicated expansion phase for Volumes V–X:
-
-- Volume V — AI Architecture: approximately 27,958 characters, 14 chapters.
-- Volume VI — Everyday Amplification: approximately 17,184 characters, 11 chapters.
-- Volume VII — Failure Library: approximately 15,593 characters, 11 chapters.
-- Volume VIII — Operational Discipline: approximately 13,280 characters, 11 chapters.
-- Volume IX — Synthesis: approximately 13,783 characters, 11 chapters.
-- Volume X — Termination: approximately 9,840 characters, 9 chapters.
-
-This is materially stronger than the previous `NOT_YET_LOCATED` state: Volumes V–X are now **documented components of a named definitive First Edition archive**. However, their exact standalone files or the definitive archive bytes have not yet been located in the searchable Library.
-
-## Important provenance caveat for Volume V
-
-The memory cell states that standalone Volume V was not among the original uploads used at the start of the session and that Volume V was reconstructed from a Volume III walkthrough plus prior session references before later expansion.
-
-Therefore:
+The earlier provenance record named:
 
 ```text
-existence_in_definitive_first_edition: SUPPORTED_BY_PRIMARY_SESSION_RECORD
-standalone_pre-session_volume_v_source: NOT_ESTABLISHED
-exact_definitive_volume_v_bytes: NOT_YET_LOCATED
+PAC_FIRST_EDITION_DEFINITIVE.tar.gz
+approximate size: 832K
+file count: 24
 ```
 
-This distinction must remain visible in lineage work.
-
-## Fork resolution evidence
-
-The record documents two competing later-volume structures and states that the operator uploaded a canonical 12-file set resolving the fork to the branch in which:
+The 2026-08-23 supplied artifact is an **uncompressed TAR**, not the historical gzip wrapper. Therefore:
 
 ```text
-VI = Everyday Amplification
-VII = Failure Library
-VIII = Operational Discipline
-IX = Synthesis
-X = Termination
+canonical 24-member source set: RECOVERED_AND_HASHED
+supplied TAR payload bytes: RECOVERED_AND_HASHED
+historical .tar.gz wrapper bytes: NOT_VERIFIED
 ```
 
-This is evidence of an operator-controlled fork decision in that session. It does not independently prove the byte identity of the final archive.
+Do not claim that the SHA-256 of the supplied TAR is the hash of the historical `.tar.gz` byte stream. Gzip framing, headers, timestamps, compression implementation, and compression level can change wrapper bytes while preserving the same TAR payload.
 
-## Hash evidence
+## Previously recorded Canon Hash
 
-The memory cell contains:
+The historical memory cell contains:
 
 ```text
-Canon Hash: SHA-256:96b9c30b092d0a0adb34c8d0252a1100629569f85161f9e649bef4ce5756b8b7
+SHA-256:96b9c30b092d0a0adb34c8d0252a1100629569f85161f9e649bef4ce5756b8b7
 ```
 
-**Hash scope is unresolved.** The record does not establish whether this value hashes the final TAR archive, a canonical text aggregation, a prior hydration package, or another object. Do not label it as the definitive archive hash until its scope is independently verified.
+That value does not equal the recovered TAR SHA-256. Its scope remains unresolved and must not be relabeled as an archive hash without identifying the exact object it covered.
 
-## Corroborating internal references
+## Volume V provenance caveat retained
 
-Later user-controlled manuscript records describe their P1 source lineage as "Power Avoidance Canon, First Edition Definitive: Volumes 0-X, appendices, red-team assessment, architecture diagram, and memory-cell records." These references corroborate that the definitive First Edition existed as an internal source package, but remain secondary to the original archive bytes.
+The earlier session record states that standalone Volume V was not among the original session uploads and was reconstructed before the later definitive expansion. Recovery of the final definitive Volume V bytes does not erase that historical lineage distinction.
 
 ## Migration classification
 
-| Object | Discovery status | Migration status |
-|---|---|---|
-| PAC First Edition definitive identity | DOCUMENTED | LEDGER_CREATED |
-| PAC Volumes V-X existence in definitive edition | SUPPORTED | MANIFEST_ONLY |
-| `PAC_FIRST_EDITION_DEFINITIVE.tar.gz` exact bytes | NOT_YET_LOCATED | BLOCKED_PENDING_SOURCE_BYTES |
-| Archive SHA-256 | UNKNOWN | BLOCKED_PENDING_BYTES |
-| Scope of recorded `96b9...` hash | UNKNOWN | REQUIRES_VERIFICATION |
+| Object | Current status |
+|---|---|
+| PAC First Edition definitive identity | OPERATOR_DESIGNATED / SUPPORTED_BY_PRIOR_PROVENANCE |
+| Complete logical 24-member First Edition set | RECOVERED_AND_HASHED |
+| Volumes 0–X definitive member bytes | RECOVERED_AND_HASHED |
+| Appendices A–F definitive member bytes | RECOVERED_AND_HASHED |
+| Glossary and architecture artifacts | RECOVERED_AND_HASHED |
+| Supplied uncompressed TAR payload | RECOVERED_AND_HASHED |
+| Supplied TAR SHA-256 | `2198f146bc56fe97d754a4e87bf1ecd9c3f03050b1ace2b215b5169c62b9a9a8` |
+| Exact historical gzip wrapper bytes | NOT_VERIFIED |
+| Historical `96b9...` hash scope | UNRESOLVED |
+| Raw TAR bytes inside GitHub | PENDING_BINARY_CAPABLE_TRANSPORT |
+| Hash/member manifest inside GitHub | MIRRORED |
 
-## Next verification steps
+## Repository transport limitation
 
-1. Search local/user-controlled storage for `PAC_FIRST_EDITION_DEFINITIVE.tar.gz` and close filename variants.
-2. If located, preserve the original bytes before extraction.
-3. Calculate SHA-256 of the archive and all 24 members.
-4. Compare the archive manifest against this session-memory manifest.
-5. Extract UTF-8 source representations without editorial rewriting.
-6. Assign stable IDs to front matter, Volumes 0-X, appendices, glossary, and supplementary artifacts.
-7. Preserve the session memory cell itself as lineage evidence, but never promote it above the exact archive once the archive is recovered.
+The current connected GitHub write surface can create text/Git blobs but does not expose the locally mounted TAR as a direct file parameter and does not expose a repository credential inside the execution container. The raw 931,840-byte TAR therefore cannot be defensibly uploaded byte-for-byte through this session without routing a megabyte-scale text encoding through the model.
+
+The repository mirror now preserves the exact TAR hash, byte size, complete 24-member hash manifest, source designation, and recovery state. A later binary-capable transport must upload the exact local TAR and verify SHA-256 equality before the repository status becomes `REPOSITORY_MIRRORED_EXACT_BYTES`.
+
+## Next source-preservation steps
+
+1. Move the exact TAR through a binary-capable GitHub upload path and verify SHA-256 after retrieval.
+2. Extract source text from the recovered definitive DOCX files without editorial rewriting.
+3. Build a stable PAC volume/chapter index mapped back to member hashes.
+4. Preserve the historical `.tar.gz` wrapper only if its exact bytes are later located; it is lineage evidence, not a reason to delay use of the recovered definitive member set.
+5. Continue ATTICUS exact-byte preservation as the remaining P0 source-recovery problem.
 
 ## Authority rule
 
-This ledger updates **discovery status only**. It does not independently redesign, amend, or canonicalize PAC content.
+This recovery record mirrors operator-designated source state. It does not independently amend PAC content. The recovered source bytes control over earlier summaries or reconstruction notes for the same definitive edition.

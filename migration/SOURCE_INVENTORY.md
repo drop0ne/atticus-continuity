@@ -5,63 +5,50 @@
 
 ## Power Avoidance Canon
 
-Current Library discovery now supports two distinct source layers:
+### Definitive First Edition recovered
 
-1. directly located standalone source artifacts for Volumes I–IV; and
-2. a provenance memory cell documenting a named definitive First Edition archive containing Volumes 0–X plus appendices and supplementary files.
+On 2026-08-23 the operator supplied `PAC_FIRST_EDITION_DEFINITIVE(20260823-114607).tar` as PAC and explicitly authorized repository mirroring.
 
-Detailed ledger: `migration/source-ledgers/PAC-FIRST-EDITION-DEFINITIVE-discovery.md`
+Direct verification established:
+
+```text
+format: POSIX TAR
+size_bytes: 931840
+sha256: 2198f146bc56fe97d754a4e87bf1ecd9c3f03050b1ace2b215b5169c62b9a9a8
+member_count: 24
+```
+
+Detailed ledger: `migration/source-ledgers/PAC-FIRST-EDITION-DEFINITIVE-discovery.md`  
+Machine-readable member manifest: `migration/source-artifacts/pac/PAC_FIRST_EDITION_DEFINITIVE-20260823.manifest.yaml`
 
 | Work | Discovery status | Migration status |
 |---|---|---|
-| Power Avoidance Canon — Volume I | LOCATED_STANDALONE | NOT_YET_MIGRATED_FULL_TEXT |
-| Power Avoidance Canon — Volume II | LOCATED_STANDALONE | NOT_YET_MIGRATED_FULL_TEXT |
-| Power Avoidance Canon — Volume III | LOCATED_STANDALONE | NOT_YET_MIGRATED_FULL_TEXT |
-| Power Avoidance Canon — Volume IV | LOCATED_STANDALONE | NOT_YET_MIGRATED_FULL_TEXT |
-| Power Avoidance Canon — Volume V | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
-| Power Avoidance Canon — Volume VI | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
-| Power Avoidance Canon — Volume VII | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
-| Power Avoidance Canon — Volume VIII | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
-| Power Avoidance Canon — Volume IX | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
-| Power Avoidance Canon — Volume X | DOCUMENTED_IN_DEFINITIVE_MANIFEST | EXACT_DEFINITIVE_BYTES_NOT_YET_LOCATED |
-| `PAC_FIRST_EDITION_DEFINITIVE.tar.gz` | NAMED_BY_PRIMARY_SESSION_RECORD | ARCHIVE_BYTES_NOT_YET_LOCATED |
+| Power Avoidance Canon — Volume 0 | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Power Avoidance Canon — Volume I | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Power Avoidance Canon — Volume II | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Power Avoidance Canon — Volume III | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Power Avoidance Canon — Volume IV | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Power Avoidance Canon — Volume V | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Power Avoidance Canon — Volume VI | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Power Avoidance Canon — Volume VII | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Power Avoidance Canon — Volume VIII | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Power Avoidance Canon — Volume IX | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Power Avoidance Canon — Volume X | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Front matter / Amendment Addendum | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Appendices A–F | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Glossary / architecture artifacts | RECOVERED_IN_DEFINITIVE_TAR | HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING |
+| Supplied definitive TAR payload | RECOVERED_AND_HASHED | REPOSITORY_HASH_MANIFEST_MIRRORED / RAW_BLOB_PENDING |
+| Historical `PAC_FIRST_EDITION_DEFINITIVE.tar.gz` wrapper | NAMED_BY_PRIMARY_SESSION_RECORD | EXACT_GZIP_WRAPPER_BYTES_NOT_VERIFIED |
 
-The previous `NOT_YET_LOCATED` state for Volumes V–X is therefore retired. Their existence as components of the definitive First Edition is supported by the user-controlled `PAC_SESSION_MEMORY_CELL.txt`, which records the complete 24-file archive manifest and a dedicated V–X expansion phase. This does **not** mean the exact definitive source bytes have been recovered.
+The recovered 24-member set matches the historical logical manifest. Appendix F is physically named `RED_TEAM_ASSESSMENT_PAC.docx` in the recovered TAR.
 
-The memory cell also records that standalone Volume V was not in the original session uploads and was reconstructed from a Volume III walkthrough plus prior-session references before expansion. That provenance distinction must remain visible.
+The prior provenance record's `Canon Hash` value `96b9c30b...5756b8b7` does not equal the recovered TAR SHA-256. Its hashed object remains unknown.
 
-### Located standalone filenames for Volumes I–IV
+Standalone pre-definitive PAC candidates remain useful for lineage and duplicate comparison, but they no longer control selection of the definitive member set after the operator supplied the definitive TAR.
 
-Observed candidate source filenames include:
+### Repository byte-mirror boundary
 
-```text
-THE POWER AVOIDANCE CANON Vol I.docx
-THE POWER AVOIDANCE CANON Vol I.odt
-THE POWER AVOIDANCE CANON Vol I(1).odt
-THE POWER AVOIDANCE CANON Vol II.odt
-THE POWER AVOIDANCE CANON Vol II(1).odt
-THE POWER AVOIDANCE CANON Vol III.docx
-THE POWER AVOIDANCE CANON Vol III.odt
-THE POWER AVOIDANCE CANON Vol IV.docx
-THE POWER AVOIDANCE CANON Vol IV.odt
-THE POWER AVOIDANCE CANON Vol IV(1).odt
-```
-
-Duplicate-looking filenames require exact byte hashes, document metadata, and textual comparison before any edition is collapsed into a single source identity.
-
-### Definitive First Edition evidence
-
-The discovered memory cell names:
-
-```text
-PAC_FIRST_EDITION_DEFINITIVE.tar.gz
-approximate size: 832K
-file count: 24
-```
-
-Its manifest includes front matter, Volume 0, Volumes I–X, an Amendment Addendum, Appendices A–F, a glossary, and architecture-diagram artifacts.
-
-The same memory cell contains a `Canon Hash` value, but the object covered by that hash is not established. It must not be labeled as the archive hash until verified against recovered bytes.
+The exact TAR is locally available and hashed. The currently connected GitHub write surface does not expose a local-file binary upload path, so the repository currently mirrors the byte size, archive SHA-256, all member SHA-256 values, and provenance—not the raw TAR blob itself. Any later raw upload must hash to `2198f146bc56fe97d754a4e87bf1ecd9c3f03050b1ace2b215b5169c62b9a9a8` before being accepted as the exact mirror.
 
 ## ATTICUS
 
@@ -128,14 +115,14 @@ For each source artifact:
 1. materialize or otherwise obtain exact original bytes through authorized access;
 2. calculate SHA-256;
 3. preserve original filename and source metadata;
-4. compare duplicate candidates;
-5. identify canonical edition only from evidence or explicit author designation;
+4. compare duplicate candidates where lineage still matters;
+5. identify canonical edition only from evidence or explicit author/operator designation;
 6. extract text without editorial rewriting;
 7. split into stable-address chunks/chapters where useful;
 8. preserve exact source-to-chunk mapping;
 9. generate retrieval bundle/index metadata;
-10. mark migration verified only after completeness checks.
+10. mark repository byte mirroring verified only after a repository retrieval hashes to the source artifact's recorded SHA-256.
 
 ## Completion rule
 
-No summary, invariant extraction, runtime bundle, or memory cell is a substitute for preservation of the complete available source bytes.
+No summary, invariant extraction, runtime bundle, or memory cell is a substitute for preservation of the complete available source bytes. A hash manifest is an integrity record, not a replacement for the raw artifact.

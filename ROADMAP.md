@@ -22,18 +22,20 @@ Goal: prevent loss of the actual PAC and ATTICUS source material.
 - [x] Source migration inventory
 - [x] Document PAC definitive First Edition archive identity and provenance manifest
 - [x] Document ATTICUS v6.5.0-ABG duplicate source set and textual-equivalence evidence
-- [ ] Hash and compare duplicate PAC candidates
-- [ ] Preserve complete PAC Volume I source
-- [ ] Preserve complete PAC Volume II source
-- [ ] Preserve complete PAC Volume III source
-- [ ] Preserve complete PAC Volume IV source
 - [x] Resolve PAC Volumes V–X existence/status from primary session record
-- [ ] Recover exact definitive PAC First Edition archive bytes or exact V–X source files
+- [x] Recover operator-designated definitive PAC First Edition TAR payload with 24 members
+- [x] Calculate SHA-256 for the recovered TAR and all 24 members
+- [x] Resolve Appendix F physical filename as `RED_TEAM_ASSESSMENT_PAC.docx`
+- [x] Preserve machine-readable PAC archive/member integrity manifest in repository
+- [ ] Mirror the exact 931,840-byte PAC TAR blob through a binary-capable GitHub transport and verify repository-retrieved SHA-256
+- [ ] Locate/verify the exact historical `.tar.gz` wrapper if it still exists; wrapper recovery is lineage-only and does not block use of the recovered definitive member set
+- [ ] Extract exact PAC source text from the recovered definitive DOCX members without editorial rewriting
+- [ ] Build stable PAC source/chapter index mapped to definitive member hashes
+- [ ] Hash and compare standalone pre-definitive PAC candidates where useful for lineage
 - [ ] Hash and compare ATTICUS v6.5.0-ABG full-stack candidates
 - [ ] Diff Library ATTICUS Markdown against repository canonical representation
 - [ ] Preserve complete canonical ATTICUS v6.5.0-ABG source with verified completeness
 - [x] Build stable ATTICUS source-section/module index
-- [ ] Build stable PAC source/chapter index after exact source recovery
 - [ ] Preserve AMAS-Symbalics manuscript sources separately
 
 ## Phase 2 — Platform-independent continuity
@@ -151,10 +153,12 @@ P3 expand passive public evidence corpus
 P4 build isolated local laboratory
 ```
 
-Immediate P0 blockers remain exact source-byte recovery/hash verification. File Library discovery re-confirms two Markdown and two DOCX ATTICUS v6.5.0-ABG candidates, but the currently available indexed retrieval path still does not establish byte identity; do not substitute extracted-text similarity for byte identity. The definitive PAC First Edition archive bytes also remain unrecovered. When raw source bytes remain unavailable, continue advancing reversible P1/P2 work without weakening the source-verification standard.
+PAC P0 materially advanced on 2026-08-23: the operator supplied the definitive 24-member TAR payload, the TAR and every member were hashed, and the complete integrity manifest is now repository-tracked. The remaining PAC preservation gap is transport of the exact raw TAR bytes into GitHub through a binary-capable path, followed by repository-side hash verification. Recovery of the historical gzip wrapper is a lineage question rather than a blocker for the definitive 24-member source set.
 
-The provider-neutral adapter layer is now registered in context manifest v0.6. ChatGPT, Claude, and local OpenAI-compatible adapters are `WORKING`; Claude's adapter is grounded in current Anthropic-documented GitHub integration and MCP/connector capability paths but remains `NOT_RUN` under CPBC. The common twelve-scenario cross-provider bootstrap contract (`CPBC-01` through `CPBC-12`) and executable evidence validator remain the portability evidence standard. The immediate P1 backlog is exact-revision executed evidence for the checkpoint writer/filesystem adapter/conformance validator, Gemini and llama.cpp/Ollama adapters, and first named-provider CPBC runs.
+ATTICUS remains the main unresolved source-recovery problem: two Markdown and two DOCX v6.5.0-ABG full-stack candidates are known, but exact duplicate byte comparison and complete repository/source diff remain outstanding.
 
-The immediate P2 experiment backlog is independent replication procedure + broader multi-agent sandbox scenarios; EXP-0004, EXP-0005, and EXP-0006 all have preserved executed PASS evidence for exact recorded revisions only.
+The provider-neutral adapter layer is registered in context manifest v0.6. ChatGPT, Claude, and local OpenAI-compatible adapters are `WORKING`; the common twelve-scenario cross-provider bootstrap contract (`CPBC-01` through `CPBC-12`) remains the portability evidence standard. The immediate P1 backlog is exact-revision executed evidence for the checkpoint writer/filesystem adapter/conformance validator, Gemini and llama.cpp/Ollama adapters, and first named-provider CPBC runs.
+
+The immediate P2 experiment backlog is independent replication procedure + broader multi-agent sandbox scenarios; EXP-0004, EXP-0005, and EXP-0006 have preserved executed PASS evidence for exact recorded revisions only.
 
 Growth is measured by recoverability, evidence quality, portability, falsifiability, implementation quality, and safety—not repository size.

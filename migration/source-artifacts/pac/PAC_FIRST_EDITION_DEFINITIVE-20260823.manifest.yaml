@@ -1,0 +1,190 @@
+schema_version: '1.0'
+artifact_id: PAC-FIRST-EDITION-DEFINITIVE-20260823
+status: RECOVERED_HASHED_LOCAL / RAW_REPOSITORY_BLOB_PENDING_TRANSPORT
+operator_designation: User supplied this TAR as PAC on 2026-08-23 and explicitly authorized repository mirroring.
+local_source:
+  filename: PAC_FIRST_EDITION_DEFINITIVE(20260823-114607).tar
+  format_observed: POSIX tar archive
+  size_bytes: 931840
+  sha256: 2198f146bc56fe97d754a4e87bf1ecd9c3f03050b1ace2b215b5169c62b9a9a8
+  member_count: 24
+historical_provenance:
+  named_archive: PAC_FIRST_EDITION_DEFINITIVE.tar.gz
+  recorded_approximate_size: 832K
+  recorded_member_count: 24
+  gzip_wrapper_identity: NOT_VERIFIED_FROM_SUPPLIED_UNCOMPRESSED_TAR
+  recorded_canon_hash: 96b9c30b092d0a0adb34c8d0252a1100629569f85161f9e649bef4ce5756b8b7
+  recorded_canon_hash_scope: UNRESOLVED
+repository_transport:
+  raw_tar_blob: PENDING_BINARY_CAPABLE_UPLOAD_PATH
+  reason: Current connected GitHub write surface accepts text/blob content but does not expose the local TAR file as a file parameter or container credential.
+  integrity_rule: Any future uploaded raw TAR must hash to local_source.sha256 before status is promoted to REPOSITORY_MIRRORED_EXACT_BYTES.
+members:
+- logical_index: 1
+  tar_member_index: 9
+  role: front_matter
+  title: Authors Preface
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_AUTHORS_PREFACE.docx
+  size_bytes: 38315
+  sha256: 9e616f60d61f9d011b7a0253583f23aa6f830e25dd5b94baf184af7066fbcb3c
+- logical_index: 2
+  tar_member_index: 17
+  role: front_matter
+  title: How to Read This Book
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_HOW_TO_READ.docx
+  size_bytes: 37722
+  sha256: 6f515174452605d13cd0e8dede1d4bfe38bf62cb25d2f84c1574479bc56bfc60
+- logical_index: 3
+  tar_member_index: 1
+  role: front_matter
+  title: Introduction
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_INTRODUCTION.docx
+  size_bytes: 40524
+  sha256: 5854d1e3c09198aa3cb101cc4da36415d0b265c6e07ccd214d2db5dedc6755e5
+- logical_index: 4
+  tar_member_index: 2
+  role: volume
+  title: Volume 0 — Orientation
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_0.docx
+  size_bytes: 39853
+  sha256: ddec5be176b77e9d0275e6316e300f39ba8e2f01894ab9fe31332feaecd4a28e
+- logical_index: 5
+  tar_member_index: 3
+  role: volume
+  title: Volume I — Foundations
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_I.docx
+  size_bytes: 35209
+  sha256: d8535ea803c121c9a331338dd95a4b3181bb14ee9f2f7da9573d4a722966ef36
+- logical_index: 6
+  tar_member_index: 21
+  role: volume
+  title: Volume II — Psychology and Moral Failure
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_II.docx
+  size_bytes: 30169
+  sha256: c4d7cb156c78fc86d7848c3eb9337d4f594cd4601641cfb84bdc58c9406ad7e4
+- logical_index: 7
+  tar_member_index: 24
+  role: volume
+  title: Volume III — Systems Design
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_III.docx
+  size_bytes: 68695
+  sha256: 8bf81a58e493267fe0ea6980e4949f5e205a1221a032d154874a6e0545ae9036
+- logical_index: 8
+  tar_member_index: 6
+  role: volume
+  title: Volume IV — Law and Institutions
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_IV.docx
+  size_bytes: 42424
+  sha256: 753a721846ddda970294269ec5fe8f1d2132ef0f92c249cc2a4d1a9fa2ede177
+- logical_index: 9
+  tar_member_index: 11
+  role: volume
+  title: Volume V — AI Architecture
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_V.docx
+  size_bytes: 47486
+  sha256: e5e0f312ef61ade45ac65c635a47f08be88d38dd856309a3e7b98cfd368f506d
+- logical_index: 10
+  tar_member_index: 4
+  role: volume
+  title: Volume VI — Everyday Amplification
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_VI.docx
+  size_bytes: 43344
+  sha256: 8fc7d4c65819711680dca5bf7067bf70176a7088aa7c0c0409315230997c300f
+- logical_index: 11
+  tar_member_index: 10
+  role: volume
+  title: Volume VII — Failure Library
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_VII.docx
+  size_bytes: 42879
+  sha256: d2d3fe191f1e0d702fe5eaf47f03644071e7b420e52b47288b547a3741d588bb
+- logical_index: 12
+  tar_member_index: 19
+  role: volume
+  title: Volume VIII — Operational Discipline
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_VIII.docx
+  size_bytes: 42112
+  sha256: 49dec6fbc94f880613ca81fe27dc786ce0fa8905e3fcec369e6558f917446cd1
+- logical_index: 13
+  tar_member_index: 14
+  role: volume
+  title: Volume IX — Synthesis
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_IX.docx
+  size_bytes: 42091
+  sha256: 10eca1d76673c5b68dfaa4ff0194db4d9ceddf85ceb6c1f8de55027a12899d70
+- logical_index: 14
+  tar_member_index: 8
+  role: volume
+  title: Volume X — Termination
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_X.docx
+  size_bytes: 40589
+  sha256: 04ac295ba7346e344b904878a820bad6548c40f5dda852b447f5aefe3fc1341e
+- logical_index: 15
+  tar_member_index: 20
+  role: governance
+  title: Amendment Addendum
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_AMENDMENT_ADDENDUM.docx
+  size_bytes: 10852
+  sha256: 330062c7484dedde3d03256ec83193291989d57ea8daa23400847f41b64aa384
+- logical_index: 16
+  tar_member_index: 23
+  role: appendix
+  title: Appendix A — Operationalizing Contestability
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_APPENDIX_OPERATIONALIZING_CONTESTABILITY.docx
+  size_bytes: 39445
+  sha256: 4e7670d04be0cc5a9451ed2d6e02dcae404202c20a6fbd71d7b17aeff2c9b9b9
+- logical_index: 17
+  tar_member_index: 5
+  role: appendix
+  title: Appendix B — Policy Applications
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_APPENDIX_POLICY_APPLICATIONS.docx
+  size_bytes: 41958
+  sha256: a7b619fc7e9e87a032f0bdf50a67256c884a04e3843035a2c6bfc3dd3808c4a4
+- logical_index: 18
+  tar_member_index: 7
+  role: appendix
+  title: Appendix C — Intellectual Lineage
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_APPENDIX_INTELLECTUAL_LINEAGE.docx
+  size_bytes: 41221
+  sha256: 73fc9349c492e60dabc7df7b4d4bb3d5eb52ea1e2773e1b8cd52b421e627b111
+- logical_index: 19
+  tar_member_index: 18
+  role: appendix
+  title: Appendix D — Criticisms and Responses
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_APPENDIX_CRITICISMS_AND_RESPONSES.docx
+  size_bytes: 40785
+  sha256: a9ccdd821b0378a89e84aa21b4ca9b34a5d9bc92ac63dca4c3f3b308b21a54ba
+- logical_index: 20
+  tar_member_index: 15
+  role: appendix
+  title: Appendix E — Worked Institutional Cases
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_APPENDIX_WORKED_CASES.docx
+  size_bytes: 41686
+  sha256: 92416e023323b414ccc0df3deffbda60623545863bc2349171e962871d21cc8b
+- logical_index: 21
+  tar_member_index: 22
+  role: appendix
+  title: Appendix F — Red Team Assessment
+  path_in_tar: ./RED_TEAM_ASSESSMENT_PAC.docx
+  size_bytes: 15687
+  sha256: 274b95ff8ef6500b7b2ba662502a758dbb89fd4c57fb97346cc01c3ff8e85b84
+- logical_index: 22
+  tar_member_index: 16
+  role: back_matter
+  title: Glossary of Canon Terms
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_GLOSSARY.docx
+  size_bytes: 39906
+  sha256: 1288007953a1f21331260bce45dd207763f17441cdf68429b94551074847decb
+- logical_index: 23
+  tar_member_index: 13
+  role: supplement
+  title: Architecture Diagram — SVG
+  path_in_tar: ./CANON_ARCHITECTURE_DIAGRAM.svg
+  size_bytes: 8010
+  sha256: 12cbf7619c85ac9382b92f1635dc878b689b2daa4f8e3d52390b793aa12bf088
+- logical_index: 24
+  tar_member_index: 12
+  role: supplement
+  title: Architecture Diagram — DOCX companion
+  path_in_tar: ./CANON_ARCHITECTURE_DIAGRAM.docx
+  size_bytes: 38395
+  sha256: 4f3e123796799b748d5cd2f335f67d8982f93bd5a21317b72bb69ad0fb40bdfd
