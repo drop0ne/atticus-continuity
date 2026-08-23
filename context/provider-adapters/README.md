@@ -9,6 +9,7 @@ They do **not** redefine ATTICUS, PAC, canonical state, or repository authority.
 - `TEMPLATE.md` — required structure and conformance expectations for new adapters.
 - `CONFORMANCE.md` — common twelve-scenario cross-provider bootstrap test contract.
 - `chatgpt.md` — current ChatGPT/OpenAI working adapter.
+- `claude.md` — working Claude/Anthropic adapter using conditional GitHub integration, trusted MCP, or portable-package fallback paths; not yet tested under the full CPBC contract.
 - `local-openai-compatible.md` — working adapter for user-controlled local runtimes exposing an OpenAI-compatible API surface; not yet tested against a named runtime/model.
 - future provider-specific adapters live beside these files.
 
