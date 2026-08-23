@@ -1,4 +1,4 @@
-schema_version: 0.5
+schema_version: 0.6
 status: WORKING
 parent_manifest: ../manifest.yaml
 
@@ -42,7 +42,8 @@ provider_adapters:
     file: provider-adapters/chatgpt.md
     status: WORKING
   claude:
-    status: PLANNED
+    file: provider-adapters/claude.md
+    status: WORKING
   gemini:
     status: PLANNED
   local_openai_compatible:
