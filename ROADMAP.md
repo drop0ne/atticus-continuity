@@ -125,7 +125,8 @@ Goal: test continuity and governance on user-owned infrastructure.
 
 - [ ] Local Git clone recovery procedure
 - [ ] Encrypted offline backup procedure
-- [ ] Source hash verification command
+- [x] Source hash verification command (`REF-SRC-INT-0001`)
+- [ ] Preserve exact-revision source-integrity verifier execution evidence
 - [ ] Disaster-recovery bootstrap from clean machine
 - [ ] Repository integrity checks
 - [ ] Release/tagging policy
@@ -155,7 +156,7 @@ P4 build isolated local laboratory
 
 PAC P0 materially advanced on 2026-08-23: the operator supplied the definitive 24-member TAR payload, the TAR and every member were hashed, and the complete integrity manifest is now repository-tracked. The remaining PAC preservation gap is transport of the exact raw TAR bytes into GitHub through a binary-capable path, followed by repository-side hash verification. Recovery of the historical gzip wrapper is a lineage question rather than a blocker for the definitive 24-member source set.
 
-ATTICUS remains the main unresolved source-recovery problem: two Markdown and two DOCX v6.5.0-ABG full-stack candidates are known, but exact duplicate byte comparison and complete repository/source diff remain outstanding.
+ATTICUS remains the main unresolved source-recovery problem: two Markdown and two DOCX v6.5.0-ABG full-stack candidates are known, but exact duplicate byte comparison and complete repository/source diff remain outstanding. `REF-SRC-INT-0001` now supplies the deterministic read-only SHA-256/size verification command needed as soon as raw Library bytes become accessible; indexed text still does not count as byte identity.
 
 The provider-neutral adapter layer is registered in context manifest v0.6. ChatGPT, Claude, and local OpenAI-compatible adapters are `WORKING`; the common twelve-scenario cross-provider bootstrap contract (`CPBC-01` through `CPBC-12`) remains the portability evidence standard. The immediate P1 backlog is exact-revision executed evidence for the checkpoint writer/filesystem adapter/conformance validator, Gemini and llama.cpp/Ollama adapters, and first named-provider CPBC runs.
 
