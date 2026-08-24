@@ -42,6 +42,9 @@ jobs:
             reference.context_loader.test_adapter \
             reference.context_loader.test_provider_conformance -v
 
+      - name: Source integrity tests
+        run: python -m unittest reference.source_integrity.test_verify -v
+
       - name: PAC gateway tests
         run: python -m unittest reference.pac_gateway.test_gateway reference.pac_gateway.test_plan reference.pac_gateway.test_exp0006 -v
 
