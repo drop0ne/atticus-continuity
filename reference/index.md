@@ -8,8 +8,11 @@ Reference code in this directory exists to turn ATTICUS/PAC hypotheses and conti
 |---|---|---|---|---|
 | `REF-PAC-GW-0001` | PAC Authority Gateway v0.2 | TESTED | `pac_gateway/` | `experiments/results/RES-2026-0001-exp0004-f3ed8958.json` |
 | `REF-CTX-0001` | Portable Context Loader + Checkpoint Validator v0.1 | TESTED | `context_loader/` | `context/results/CTX-RES-2026-0001-f3ed8958.json` |
+| `REF-SRC-INT-0001` | Source Integrity Verifier v0.1 | IMPLEMENTED / EXACT-REVISION EVIDENCE PENDING | `source_integrity/` | — |
 
-Both TESTED statuses refer to exact revision `f3ed8958b3b819852d4a634f718a097f95b65114`. Later changes require their own executed evidence before being treated as tested changes.
+The TESTED statuses for `REF-PAC-GW-0001` and `REF-CTX-0001` refer to exact revision `f3ed8958b3b819852d4a634f718a097f95b65114`. Later changes require their own executed evidence before being treated as tested changes.
+
+`REF-SRC-INT-0001` passed a 10-test local pre-commit suite before repository integration. That run is implementation evidence only; it does not promote the repository revision to TESTED until exact-revision execution evidence is preserved.
 
 ### REF-PAC-GW-0001 components
 
@@ -36,6 +39,17 @@ Both TESTED statuses refer to exact revision `f3ed8958b3b819852d4a634f718a097f95
 - standard-library unit tests.
 
 The loader returns a retrieval plan only. Bundle matches and retrieved repository records do not create truth or authority.
+
+### REF-SRC-INT-0001 components
+
+- deterministic chunked SHA-256 and byte-size calculation;
+- single-artifact verification against expected digest and optional size;
+- JSON manifest verification for multiple relative-path artifacts;
+- fail-closed handling of malformed digests, missing files, duplicate paths, absolute manifest paths, and path traversal;
+- machine-readable JSON result output;
+- no network, execution, archive extraction, rendering, or mutation capability.
+
+A verifier PASS proves byte agreement with the supplied expectation only. It does not establish provenance, authorship, correctness, or canonical authority.
 
 ## Status vocabulary
 
