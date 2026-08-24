@@ -32,17 +32,21 @@ implementation:
 verification:
   local_command: python -m unittest reference.source_integrity.test_verify -v
   local_result: 10 tests passed, 0 failures, 0 errors, 0 skipped
-  evidence_boundary: This pre-commit local run validates the staged implementation text but is not exact-revision repository CI evidence.
-files_added:
+  evidence_boundary: This local pre-commit run validates the implementation text but is not exact-revision repository CI evidence.
+  github_status_check: No combined-status record was exposed for the first workflow-bearing revision when queried; do not promote to TESTED from absence of a failure signal.
+files_changed:
   - reference/source_integrity/__init__.py
   - reference/source_integrity/verify.py
   - reference/source_integrity/test_verify.py
   - reference/source_integrity/README.md
-next_repository_updates:
-  - index REF-SRC-INT-0001 in reference/index.md
-  - add its unit tests to the read-only reference-conformance workflow
-  - mark the Phase 6 source-hash verification command implemented in ROADMAP.md
-  - advance context/LATEST.md to this checkpoint
+  - reference/index.md
+  - .github/workflows/reference-conformance.yml
+  - ROADMAP.md
+  - context/checkpoints/CP-2026-08-24-source-integrity-verifier.md
+  - context/LATEST.md
+roadmap_effect:
+  - Phase 6 source hash verification command is now implemented.
+  - Exact-revision preserved execution evidence remains open.
 open_questions:
   - Can a binary-capable future transport expose the PAC TAR and ATTICUS candidate files as raw bytes for direct verifier execution?
   - Which ATTICUS Markdown/DOCX duplicate bytes are identical, and which exact source should be preserved after hash/diff evidence exists?
