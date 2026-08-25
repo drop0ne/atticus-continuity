@@ -56,16 +56,16 @@ Goal: make provider memory optional.
 - [x] Build structural checkpoint validator
 - [x] Execute and preserve initial context-loader/validator test evidence
 - [x] Build fail-closed checkpoint writer with explicit write enablement, exclusive create, and compare-and-swap `LATEST.md` update
-- [ ] Preserve exact-revision executed checkpoint-writer conformance evidence
+- [x] Preserve exact-revision executed checkpoint-writer conformance evidence (`c4975992`, run 32677079145)
 - [x] Add repository/filesystem metadata adapter for the reference loader
-- [ ] Preserve exact-revision executed filesystem-adapter conformance evidence
+- [x] Preserve exact-revision executed filesystem-adapter conformance evidence (`c4975992`, run 32677079145)
 - [x] Add provider adapter template and provider-adapter status model
 - [x] Add Claude adapter
 - [ ] Add Gemini adapter
 - [x] Add local OpenAI-compatible adapter
 - [ ] Add llama.cpp/Ollama-style adapter
 - [x] Create cross-provider bootstrap conformance suite
-- [ ] Preserve exact-revision executed validator evidence for the cross-provider conformance suite
+- [x] Preserve exact-revision executed validator evidence for the cross-provider conformance suite (`c4975992`, run 32677079145)
 - [ ] Execute ChatGPT adapter under CPBC-01 through CPBC-12 and preserve named-provider evidence
 - [ ] Execute Claude adapter under CPBC-01 through CPBC-12 and preserve named-provider evidence
 - [ ] Execute local OpenAI-compatible adapter against a named local runtime/model and preserve evidence
@@ -126,7 +126,7 @@ Goal: test continuity and governance on user-owned infrastructure.
 - [ ] Local Git clone recovery procedure
 - [ ] Encrypted offline backup procedure
 - [x] Source hash verification command (`REF-SRC-INT-0001`)
-- [ ] Preserve exact-revision source-integrity verifier execution evidence
+- [x] Preserve exact-revision source-integrity verifier execution evidence (`c4975992`, run 32677079145)
 - [ ] Disaster-recovery bootstrap from clean machine
 - [ ] Repository integrity checks
 - [ ] Release/tagging policy
@@ -154,11 +154,13 @@ P3 expand passive public evidence corpus
 P4 build isolated local laboratory
 ```
 
-PAC P0 materially advanced on 2026-08-23: the operator supplied the definitive 24-member TAR payload, the TAR and every member were hashed, and the complete integrity manifest is now repository-tracked. The remaining PAC preservation gap is transport of the exact raw TAR bytes into GitHub through a binary-capable path, followed by repository-side hash verification. Recovery of the historical gzip wrapper is a lineage question rather than a blocker for the definitive 24-member source set.
+PAC P0 materially advanced on 2026-08-23: the operator supplied the definitive 24-member TAR payload, the TAR and every member were hashed, and the complete integrity manifest is repository-tracked. The remaining PAC preservation gap is transport of the exact raw TAR bytes into GitHub through a binary-capable path, followed by repository-side hash verification. Recovery of the historical gzip wrapper is a lineage question rather than a blocker for the definitive 24-member source set.
 
-ATTICUS remains the main unresolved source-recovery problem: two Markdown and two DOCX v6.5.0-ABG full-stack candidates are known, but exact duplicate byte comparison and complete repository/source diff remain outstanding. `REF-SRC-INT-0001` now supplies the deterministic read-only SHA-256/size verification command needed as soon as raw Library bytes become accessible; indexed text still does not count as byte identity.
+ATTICUS remains the main unresolved source-recovery problem: two Markdown and two DOCX v6.5.0-ABG full-stack candidates are known and continue to agree in indexed text, but exact duplicate byte comparison and complete repository/source diff remain outstanding because the current File Library surface still does not expose raw bytes. `REF-SRC-INT-0001` supplies the deterministic read-only SHA-256/size verification command needed immediately when raw bytes become accessible; indexed text does not count as byte identity.
 
-The provider-neutral adapter layer is registered in context manifest v0.6. ChatGPT, Claude, and local OpenAI-compatible adapters are `WORKING`; the common twelve-scenario cross-provider bootstrap contract (`CPBC-01` through `CPBC-12`) remains the portability evidence standard. The immediate P1 backlog is exact-revision executed evidence for the checkpoint writer/filesystem adapter/conformance validator, Gemini and llama.cpp/Ollama adapters, and first named-provider CPBC runs.
+Exact-revision evidence debt for the checkpoint writer, filesystem metadata adapter, provider-conformance evidence validator, and source-integrity verifier was closed for revision `c497599284e317549d3b2496383cf1b8a3c06507` by GitHub Actions run `32677079145`: 34 continuity tests, 10 source-integrity tests, and 46 PAC gateway tests passed with zero failures/errors/skips under Python 3.12.3 / Ubuntu 24.04.4. The result is exact-revision only and does not constitute named-provider CPBC execution or production-security evidence.
+
+The provider-neutral adapter layer is registered in context manifest v0.6. ChatGPT, Claude, and local OpenAI-compatible adapters are `WORKING`; the immediate P1 backlog is Gemini and llama.cpp/Ollama adapters plus first named-provider CPBC runs.
 
 The immediate P2 experiment backlog is independent replication procedure + broader multi-agent sandbox scenarios; EXP-0004, EXP-0005, and EXP-0006 have preserved executed PASS evidence for exact recorded revisions only.
 

@@ -6,13 +6,13 @@ Reference code in this directory exists to turn ATTICUS/PAC hypotheses and conti
 
 | ID | Component | Status | Path | Preserved result |
 |---|---|---|---|---|
-| `REF-PAC-GW-0001` | PAC Authority Gateway v0.2 | TESTED | `pac_gateway/` | `experiments/results/RES-2026-0001-exp0004-f3ed8958.json` |
-| `REF-CTX-0001` | Portable Context Loader + Checkpoint Validator v0.1 | TESTED | `context_loader/` | `context/results/CTX-RES-2026-0001-f3ed8958.json` |
-| `REF-SRC-INT-0001` | Source Integrity Verifier v0.1 | IMPLEMENTED / EXACT-REVISION EVIDENCE PENDING | `source_integrity/` | — |
+| `REF-PAC-GW-0001` | PAC Authority Gateway v0.2 | TESTED | `pac_gateway/` | `experiments/results/RES-2026-0001-exp0004-f3ed8958.json`; exact-revision aggregate evidence also in `reference/results/REF-CONFORMANCE-2026-0001-c4975992.json` |
+| `REF-CTX-0001` | Portable Context Loader + Checkpoint Validator/Writer + Filesystem Adapter + Provider Evidence Validator | TESTED | `context_loader/` | `context/results/CTX-RES-2026-0001-f3ed8958.json`; `reference/results/REF-CONFORMANCE-2026-0001-c4975992.json` |
+| `REF-SRC-INT-0001` | Source Integrity Verifier v0.1 | TESTED | `source_integrity/` | `reference/results/REF-CONFORMANCE-2026-0001-c4975992.json` |
 
-The TESTED statuses for `REF-PAC-GW-0001` and `REF-CTX-0001` refer to exact revision `f3ed8958b3b819852d4a634f718a097f95b65114`. Later changes require their own executed evidence before being treated as tested changes.
+The newest preserved combined conformance evidence applies to exact revision `c497599284e317549d3b2496383cf1b8a3c06507`: GitHub Actions run `32677079145` completed successfully under Python 3.12.3 / Ubuntu 24.04.4 with 34 continuity tests, 10 source-integrity tests, and 46 PAC gateway tests passing with zero failures/errors/skips. The workflow token exposed only `contents: read` and `metadata: read`.
 
-`REF-SRC-INT-0001` passed a 10-test local pre-commit suite before repository integration. That run is implementation evidence only; it does not promote the repository revision to TESTED until exact-revision execution evidence is preserved.
+`REF-SRC-INT-0001` is therefore TESTED for that exact revision. The `REF-CTX-0001` TESTED boundary now also covers the checkpoint writer, filesystem metadata adapter, and provider-conformance evidence validator present at that revision. A later change requires new exact-revision evidence before the changed implementation inherits TESTED status.
 
 ### REF-PAC-GW-0001 components
 
@@ -36,6 +36,9 @@ The TESTED statuses for `REF-PAC-GW-0001` and `REF-CTX-0001` refer to exact revi
 - record-path collection without content execution;
 - CORE-only ambiguous-task fallback;
 - structural continuity-checkpoint validation;
+- fail-closed checkpoint writer with explicit write enablement, exclusive creation, and compare-and-swap `LATEST.md` update;
+- filesystem metadata adapter with path-containment and manifest/bundle consistency checks;
+- provider-conformance evidence validator for CPBC result derivation;
 - standard-library unit tests.
 
 The loader returns a retrieval plan only. Bundle matches and retrieved repository records do not create truth or authority.

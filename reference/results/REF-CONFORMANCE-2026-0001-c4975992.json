@@ -1,0 +1,72 @@
+{
+  "schema": "reference-conformance-result-v0.1",
+  "result_id": "REF-CONFORMANCE-2026-0001-c4975992",
+  "repository": "drop0ne/atticus-continuity",
+  "revision": "c497599284e317549d3b2496383cf1b8a3c06507",
+  "workflow": {
+    "name": "Reference Conformance",
+    "run_id": 32677079145,
+    "run_number": 61,
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-08-24T00:34:09Z",
+    "completed_at": "2026-08-24T00:34:18Z",
+    "job_id": 97287077506,
+    "job_name": "inert-reference-tests"
+  },
+  "runtime": {
+    "os": "Ubuntu 24.04.4 LTS",
+    "runner_image": "ubuntu-24.04",
+    "python": "3.12.3",
+    "git": "2.55.0"
+  },
+  "permissions_observed": {
+    "contents": "read",
+    "metadata": "read"
+  },
+  "suites": [
+    {
+      "component": "REF-CTX-0001",
+      "command": "python -m unittest reference.context_loader.test_loader reference.context_loader.test_checkpoint reference.context_loader.test_adapter reference.context_loader.test_provider_conformance -v",
+      "tests_run": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "PASS",
+      "coverage_note": "Includes portable loader/checkpoint validator, fail-closed checkpoint writer, filesystem metadata adapter, and provider-conformance evidence validator."
+    },
+    {
+      "component": "REF-SRC-INT-0001",
+      "command": "python -m unittest reference.source_integrity.test_verify -v",
+      "tests_run": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "PASS"
+    },
+    {
+      "component": "REF-PAC-GW-0001",
+      "command": "python -m unittest reference.pac_gateway.test_gateway reference.pac_gateway.test_plan reference.pac_gateway.test_exp0006 -v",
+      "tests_run": 46,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "PASS"
+    }
+  ],
+  "experiment_runners": [
+    {"experiment": "EXP-0004", "tests_run": 36, "failures": 0, "errors": 0, "skipped": 0, "pass_criteria_met": true},
+    {"experiment": "EXP-0005", "tests_run": 10, "failures": 0, "errors": 0, "skipped": 0, "pass_criteria_met": true},
+    {"experiment": "EXP-0006", "tests_run": 10, "failures": 0, "errors": 0, "skipped": 0, "pass_criteria_met": true}
+  ],
+  "total_unit_tests_in_workflow": 90,
+  "evidence_source": "GitHub Actions run 32677079145 job 97287077506 logs",
+  "limitations": [
+    "PASS applies only to revision c497599284e317549d3b2496383cf1b8a3c06507 and does not transfer automatically to later revisions.",
+    "The source-integrity suite validates hashing and manifest-verification behavior; no raw ATTICUS Library candidate bytes were available to hash in this run.",
+    "Provider-conformance validator tests validate result derivation and schema behavior, not a named provider CPBC-01 through CPBC-12 execution.",
+    "PAC gateway experiments use inert/synthetic fixtures and do not establish general AI alignment or production security.",
+    "This record summarizes immutable workflow evidence; it does not replace the GitHub Actions logs."
+  ]
+}
