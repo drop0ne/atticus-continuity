@@ -1,0 +1,39 @@
+schema_version: '1.0'
+artifact_id: PAC-TEXT-EXTRACTION-20260826
+status: LOCAL_EXTRACTION_VERIFIED / CHAPTER_INDEX_REPOSITORY_STAGED / FULL_TEXT_PROJECTIONS_PENDING
+source_tar:
+  filename: PAC_FIRST_EDITION_DEFINITIVE(20260823-114607).tar
+  size_bytes: 931840
+  sha256: 2198f146bc56fe97d754a4e87bf1ecd9c3f03050b1ace2b215b5169c62b9a9a8
+extraction:
+  tool_path: reference/source_integrity/extract_pac_text.py
+  method: WordprocessingML paragraph text in XML order from document/header/footer/footnotes/endnotes/comments parts; SVG verbatim UTF-8
+  editorial_rewriting: false
+  formatting_preserved: false
+  macros_or_embedded_content_executed: false
+  docx_members: 23
+  svg_members: 1
+  deterministic_repeat_runs: 2
+  deterministic_tree_digest_sha256: a2cb235fb5a1ab5da3e89a40e85a25e861f061b82609151fbe46ec61d41a1715
+  total_projection_tree_bytes: 644507
+  extracted_text_characters_observed_in_logical_projection_run: 512364
+  explicitly_styled_headings_observed: 229
+chapter_index:
+  part_1_path: migration/source-artifacts/pac/PAC_FIRST_EDITION_DEFINITIVE-20260823.chapter-index.part1.yaml
+  part_1_sha256: a9f8bbb41d5a75cab03f63d9ac8705af063c68cac678bf5c3bfcf52ab86bc5c5
+  part_2_path: migration/source-artifacts/pac/PAC_FIRST_EDITION_DEFINITIVE-20260823.chapter-index.part2.yaml
+  part_2_sha256: 66bf677fc902546ba6fff5db364b59cf71569a63e49a70b728aa126f75cc9f3d
+indexing_rule:
+  - Preserve explicitly styled headings as observed.
+  - Record numbered labels even when no Heading style is present.
+  - Do not infer, repair, renumber, or silently promote source structure.
+important_observations:
+  - Volume I contains numbered labels I.2, I.8, I.11, I.12, and I.13 without corresponding Heading-style paragraphs in the DOCX body story.
+  - Volume IV labels IV.41 through IV.60 are present as numbered labels but are not Heading-style paragraphs.
+  - These are source-structure observations, not findings that content is missing.
+repository_boundary:
+  chapter_index: MIRRORED
+  extractor: MIRRORED
+  full_utf8_text_projection_set: PENDING
+  exact_raw_tar_blob: PENDING_BINARY_CAPABLE_TRANSPORT
+  historical_tar_gz_wrapper: UNVERIFIED_LINEAGE_ONLY

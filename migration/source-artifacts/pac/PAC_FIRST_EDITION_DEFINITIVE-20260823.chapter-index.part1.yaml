@@ -1,0 +1,620 @@
+schema_version: '1.0'
+source_tar_sha256: 2198f146bc56fe97d754a4e87bf1ecd9c3f03050b1ace2b215b5169c62b9a9a8
+member_range:
+- 1
+- 12
+members:
+- logical_index: 1
+  title: Authors Preface
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_AUTHORS_PREFACE.docx
+  source_sha256: 9e616f60d61f9d011b7a0253583f23aa6f830e25dd5b94baf184af7066fbcb3c
+  text_projection_sha256: 4fbad30cf90062f253ae9cea6bf94644b1b8ac150d03dd58875f69984b07ba81
+  text_projection_size_bytes: 3332
+  headings:
+  - Author’s Preface
+  numbered_labels: []
+- logical_index: 2
+  title: How to Read This Book
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_HOW_TO_READ.docx
+  source_sha256: 6f515174452605d13cd0e8dede1d4bfe38bf62cb25d2f84c1574479bc56bfc60
+  text_projection_sha256: ebdcb898cb70976249d4146ef46f9c08dff4a3da9b08f6772b03d48b6e67e80b
+  text_projection_size_bytes: 1994
+  headings: []
+  numbered_labels: []
+- logical_index: 3
+  title: Introduction
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_INTRODUCTION.docx
+  source_sha256: 5854d1e3c09198aa3cb101cc4da36415d0b265c6e07ccd214d2db5dedc6755e5
+  text_projection_sha256: 01f4018d1c0a834d767344efaf417d9ec5557ebfb1513522731bcb99165a0646
+  text_projection_size_bytes: 8685
+  headings:
+  - A Pattern That Repeats
+  - The Same Story, Different Systems
+  - Why Safeguards Fail
+  - What This Work Attempts
+  - A Note on the Title
+  - How to Use This Work
+  numbered_labels: []
+- logical_index: 4
+  title: Volume 0 — Orientation
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_0.docx
+  source_sha256: ddec5be176b77e9d0275e6316e300f39ba8e2f01894ab9fe31332feaecd4a28e
+  text_projection_sha256: 2923c5ebd9a45f3b43ad6fd9bbc6f9459fa0d35c1b2a70eb163169f699053297
+  text_projection_size_bytes: 7065
+  headings:
+  - Contents
+  - 0.0  Why This Orientation Exists
+  - 0.1  The Problem the Canon Addresses
+  - 0.2  What the Canon Is
+  - 0.3  What the Canon Is Not
+  - 0.4  How the Canon Is Structured
+  - 0.5  The Two-Layer Architecture
+  - 0.6  How to Read the Canon
+  - 0.7  Who This Framework Is For
+  - 0.8  Limits of the Canon
+  - 0.9  A Note on Authority
+  numbered_labels:
+  - label: '0.0'
+    heading_style_present: true
+    occurrences: 2
+  - label: '0.1'
+    heading_style_present: true
+    occurrences: 2
+  - label: '0.2'
+    heading_style_present: true
+    occurrences: 2
+  - label: '0.3'
+    heading_style_present: true
+    occurrences: 2
+  - label: '0.4'
+    heading_style_present: true
+    occurrences: 2
+  - label: '0.5'
+    heading_style_present: true
+    occurrences: 2
+  - label: '0.6'
+    heading_style_present: true
+    occurrences: 2
+  - label: '0.7'
+    heading_style_present: true
+    occurrences: 2
+  - label: '0.8'
+    heading_style_present: true
+    occurrences: 2
+  - label: '0.9'
+    heading_style_present: true
+    occurrences: 2
+- logical_index: 5
+  title: Volume I — Foundations
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_I.docx
+  source_sha256: d8535ea803c121c9a331338dd95a4b3181bb14ee9f2f7da9573d4a722966ef36
+  text_projection_sha256: c015bb165df4b6e98054ee4a6a07cc60295e0bb9e992ae6d1da4658811d994fe
+  text_projection_size_bytes: 55623
+  headings:
+  - Contents
+  - I.1  What Power Is
+  - I.3  The Failure of Good Intentions
+  - I.4  The Physics of Power
+  - 'I.5  The First Law: Ambiguity and Expansion'
+  - I.6  Historical Archetypes of Power Capture
+  - I.7  From Laws to Constraints (Interlude)
+  - I.9  Explicitness Without Rigidity
+  - I.10  When Power Must Be Taken
+  numbered_labels:
+  - label: I.1
+    heading_style_present: true
+    occurrences: 2
+  - label: I.2
+    heading_style_present: false
+    occurrences: 1
+  - label: I.3
+    heading_style_present: true
+    occurrences: 2
+  - label: I.4
+    heading_style_present: true
+    occurrences: 2
+  - label: I.5
+    heading_style_present: true
+    occurrences: 2
+  - label: I.6
+    heading_style_present: true
+    occurrences: 2
+  - label: I.7
+    heading_style_present: true
+    occurrences: 2
+  - label: I.8
+    heading_style_present: false
+    occurrences: 1
+  - label: I.9
+    heading_style_present: true
+    occurrences: 2
+  - label: I.10
+    heading_style_present: true
+    occurrences: 2
+  - label: I.11
+    heading_style_present: false
+    occurrences: 1
+  - label: I.12
+    heading_style_present: false
+    occurrences: 1
+  - label: I.13
+    heading_style_present: false
+    occurrences: 1
+- logical_index: 6
+  title: Volume II — Psychology and Moral Failure
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_II.docx
+  source_sha256: c4d7cb156c78fc86d7848c3eb9337d4f594cd4601641cfb84bdc58c9406ad7e4
+  text_projection_sha256: 0f69e518c41eabbc3e8e6c45e30157442cf9d003fffd13be9870edae3b5cb8bc
+  text_projection_size_bytes: 44023
+  headings:
+  - Contents
+  - II.12  The Ego Gravity Well
+  - II.13  Fear, Trauma, and the Drive to Control
+  - II.14  The Savior Complex
+  - II.15  Charisma as a Power Multiplier
+  - II.16  Obedience Revisited
+  - II.17  Intelligence as a Risk Factor
+  - II.18  The Corruption Curve
+  - II.19  Self-Deception as a Power Tool
+  - II.20  Power Avoidance as Self-Preservation
+  numbered_labels:
+  - label: II.11
+    heading_style_present: false
+    occurrences: 1
+  - label: II.12
+    heading_style_present: true
+    occurrences: 2
+  - label: II.13
+    heading_style_present: true
+    occurrences: 2
+  - label: II.14
+    heading_style_present: true
+    occurrences: 2
+  - label: II.15
+    heading_style_present: true
+    occurrences: 2
+  - label: II.16
+    heading_style_present: true
+    occurrences: 2
+  - label: II.17
+    heading_style_present: true
+    occurrences: 2
+  - label: II.18
+    heading_style_present: true
+    occurrences: 2
+  - label: II.19
+    heading_style_present: true
+    occurrences: 2
+  - label: II.20
+    heading_style_present: true
+    occurrences: 2
+  - label: II.21
+    heading_style_present: false
+    occurrences: 1
+- logical_index: 7
+  title: Volume III — Systems Design
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_III.docx
+  source_sha256: 8bf81a58e493267fe0ea6980e4949f5e205a1221a032d154874a6e0545ae9036
+  text_projection_sha256: df2b71702926297e16e73cee519e11920c751ff1de854283a504ebec530aa265
+  text_projection_size_bytes: 124144
+  headings:
+  - Contents
+  - III.22  Power Minimization vs. Power Avoidance
+  - III.23  Boundary-First Architecture
+  - III.24  Explicit Authority Graphs
+  - III.25  Separation of Concerns (Morally Applied)
+  - III.26  Time as a Structural Constraint
+  - III.27  Contestability and Interrupt Authority
+  - III.28  Visibility Without Surveillance
+  - III.29  Constraining the Constraint Designers
+  - III.32  Distributed Authority Without Fragmentation
+  - III.33  Human-in-the-Loop Without Illusion
+  - III.34  Fail-Soft, Not Fail-Safe
+  - Volume III Design Invariants
+  - III.35  Measuring Power Drift in Live Systems
+  - III.36  Emergency Architecture Without Capture
+  - III.36A  Competitive Dynamics and the Survival of Constrained Systems
+  - III.36A  Competitive Dynamics and the Survival of Constrained Systems
+  - 36A.1 The Competitive Objection
+  - 36A.2 The Time-Horizon Distortion
+  - 36A.3 The Difference Between Speed and Survivability
+  - 36A.4 Why Constraint Performs Better Over Repeated Stress
+  - 36A.5 The Chronic Environment Problem
+  - 36A.6 The Canon's Actual Claim
+  - 36A.7 Some Losses Will Still Occur
+  - 36A.8 Competitive Design Without Capture
+  - 36A.9 Constraint as Strategic Advantage
+  - 36A.10 The Measure That Matters
+  - 36A.11 Boundary Statement
+  - 36A.12 Transition Forward
+  - 'III.36B  Bootstrapping Constraint: Implementation, Transition, and Managed Replacement'
+  - 'III.36B  Bootstrapping Constraint: Implementation, Transition, and Managed Replacement'
+  - 36B.1 The Purity Error
+  - 36B.2 The Canon as Constraint Library
+  - 36B.3 The First Rule of Implementation
+  - 36B.4 Five Primary Insertion Points
+  - 36B.5 Why Incremental Adoption Is Not Betrayal
+  - 36B.6 The Transition-State Problem
+  - 36B.7 Managed Replacement
+  - 36B.8 Memory Without Indispensability
+  - 36B.9 Constraint Continuity
+  - 36B.10 Who Begins?
+  - 36B.11 Reform Without Myth
+  - 36B.12 The Minimum Viable Reform Test
+  - 36B.13 What This Chapter Does Not Claim
+  - 36B.14 The Practical Thesis
+  - 36B.15 Transition Forward
+  - 'III.37  Design Walkthrough: A Power-Avoidant Organization'
+  - 'III.38  Design Walkthrough: A Power-Avoidant AI System'
+  - III.39  What This Architecture Cannot Prevent
+  - 'III.40  Volume III Synthesis: Constraint as Ethics'
+  - Appendix A  Positioning the Canon in the Literature
+  numbered_labels:
+  - label: III.21
+    heading_style_present: false
+    occurrences: 1
+  - label: III.22
+    heading_style_present: true
+    occurrences: 2
+  - label: III.23
+    heading_style_present: true
+    occurrences: 2
+  - label: III.24
+    heading_style_present: true
+    occurrences: 2
+  - label: III.25
+    heading_style_present: true
+    occurrences: 2
+  - label: III.26
+    heading_style_present: true
+    occurrences: 2
+  - label: III.27
+    heading_style_present: true
+    occurrences: 2
+  - label: III.28
+    heading_style_present: true
+    occurrences: 2
+  - label: III.29
+    heading_style_present: true
+    occurrences: 2
+  - label: III.30
+    heading_style_present: false
+    occurrences: 1
+  - label: III.31
+    heading_style_present: false
+    occurrences: 1
+  - label: III.32
+    heading_style_present: true
+    occurrences: 2
+  - label: III.33
+    heading_style_present: true
+    occurrences: 2
+  - label: III.34
+    heading_style_present: true
+    occurrences: 2
+  - label: III.35
+    heading_style_present: true
+    occurrences: 2
+  - label: III.36
+    heading_style_present: true
+    occurrences: 2
+  - label: III.36A
+    heading_style_present: true
+    occurrences: 3
+  - label: III.36B
+    heading_style_present: true
+    occurrences: 4
+  - label: III.37
+    heading_style_present: true
+    occurrences: 2
+  - label: III.38
+    heading_style_present: true
+    occurrences: 2
+  - label: III.39
+    heading_style_present: true
+    occurrences: 2
+  - label: III.40
+    heading_style_present: true
+    occurrences: 2
+  - label: III.37A
+    heading_style_present: false
+    occurrences: 1
+  - label: III.37B
+    heading_style_present: false
+    occurrences: 1
+  - label: III.37C
+    heading_style_present: false
+    occurrences: 1
+- logical_index: 8
+  title: Volume IV — Law and Institutions
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_IV.docx
+  source_sha256: 753a721846ddda970294269ec5fe8f1d2132ef0f92c249cc2a4d1a9fa2ede177
+  text_projection_sha256: 10c1b660798f215a3563b60eee2562c3e48eb377222d40b8b81bd432c8c8d794
+  text_projection_size_bytes: 85462
+  headings:
+  - Contents
+  numbered_labels:
+  - label: IV.41
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.42
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.43
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.44
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.45
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.46
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.47
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.48
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.49
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.50
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.51
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.52
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.53
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.54
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.55
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.56
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.57
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.58
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.59
+    heading_style_present: false
+    occurrences: 1
+  - label: IV.60
+    heading_style_present: false
+    occurrences: 1
+- logical_index: 9
+  title: Volume V — AI Architecture
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_V.docx
+  source_sha256: e5e0f312ef61ade45ac65c635a47f08be88d38dd856309a3e7b98cfd368f506d
+  text_projection_sha256: bff6b4991aee64a84de53f31b45806ba67ff48984f50559763aca7f4bac373d1
+  text_projection_size_bytes: 28155
+  headings:
+  - Contents
+  - V.1  Intelligence Without Authority
+  - V.2  Non-Authoritative Positioning
+  - V.3  Input Boundaries
+  - V.4  Output Constraints
+  - V.5  Optimization Boundaries
+  - V.6  Preventing Human Substitution
+  - V.7  Interrupt Authority
+  - V.8  Temporal Decay of AI Outputs
+  - V.9  Drift Detection for AI Systems
+  - V.10  Emergency Constraints on AI
+  - V.11  Self-Modification Prohibition
+  - V.12  Legibility Without Charisma
+  - V.13  Exit Viability
+  - V.14  Volume V Synthesis
+  numbered_labels:
+  - label: V.1
+    heading_style_present: true
+    occurrences: 2
+  - label: V.2
+    heading_style_present: true
+    occurrences: 2
+  - label: V.3
+    heading_style_present: true
+    occurrences: 2
+  - label: V.4
+    heading_style_present: true
+    occurrences: 2
+  - label: V.5
+    heading_style_present: true
+    occurrences: 2
+  - label: V.6
+    heading_style_present: true
+    occurrences: 2
+  - label: V.7
+    heading_style_present: true
+    occurrences: 2
+  - label: V.8
+    heading_style_present: true
+    occurrences: 2
+  - label: V.9
+    heading_style_present: true
+    occurrences: 2
+  - label: V.10
+    heading_style_present: true
+    occurrences: 2
+  - label: V.11
+    heading_style_present: true
+    occurrences: 2
+  - label: V.12
+    heading_style_present: true
+    occurrences: 2
+  - label: V.13
+    heading_style_present: true
+    occurrences: 2
+  - label: V.14
+    heading_style_present: true
+    occurrences: 2
+- logical_index: 10
+  title: Volume VI — Everyday Amplification
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_VI.docx
+  source_sha256: 8fc7d4c65819711680dca5bf7067bf70176a7088aa7c0c0409315230997c300f
+  text_projection_sha256: b47f5dbb989aef4177d598c8ac5becac4ac785eed09067f274fcc1c5c7d71e2f
+  text_projection_size_bytes: 17371
+  headings:
+  - Contents
+  - VI.0  The Expansion of Power
+  - VI.1  Infrastructure Power
+  - VI.2  Algorithmic Power
+  - VI.3  Economic Dependency
+  - VI.4  Platform Lock-In
+  - VI.5  Data Concentration
+  - VI.6  Network Effects
+  - VI.7  Power Through Defaults
+  - VI.8  Constraint Patterns for Amplification Systems
+  - VI.9  Everyday Defensive Architecture
+  - VI.10  Volume VI Synthesis
+  numbered_labels:
+  - label: VI.0
+    heading_style_present: true
+    occurrences: 2
+  - label: VI.1
+    heading_style_present: true
+    occurrences: 2
+  - label: VI.2
+    heading_style_present: true
+    occurrences: 2
+  - label: VI.3
+    heading_style_present: true
+    occurrences: 2
+  - label: VI.4
+    heading_style_present: true
+    occurrences: 2
+  - label: VI.5
+    heading_style_present: true
+    occurrences: 2
+  - label: VI.6
+    heading_style_present: true
+    occurrences: 2
+  - label: VI.7
+    heading_style_present: true
+    occurrences: 2
+  - label: VI.8
+    heading_style_present: true
+    occurrences: 2
+  - label: VI.9
+    heading_style_present: true
+    occurrences: 2
+  - label: VI.10
+    heading_style_present: true
+    occurrences: 2
+- logical_index: 11
+  title: Volume VII — Failure Library
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_VII.docx
+  source_sha256: d2d3fe191f1e0d702fe5eaf47f03644071e7b420e52b47288b547a3741d588bb
+  text_projection_sha256: 3efd90307ad4dc7c003c9726d3e2388e2781ade3b3d88b9d73f3956b7244c393
+  text_projection_size_bytes: 15720
+  headings:
+  - Contents
+  - VII.0  Why Failure Must Be Studied
+  - VII.1  Emergency Authority Becoming Permanent
+  - VII.2  Institutional Capture
+  - VII.3  Infrastructure Dependency Collapse
+  - VII.4  Algorithmic Authority Drift
+  - VII.5  Economic Concentration
+  - VII.6  Oversight Failure
+  - VII.7  Narrative Capture
+  - VII.8  Slow Legitimacy Decay
+  - VII.9  Cascade Failures
+  - VII.10  Lessons for Constraint Architecture
+  numbered_labels:
+  - label: VII.0
+    heading_style_present: true
+    occurrences: 2
+  - label: VII.1
+    heading_style_present: true
+    occurrences: 2
+  - label: VII.2
+    heading_style_present: true
+    occurrences: 2
+  - label: VII.3
+    heading_style_present: true
+    occurrences: 2
+  - label: VII.4
+    heading_style_present: true
+    occurrences: 2
+  - label: VII.5
+    heading_style_present: true
+    occurrences: 2
+  - label: VII.6
+    heading_style_present: true
+    occurrences: 2
+  - label: VII.7
+    heading_style_present: true
+    occurrences: 2
+  - label: VII.8
+    heading_style_present: true
+    occurrences: 2
+  - label: VII.9
+    heading_style_present: true
+    occurrences: 2
+  - label: VII.10
+    heading_style_present: true
+    occurrences: 2
+- logical_index: 12
+  title: Volume VIII — Operational Discipline
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_VIII.docx
+  source_sha256: 49dec6fbc94f880613ca81fe27dc786ce0fa8905e3fcec369e6558f917446cd1
+  text_projection_sha256: e3455fbef0d99a6f7a0b09f7e86af09753e76a5b748aac0ce661705a131dd1ac
+  text_projection_size_bytes: 13423
+  headings:
+  - Contents
+  - VIII.0  Why Discipline Matters
+  - VIII.1  Daily Constraint Maintenance
+  - VIII.2  Authority Hygiene
+  - VIII.3  Decision Transparency
+  - VIII.4  Contestability Management
+  - VIII.5  Rotation and Role Decay
+  - VIII.6  Institutional Memory Without Authority
+  - VIII.7  Drift Detection
+  - VIII.8  Crisis Discipline
+  - VIII.9  Cultural Reinforcement
+  - VIII.10  Volume VIII Synthesis
+  numbered_labels:
+  - label: VIII.0
+    heading_style_present: true
+    occurrences: 2
+  - label: VIII.1
+    heading_style_present: true
+    occurrences: 2
+  - label: VIII.2
+    heading_style_present: true
+    occurrences: 2
+  - label: VIII.3
+    heading_style_present: true
+    occurrences: 2
+  - label: VIII.4
+    heading_style_present: true
+    occurrences: 2
+  - label: VIII.5
+    heading_style_present: true
+    occurrences: 2
+  - label: VIII.6
+    heading_style_present: true
+    occurrences: 2
+  - label: VIII.7
+    heading_style_present: true
+    occurrences: 2
+  - label: VIII.8
+    heading_style_present: true
+    occurrences: 2
+  - label: VIII.9
+    heading_style_present: true
+    occurrences: 2
+  - label: VIII.10
+    heading_style_present: true
+    occurrences: 2

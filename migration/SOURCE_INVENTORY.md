@@ -46,9 +46,36 @@ The prior provenance record's `Canon Hash` value `96b9c30b...5756b8b7` does not 
 
 Standalone pre-definitive PAC candidates remain useful for lineage and duplicate comparison, but they no longer control selection of the definitive member set after the operator supplied the definitive TAR.
 
+### Deterministic source-text projection and chapter index
+
+On 2026-08-26 the recovered definitive TAR was processed locally with an inert deterministic extractor. All 23 DOCX members and the SVG member were projected to UTF-8 without editorial rewriting. The DOCX projection reads text-bearing WordprocessingML parts in XML order; formatting/layout is not preserved and no macros, external links, or embedded content are executed.
+
+Repository records:
+
+```text
+migration/source-artifacts/pac/PAC_TEXT_EXTRACTION-20260826.yaml
+migration/source-artifacts/pac/PAC_FIRST_EDITION_DEFINITIVE-20260823.chapter-index.part1.yaml
+migration/source-artifacts/pac/PAC_FIRST_EDITION_DEFINITIVE-20260823.chapter-index.part2.yaml
+reference/source_integrity/extract_pac_text.py
+```
+
+Verification:
+
+```text
+deterministic repeat runs: 2
+projection tree digest SHA-256: a2cb235fb5a1ab5da3e89a40e85a25e861f061b82609151fbe46ec61d41a1715
+total projection tree bytes: 644507
+extracted text characters observed: 512364
+explicitly styled headings observed: 229
+```
+
+The chapter index maps each logical PAC member to its definitive source SHA-256 and its derived text-projection SHA-256. It preserves Heading-style paragraphs separately from numbered-label observations. Labels without Heading style are recorded as source-structure observations and are not silently repaired or promoted to inferred chapters.
+
+Status: `LOCAL_TEXT_EXTRACTION_VERIFIED / CHAPTER_INDEX_MIRRORED / FULL_TEXT_PROJECTION_MIRROR_PENDING`.
+
 ### Repository byte-mirror boundary
 
-The exact TAR is locally available and hashed. The currently connected GitHub write surface does not expose a local-file binary upload path, so the repository currently mirrors the byte size, archive SHA-256, all member SHA-256 values, and provenance—not the raw TAR blob itself. Any later raw upload must hash to `2198f146bc56fe97d754a4e87bf1ecd9c3f03050b1ace2b215b5169c62b9a9a8` before being accepted as the exact mirror.
+The exact TAR is locally available and hashed. The currently connected GitHub write surface does not expose a local-file binary upload path, so the repository currently mirrors the byte size, archive SHA-256, all member SHA-256 values, provenance, deterministic extraction metadata, and chapter index—not the raw TAR blob or complete per-member text projection set itself. Any later raw upload must hash to `2198f146bc56fe97d754a4e87bf1ecd9c3f03050b1ace2b215b5169c62b9a9a8` before being accepted as the exact mirror.
 
 ## ATTICUS
 
@@ -125,4 +152,4 @@ For each source artifact:
 
 ## Completion rule
 
-No summary, invariant extraction, runtime bundle, or memory cell is a substitute for preservation of the complete available source bytes. A hash manifest is an integrity record, not a replacement for the raw artifact.
+No summary, invariant extraction, runtime bundle, or memory cell is a substitute for preservation of the complete available source bytes. A hash manifest or text projection is an integrity/recovery aid, not a replacement for the raw artifact.

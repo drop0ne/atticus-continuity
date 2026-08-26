@@ -29,8 +29,9 @@ Goal: prevent loss of the actual PAC and ATTICUS source material.
 - [x] Preserve machine-readable PAC archive/member integrity manifest in repository
 - [ ] Mirror the exact 931,840-byte PAC TAR blob through a binary-capable GitHub transport and verify repository-retrieved SHA-256
 - [ ] Locate/verify the exact historical `.tar.gz` wrapper if it still exists; wrapper recovery is lineage-only and does not block use of the recovered definitive member set
-- [ ] Extract exact PAC source text from the recovered definitive DOCX members without editorial rewriting
-- [ ] Build stable PAC source/chapter index mapped to definitive member hashes
+- [x] Deterministically extract and hash PAC source-text projections from all definitive DOCX/SVG members without editorial rewriting
+- [x] Build stable PAC source/chapter index mapped to definitive member and text-projection hashes
+- [ ] Mirror the complete per-member PAC UTF-8 projection set into GitHub and verify projection hashes
 - [ ] Hash and compare standalone pre-definitive PAC candidates where useful for lineage
 - [ ] Hash and compare ATTICUS v6.5.0-ABG full-stack candidates
 - [ ] Diff Library ATTICUS Markdown against repository canonical representation
@@ -154,7 +155,9 @@ P3 expand passive public evidence corpus
 P4 build isolated local laboratory
 ```
 
-PAC P0 materially advanced on 2026-08-23: the operator supplied the definitive 24-member TAR payload, the TAR and every member were hashed, and the complete integrity manifest is repository-tracked. The remaining PAC preservation gap is transport of the exact raw TAR bytes into GitHub through a binary-capable path, followed by repository-side hash verification. Recovery of the historical gzip wrapper is a lineage question rather than a blocker for the definitive 24-member source set.
+PAC P0 materially advanced again on 2026-08-26. The definitive 24-member TAR remains the controlling source package. All 23 DOCX members and the SVG were deterministically projected to UTF-8 locally without editorial rewriting; two independent extraction runs produced the same aggregate projection-tree digest `a2cb235fb5a1ab5da3e89a40e85a25e861f061b82609151fbe46ec61d41a1715`. Stable chapter-index shards now map logical members to definitive source SHA-256 values, text-projection SHA-256 values, observed Heading-style structure, and numbered-label observations. The indexes preserve source irregularities rather than silently repairing them.
+
+The remaining PAC preservation gaps are transport rather than source identification: the exact 931,840-byte TAR and complete 644,507-byte projection tree are still not repository-mirrored through the current connector. Recovery of the historical gzip wrapper remains a lineage question rather than a blocker for the definitive 24-member source set.
 
 ATTICUS remains the main unresolved source-recovery problem: two Markdown and two DOCX v6.5.0-ABG full-stack candidates are known and continue to agree in indexed text, but exact duplicate byte comparison and complete repository/source diff remain outstanding because the current File Library surface still does not expose raw bytes. `REF-SRC-INT-0001` supplies the deterministic read-only SHA-256/size verification command needed immediately when raw bytes become accessible; indexed text does not count as byte identity.
 

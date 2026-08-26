@@ -1,0 +1,278 @@
+schema_version: '1.0'
+source_tar_sha256: 2198f146bc56fe97d754a4e87bf1ecd9c3f03050b1ace2b215b5169c62b9a9a8
+member_range:
+- 13
+- 24
+members:
+- logical_index: 13
+  title: Volume IX — Synthesis
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_IX.docx
+  source_sha256: 10eca1d76673c5b68dfaa4ff0194db4d9ceddf85ceb6c1f8de55027a12899d70
+  text_projection_sha256: ce3282747cb8c66d14d4358399dbd9c6756e060554f19d1ad48e56cb2bc934c2
+  text_projection_size_bytes: 13892
+  headings:
+  - Contents
+  - IX.0  Why Synthesis Is Necessary
+  - IX.1  The Core Model
+  - IX.2  The Layers of Constraint
+  - IX.3  How Power Actually Accumulates
+  - IX.4  Defensive Architecture
+  - IX.5  The Human Problem
+  - IX.6  The Technological Problem
+  - IX.7  The Institutional Problem
+  - IX.8  The Continuous Nature of Constraint
+  - IX.9  Limits of the Canon
+  - IX.10  Final Synthesis
+  numbered_labels:
+  - label: IX.0
+    heading_style_present: true
+    occurrences: 2
+  - label: IX.1
+    heading_style_present: true
+    occurrences: 2
+  - label: IX.2
+    heading_style_present: true
+    occurrences: 2
+  - label: IX.3
+    heading_style_present: true
+    occurrences: 2
+  - label: IX.4
+    heading_style_present: true
+    occurrences: 2
+  - label: IX.5
+    heading_style_present: true
+    occurrences: 2
+  - label: IX.6
+    heading_style_present: true
+    occurrences: 2
+  - label: IX.7
+    heading_style_present: true
+    occurrences: 2
+  - label: IX.8
+    heading_style_present: true
+    occurrences: 2
+  - label: IX.9
+    heading_style_present: true
+    occurrences: 2
+  - label: IX.10
+    heading_style_present: true
+    occurrences: 2
+- logical_index: 14
+  title: Volume X — Termination
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_Vol_X.docx
+  source_sha256: 04ac295ba7346e344b904878a820bad6548c40f5dda852b447f5aefe3fc1341e
+  text_projection_sha256: 63e81d3766d33b6a0806543af5e56fd4b3a03931df064a594b101728a808c4d6
+  text_projection_size_bytes: 9965
+  headings:
+  - Contents
+  - X.0  The Problem of Framework Success
+  - X.1  The Risk of Doctrinal Capture
+  - X.2  Indicators of Canon Power Accumulation
+  - X.3  The Abandonment Rule
+  - X.4  Distributed Termination
+  - X.5  Post-Termination Use
+  - X.6  The Author’s Non-Authority
+  - X.7  Renewal Without Permanence
+  - X.8  Final Statement
+  numbered_labels:
+  - label: X.0
+    heading_style_present: true
+    occurrences: 2
+  - label: X.1
+    heading_style_present: true
+    occurrences: 2
+  - label: X.2
+    heading_style_present: true
+    occurrences: 2
+  - label: X.3
+    heading_style_present: true
+    occurrences: 2
+  - label: X.4
+    heading_style_present: true
+    occurrences: 2
+  - label: X.5
+    heading_style_present: true
+    occurrences: 2
+  - label: X.6
+    heading_style_present: true
+    occurrences: 2
+  - label: X.7
+    heading_style_present: true
+    occurrences: 2
+  - label: X.8
+    heading_style_present: true
+    occurrences: 2
+- logical_index: 15
+  title: Amendment Addendum
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_AMENDMENT_ADDENDUM.docx
+  source_sha256: 330062c7484dedde3d03256ec83193291989d57ea8daa23400847f41b64aa384
+  text_projection_sha256: f60f7f1b7803c0d0e7cedb6698ad1b53fcc8eb0026d5648c71c4bc93232f1207
+  text_projection_size_bytes: 4328
+  headings: []
+  numbered_labels: []
+- logical_index: 16
+  title: Appendix A — Operationalizing Contestability
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_APPENDIX_OPERATIONALIZING_CONTESTABILITY.docx
+  source_sha256: 4e7670d04be0cc5a9451ed2d6e02dcae404202c20a6fbd71d7b17aeff2c9b9b9
+  text_projection_sha256: 657ca0d999150f6532f6765c2581dc221421836fb07b68b7329303b532a01f75
+  text_projection_size_bytes: 6471
+  headings:
+  - Contents
+  - XI.0  Purpose
+  - XI.1  Definition of Contestability
+  - XI.2  Core Contestability Indicators
+  - XI.3  Contestability Failure Signals
+  - XI.4  Contestability Thresholds
+  - XI.5  Application Across System Types
+  - XI.6  Limits of Measurement
+  - XI.7  Relationship to the Canon
+  - XI.8  Conclusion
+  numbered_labels:
+  - label: XI.0
+    heading_style_present: true
+    occurrences: 2
+  - label: XI.1
+    heading_style_present: true
+    occurrences: 2
+  - label: XI.2
+    heading_style_present: true
+    occurrences: 2
+  - label: XI.3
+    heading_style_present: true
+    occurrences: 2
+  - label: XI.4
+    heading_style_present: true
+    occurrences: 2
+  - label: XI.5
+    heading_style_present: true
+    occurrences: 2
+  - label: XI.6
+    heading_style_present: true
+    occurrences: 2
+  - label: XI.7
+    heading_style_present: true
+    occurrences: 2
+  - label: XI.8
+    heading_style_present: true
+    occurrences: 2
+- logical_index: 17
+  title: Appendix B — Policy Applications
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_APPENDIX_POLICY_APPLICATIONS.docx
+  source_sha256: a7b619fc7e9e87a032f0bdf50a67256c884a04e3843035a2c6bfc3dd3808c4a4
+  text_projection_sha256: 572aca30c45a82c6a173376efbcbf3ddaf587d5e6f39172d51dd4174323c8886
+  text_projection_size_bytes: 14247
+  headings:
+  - Contents
+  - PA.0  Purpose of This Appendix
+  - 'PA.1  Application: Emergency Authority Design'
+  - 'PA.2  Application: AI Governance Board'
+  - 'PA.3  Application: Platform Regulation'
+  - 'PA.4  Application: Regulatory Oversight Architecture'
+  - 'PA.5  Application: Organizational Authority Audit'
+  - 'PA.6  Application: Constitutional Emergency Clause'
+  - PA.7  Common Objections
+  - PA.8  Limits of Application
+  numbered_labels: []
+- logical_index: 18
+  title: Appendix C — Intellectual Lineage
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_APPENDIX_INTELLECTUAL_LINEAGE.docx
+  source_sha256: 73fc9349c492e60dabc7df7b4d4bb3d5eb52ea1e2773e1b8cd52b421e627b111
+  text_projection_sha256: 74ae00c85adc7febc01d37c329bc3d808e8186bfaaf667a9951e463186150496
+  text_projection_size_bytes: 10990
+  headings:
+  - Purpose of This Appendix
+  - A. Karl Popper and the Open Society
+  - B. Elinor Ostrom and Institutional Design
+  - C. James Madison and Structural Suspicion
+  - D. Friedrich Hayek and Dispersed Knowledge
+  - E. Modern AI Governance Literature
+  - F. The Canon’s Distinct Contribution
+  - G. What This Appendix Does Not Claim
+  numbered_labels: []
+- logical_index: 19
+  title: Appendix D — Criticisms and Responses
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_APPENDIX_CRITICISMS_AND_RESPONSES.docx
+  source_sha256: a9ccdd821b0378a89e84aa21b4ca9b34a5d9bc92ac63dca4c3f3b308b21a54ba
+  text_projection_sha256: b40373042802c9c27b3c0138959fff165353dfddd74a26ef67f98ec26bac38ca
+  text_projection_size_bytes: 9038
+  headings:
+  - Purpose of This Appendix
+  - 1. Contestability Remains Underspecified
+  - 2. The Framework Is Too Broad
+  - 3. The Canon May Understate the Value of Durable Authority
+  - 4. The Termination Architecture May Be Symbolically Elegant but Institutionally Weak
+  - 5. New Terminology May Be Accused of Rebranding Familiar Ideas
+  - 6. The Amendment Addendum May Appear to Insulate the Canon from Real Revision
+  - 7. The AI Governance Sections May Seem Too Restrictive
+  - 8. The Prose Style May Resist Some Academic Audiences
+  - Summary
+  numbered_labels: []
+- logical_index: 20
+  title: Appendix E — Worked Institutional Cases
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_APPENDIX_WORKED_CASES.docx
+  source_sha256: 92416e023323b414ccc0df3deffbda60623545863bc2349171e962871d21cc8b
+  text_projection_sha256: b8a2c738a344aed81301dd5d30d59e2c663eef86d60a92481c0f56dd5486e131
+  text_projection_size_bytes: 12217
+  headings:
+  - Purpose of This Appendix
+  - The Canon’s Diagnostic Method
+  - 'Case 1: Emergency Authority After Crisis'
+  - 'Case 2: Platform and Infrastructure Dependency'
+  - 'Case 3: AI Deployment Governance'
+  - What These Cases Collectively Demonstrate
+  numbered_labels: []
+- logical_index: 21
+  title: Appendix F — Red Team Assessment
+  path_in_tar: ./RED_TEAM_ASSESSMENT_PAC.docx
+  source_sha256: 274b95ff8ef6500b7b2ba662502a758dbb89fd4c57fb97346cc01c3ff8e85b84
+  text_projection_sha256: aaf2a43d45166683e40256961569a3f1802b904d7acd2654d3af305d4da21a0d
+  text_projection_size_bytes: 16260
+  headings:
+  - Executive Summary
+  - 'Attack Class 1: The Bootstrapping Paradox'
+  - 'RT-1: Who Imposes the Constraints?'
+  - 'RT-2: The Amendment Addendum Is Already Accumulating Power'
+  - 'Attack Class 2: Weaponized Constraint'
+  - 'RT-3: Obstruction as a Service'
+  - 'RT-4: Constraint Arbitrage Between Systems'
+  - 'RT-5: The Expiry Weapon'
+  - 'Attack Class 3: Philosophical Load-Bearing Failures'
+  - 'RT-6: The Consent Definition Is Too Expansive'
+  - 'RT-7: The Canon Cannot Distinguish Legitimate From Illegitimate Constraint'
+  - 'RT-8: “The Will of the People” Is Underspecified'
+  - 'Attack Class 4: Omission and Scope Gaps'
+  - 'RT-9: Economic Power Is Structurally Absent'
+  - 'RT-10: Cultural and Narrative Power Gets Psychological Treatment but No Structural One'
+  - 'RT-11: Volumes V–X Do Not Exist Yet'
+  - 'Attack Class 5: Self-Referential and Meta Vulnerabilities'
+  - 'RT-12: The Canon Is Already a Power Object'
+  - 'RT-13: The Author Is Not Exempt'
+  - Findings Summary
+  - Assessor’s Note
+  numbered_labels: []
+- logical_index: 22
+  title: Glossary of Canon Terms
+  path_in_tar: ./THE_POWER_AVOIDANCE_CANON_-_GLOSSARY.docx
+  source_sha256: 1288007953a1f21331260bce45dd207763f17441cdf68429b94551074847decb
+  text_projection_sha256: eaee9965eb299879013c10404bee095d531975e26ac4c4d619f6f1c570f18fa4
+  text_projection_size_bytes: 7694
+  headings:
+  - Glossary of Canon Terms
+  numbered_labels: []
+- logical_index: 23
+  title: Architecture Diagram — SVG
+  path_in_tar: ./CANON_ARCHITECTURE_DIAGRAM.svg
+  source_sha256: 12cbf7619c85ac9382b92f1635dc878b689b2daa4f8e3d52390b793aa12bf088
+  text_projection_sha256: 12cbf7619c85ac9382b92f1635dc878b689b2daa4f8e3d52390b793aa12bf088
+  text_projection_size_bytes: 8010
+  headings: []
+  numbered_labels: []
+- logical_index: 24
+  title: Architecture Diagram — DOCX companion
+  path_in_tar: ./CANON_ARCHITECTURE_DIAGRAM.docx
+  source_sha256: 4f3e123796799b748d5cd2f335f67d8982f93bd5a21317b72bb69ad0fb40bdfd
+  text_projection_sha256: c057ec6dd1e66ccb3eea353f1e554e77699cb89ce5a6b1732f57a0e0a4f60b87
+  text_projection_size_bytes: 3447
+  headings:
+  - Canon Architecture
+  numbered_labels: []
