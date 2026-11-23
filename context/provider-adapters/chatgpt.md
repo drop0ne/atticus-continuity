@@ -74,3 +74,11 @@ If GitHub is unavailable in the active ChatGPT experience:
 - OpenAI Help Center: Apps in ChatGPT.
 
 Reverify this adapter when OpenAI product behavior changes.
+
+## November 22, 2026 source and P1 memory-cache update
+
+The full canonical-release Markdown source is mirrored at `atticus/source/ATTICUS_v6_5_0_ABG_FULL_STACK.md`, SHA-256 `5c8dff836d50cb372c6dcb450727ad9fad0e6b7d2704902d3c0ee2652e4055ad`. Retrieve it only when full reconstruction or source-level wording is needed. The shorter `atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md` remains the controlling state record and later AMAS binding.
+
+The recovery seed is `context/memory/ATTICUS_P1_GLOBAL_MEMORY_SEED_v6.5.0-ABG.md`. This is an optional compact memory cache, **not** proof that global ChatGPT memory was successfully written. Current explicit v6.5.0-ABG designation supersedes stale historical v6.4.2/W7-off summary/profile text. Repository synchronization cannot directly inspect or repair platform-managed memory.
+
+See `context/checkpoints/CP-2026-11-22-atticus-platform-synchronization.md` for exact verification scope and ZIP/DOCX blockers.
