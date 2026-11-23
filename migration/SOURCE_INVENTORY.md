@@ -114,7 +114,7 @@ The discovered source describes and explicitly declares:
 - known limitations and migration procedure;
 - canonical state declaration superseding v6.4.2-CMHM as the active baseline.
 
-Migration status: `SOURCE_TEXT_LOCATED / FULL_DIFF_NOT_YET_VERIFIED`.
+Migration status as of 2026-11-22: `MARKDOWN_BYTE_IDENTICAL_AND_MIRRORED / DOCX_ZIP_PENDING / CROSS_FORMAT_DIFF_PENDING`. Four 42,375-byte Markdown copies hash to `5c8dff836d50cb372c6dcb450727ad9fad0e6b7d2704902d3c0ee2652e4055ad`; one exact Markdown source is now at `atticus/source/ATTICUS_v6_5_0_ABG_FULL_STACK.md`. Prior August discovery observations above are retained for lineage.
 
 The repository canonical representation must still be completely diffed against a selected Library Markdown source before the source migration is marked verified.
 

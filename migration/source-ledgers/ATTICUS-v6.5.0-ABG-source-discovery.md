@@ -1,6 +1,8 @@
 # ATTICUS v6.5.0-ABG — Source Discovery Ledger
 
-**Status:** CANONICAL_SOURCE_TEXT_LOCATED / BYTE_IDENTITY_UNRESOLVED  
+**Status:** MARKDOWN_BYTE_IDENTITY_VERIFIED_2026-11-22 / DOCX_ZIP_IDENTITY_UNRESOLVED
+
+**2026-11-22 update:** Four accessible 42,375-byte Markdown copies returned identical SHA-256 `5c8dff836d50cb372c6dcb450727ad9fad0e6b7d2704902d3c0ee2652e4055ad`. One complete Markdown source is preserved at `atticus/source/ATTICUS_v6_5_0_ABG_FULL_STACK.md`. Older observations below are retained as historical August 2026 evidence.  
 **Target:** preserve the complete provider-neutral canonical ATTICUS v6.5.0-ABG specification independently of platform memory.
 
 ## Located Library artifacts
@@ -102,3 +104,14 @@ The current repository already contains `atticus/canonical/ATTICUS_v6.5.0-ABG_CA
 ## Non-claim
 
 Matching sampled text does not prove that every byte or every hidden document property is identical. Until hashes and a complete diff exist, duplicate collapse remains provisional.
+
+## November 22, 2026 synchronization verification
+
+- Four Markdown sources: 42,375 bytes each, SHA-256 identical (`5c8dff836d50cb372c6dcb450727ad9fad0e6b7d2704902d3c0ee2652e4055ad`).
+- Exact complete Markdown release source preserved in `atticus/source/ATTICUS_v6_5_0_ABG_FULL_STACK.md`.
+- The canonical-state record and explicitly pinned August AMAS v2.0 component binding remain controlling; this historical July release text does not roll them back.
+- Library project ZIPs discovered but raw bytes not accessible: `ATTICUS_v6.5.0-ABG_FULL_STACK.zip` (79,430 bytes) and `ATTICUS_GLOBAL_MEMORY_HANDOFF_v6.5.0-ABG.zip` (82,609 bytes).
+- ZIP internal hashes and DOCX byte identity were not independently reverified in this synchronization.
+- The compact P1 memory-seed file is a recovery reference, not evidence of a successful account-memory mutation.
+
+Current migration status: `MARKDOWN_MIRRORED_AND_HASHED / ZIP_DOCX_PENDING`.

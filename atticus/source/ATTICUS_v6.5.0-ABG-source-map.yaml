@@ -12,11 +12,11 @@ source_candidates:
     - file_id: file_00000000090c722f951a76cd7058b15d
       created_at: 2026-07-11T00:50:20Z
       filename: ATTICUS_v6_5_0_ABG_FULL_STACK.md
-      byte_hash: UNKNOWN
+      byte_hash: 5c8dff836d50cb372c6dcb450727ad9fad0e6b7d2704902d3c0ee2652e4055ad
     - file_id: file_000000002ea0820c9ed1207992156b5b
       created_at: 2026-07-21T14:17:00Z
       filename: ATTICUS_v6_5_0_ABG_FULL_STACK.md
-      byte_hash: UNKNOWN
+      byte_hash: 5c8dff836d50cb372c6dcb450727ad9fad0e6b7d2704902d3c0ee2652e4055ad
   docx:
     - file_id: file_000000009294722fa0d76b7d749718a4
       created_at: 2026-07-11T00:50:19Z
@@ -28,8 +28,8 @@ source_candidates:
       byte_hash: UNKNOWN
 
 textual_equivalence:
-  status: STRONGLY_SUPPORTED_BY_SAMPLED_SECTIONS
-  byte_identity: UNVERIFIED
+  status: VERIFIED_BYTE_IDENTICAL_MARKDOWN_CANDIDATES
+  byte_identity: MARKDOWN_VERIFIED_DOCX_ZIP_UNVERIFIED
   rule: Sampled textual agreement must not be promoted to byte identity without hashes.
 
 sections:
@@ -83,6 +83,11 @@ module_index:
 
 migration_state:
   exact_source_bytes_preserved_in_repo: false
+  full_stack_markdown_source_path: atticus/source/ATTICUS_v6_5_0_ABG_FULL_STACK.md
+  full_stack_markdown_sha256: 5c8dff836d50cb372c6dcb450727ad9fad0e6b7d2704902d3c0ee2652e4055ad
+  markdown_candidates_byte_identical: true
+  full_stack_markdown_bytes_mirrored: true
+  exact_zip_and_docx_source_bytes_mirrored: false
   complete_library_to_repo_diff: false
   duplicate_hashes_computed: false
   stable_section_ids_created: true
@@ -91,6 +96,6 @@ migration_state:
 next_required_verification:
   - Materialize exact Markdown and DOCX source bytes.
   - Compute SHA-256 and byte sizes for all four candidates.
-  - Perform complete Markdown duplicate diff.
-  - Compare selected Markdown source against repository canonical representation.
+  - Confirm the 2026-11-22 byte-identical Markdown candidate comparison (already SHA-256 verified).
+  - Compare the full Markdown release source against the governing canonical-state summary and later AMAS component binding for semantic consistency; do not roll back newer explicit bindings.
   - Preserve the selected complete source only after discrepancies are classified.
