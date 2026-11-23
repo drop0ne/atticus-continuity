@@ -53,6 +53,10 @@ provider_adapters:
     status: PLANNED
 
 source_migration_inventory: ../migration/SOURCE_INVENTORY.md
+atticus_full_stack_source: ../atticus/source/ATTICUS_v6_5_0_ABG_FULL_STACK.md
+atticus_p1_platform_memory_seed:
+  file: memory/ATTICUS_P1_GLOBAL_MEMORY_SEED_v6.5.0-ABG.md
+  status: RECOVERY_REFERENCE_NOT_PROOF_OF_PLATFORM_MEMORY_INSTALL
 public_agent_artifact_policy: ../knowledge/assimilation/PUBLIC_AGENT_ARTIFACT_POLICY.md
 master_plan: ../MASTER_PLAN.md
 roadmap: ../ROADMAP.md

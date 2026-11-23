@@ -13,6 +13,7 @@ records:
     - atticus/canonical/AMAS_v2.0_CANONICAL_BINDING.md
   source_structure:
     - atticus/source/ATTICUS_v6.5.0-ABG-source-map.yaml
+    - atticus/source/ATTICUS_v6_5_0_ABG_FULL_STACK.md
     - atticus/index.md
   governance:
     - pac/principles/PAC_BASELINE.md
@@ -46,6 +47,9 @@ routing:
 
 source_integrity:
   complete_source_bytes_in_repository: false
+  complete_markdown_source_bytes_in_repository: true
+  markdown_source_sha256: 5c8dff836d50cb372c6dcb450727ad9fad0e6b7d2704902d3c0ee2652e4055ad
+  exact_zip_and_docx_bytes_verified_in_repository: false
   source_map_is_not_full_source: true
   sampled_text_equivalence_is_not_byte_identity: true
   unresolved_byte_verification_source: atticus/source/ATTICUS_v6.5.0-ABG-source-map.yaml
@@ -61,4 +65,4 @@ rules:
 notes:
   - This bundle makes the current runtime addressable without loading historical lineage.
   - Section IDs are retrieval selectors, not authority grants.
-  - The exact full-stack source remains a P0 preservation task until source bytes are recovered, hashed, diffed, and preserved.
+  - The exact full-stack Markdown source is now mirrored and SHA-256 verified; raw DOCX/ZIP provenance, archive checksums, and cross-format comparisons remain P0 preservation tasks.

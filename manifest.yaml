@@ -33,6 +33,10 @@ canonical:
   atticus:
     version: v6.5.0-ABG
     file: atticus/canonical/ATTICUS_v6.5.0-ABG_CANONICAL.md
+    full_stack_source: atticus/source/ATTICUS_v6_5_0_ABG_FULL_STACK.md
+    full_stack_source_sha256: 5c8dff836d50cb372c6dcb450727ad9fad0e6b7d2704902d3c0ee2652e4055ad
+    full_stack_source_status: MARKDOWN_BYTE_VERIFIED_ZIP_DOCX_PENDING
+    source_does_not_override_canonical_component_bindings: true
   amas:
     status: CANONICAL_COMPONENT_BINDING
     file: atticus/canonical/AMAS_v2.0_CANONICAL_BINDING.md
